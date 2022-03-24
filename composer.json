@@ -1,0 +1,41 @@
+{
+    "name": "nci/settings",
+    "description": "NCI laravel package to manage settings.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Arthur REGNIER",
+        "email": "arthur.regnier@nci.fr"
+      },
+      {
+        "name": "Mathieu LALLEMAND",
+        "email": "mathieu.lallemand@nci.fr"
+      }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Nci\\SettingsPackage\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "Nci\\SettingsPackage\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-f": "vendor/bin/phpunit --filter"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nci\\SettingsPackage\\SettingsPackageServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.0",
+        "phpunit/phpunit": "^9.5"
+    }
+}
