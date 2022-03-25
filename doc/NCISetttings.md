@@ -69,7 +69,7 @@ Objectif : gérer les paramètres de l'application au travers d'objets gérable 
 public static function Setting::groups() : array / collection<Setting>
 
 // Retourne la liste de tous les paramètres confondus
-public static function Setting::app(string $group = null) : array/collection<Setting>;
+public static function Setting::app(string $group = null): array/collection<Setting>;
 public static function Setting::user(User $user, string $group = null) : array/collection<Setting>;
 public static function Setting::setForApp(Setting $setting, value);
 public static function Setting::setForUser(User $user, Setting $setting, value);
