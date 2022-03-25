@@ -4,7 +4,7 @@ namespace Nci\SettingsPackage;
 
 use Illuminate\Support\ServiceProvider;
 
-class SettingsPackageServiceProvier extends ServiceProvider
+class SettingsPackageServiceProvider extends ServiceProvider
 {
     public function register()
     {

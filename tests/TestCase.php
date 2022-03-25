@@ -1,8 +1,8 @@
 <?php
 
-namespace Nci\SettingsPackage;
+namespace Nci\SettingsPackage\Tests;
 
-use Nci\SettingsPackage\SettingsPackageServiceProvier;
+use Nci\SettingsPackage\SettingsPackageServiceProvider;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
 
 class TestCase extends TestbenchTestCase
@@ -16,7 +16,7 @@ class TestCase extends TestbenchTestCase
     protected function getPackageProviders($app)
     {
         return [
-            SettingsPackageServiceProvier::class,
+            SettingsPackageServiceProvider::class,
         ];
     }
 

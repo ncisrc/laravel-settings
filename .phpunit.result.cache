@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":[]}
+{"version":1,"defects":{"Nci\\SettingsPackage\\Tests\\Unit\\Test::it_should_return_class_name":4},"times":{"Nci\\SettingsPackage\\Tests\\Unit\\Test::it_should_return_class_name":0.069}}

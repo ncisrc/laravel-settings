@@ -17,16 +17,19 @@ return new class extends Migration
             $table->id();
             $table->string('group');
             $table->string('scope');
-            $table->string('code');
+            $table->string('code')->unique();
             $table->text('description');
             $table->string('type');
-            $table->text('data')->nullable();
+            $table->text('json_otpions')->nullable();
             $table->boolean('nullable');
             $table->text('default')->nullable();
             $table->boolean('favorite');
             $table->string('width');
-            $table->string('level');
             $table->timestamps();
+
+            $table->index('group');
+            $table->index('scope');
+            $table->index('favorite');
         });
     }
 
