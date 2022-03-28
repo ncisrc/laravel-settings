@@ -43,7 +43,7 @@ trait HasSettings
 
             if (array_key_exists('code', $data)) {
                 $whereAry[] = ' setting.code=:code ';
-                $params['code'] = $data['code'];
+                $params['code'] = "%{$data['code']}%";
             }
 
             if (array_key_exists('favorite', $data)) {
@@ -79,11 +79,6 @@ trait HasSettings
         return static::settings(['id' => $settingId], $userId)[0];
     }
 
-    public static function settingByCode(string $code, int $userId = null): stdClass
-    {
-        return static::settings(['code' => $code], $userId)[0];
-    }
-
     public static function setSetting(int $settingId, string $value, int $userId = null): void
     {
         $setting = Setting::find($settingId);
@@ -104,7 +99,7 @@ trait HasSettings
                 DB::update('UPDATE user_setting SET value=? WHERE user_id=? AND setting_id=?', [$value, $userId, $setting->id]);
                 return;
             }
-            // if value equals values abort
+            // if value equals default abort
             // TODO
             // either create
             DB::insert('INSERT INTO user_setting (user_id, setting_id, value) values (?, ?, ?)' , [$userId, $setting->id, $value]);
