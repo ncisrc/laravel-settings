@@ -5,9 +5,6 @@ namespace Nci\SettingsPackage\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Nci\SettingsPackage\Business\AppSettingBusiness;
-use Nci\SettingsPackage\Business\SettingBusiness;
-use Nci\SettingsPackage\Enums\ErrorText;
-use Nci\SettingsPackage\Models\Setting;
 
 class AppSettingController extends Controller
 {
@@ -28,8 +25,7 @@ class AppSettingController extends Controller
 
     public function show(int $settingId)
     {
-        $request = new Request();
-        $request->request->add([
+        $request = static::getNewRequest([
             'setting_id' => $settingId,
         ]);
 

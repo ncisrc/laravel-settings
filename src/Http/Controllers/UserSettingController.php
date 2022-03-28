@@ -28,8 +28,7 @@ class UserSettingController extends Controller
 
     public function show(int $userId, int $settingId)
     {
-        $request = new Request();
-        $request->request->add([
+        $request = static::getNewRequest([
             'user_id'    => $userId,
             'setting_id' => $settingId,
         ]);

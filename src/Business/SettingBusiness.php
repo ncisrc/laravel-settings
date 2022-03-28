@@ -2,7 +2,6 @@
 
 namespace Nci\SettingsPackage\Business;
 
-use Exception;
 use Nci\SettingsPackage\Classes\App;
 use Nci\SettingsPackage\Models\Setting;
 

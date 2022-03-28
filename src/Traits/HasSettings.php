@@ -72,7 +72,9 @@ trait HasSettings
 
         $settingsAry = DB::select($sql, $params);
 
-        // TODO fetch jsonsql
+        foreach ($settingsAry as $setting) {
+            // TODO fetch jsonsql
+        }
 
         return $settingsAry;
     }
