@@ -5,6 +5,8 @@ namespace Nci\SettingsPackage\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Nci\SettingsPackage\Business\SettingBusiness;
+use Nci\SettingsPackage\Enums\ErrorText;
+use Nci\SettingsPackage\Models\Setting;
 
 class SettingController extends Controller
 {
@@ -27,7 +29,7 @@ class SettingController extends Controller
     public function show(int $settingId)
     {
         if (!is_numeric($settingId)) {
-            throw new Exception('Invalid parameter.');
+            throw new Exception(ErrorText::API_E_PARAM01);
         }
 
         try {
@@ -40,7 +42,7 @@ class SettingController extends Controller
     public function update(Request $request, int $settingId)
     {
         if (!is_numeric($settingId)) {
-            throw new Exception('Invalid parameter.');
+            throw new Exception(ErrorText::API_E_PARAM01);
         }
 
         $data = $request->validate([
@@ -50,11 +52,17 @@ class SettingController extends Controller
         ]);
 
         if (count($data) === 0) {
-            throw new Exception('Nothing to update.');
+            throw new Exception(ErrorText::API_E_PARAM02);
+        }
+
+        $setting = Setting::find($settingId);
+
+        if (is_null($setting)) {
+            throw new Exception(ErrorText::API_E_SETTING02);
         }
 
         try {
-            return SettingBusiness::settingFind($settingId);
+            return SettingBusiness::settingUpdate($setting, $data);
         } catch (Exception $e) {
             throw new Exception($e);
         }

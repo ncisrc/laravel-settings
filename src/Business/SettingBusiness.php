@@ -18,14 +18,8 @@ class SettingBusiness
         return Setting::find($settingId);
     }
 
-    public static function settingUpdate(int $settingId, array $data): Setting
+    public static function settingUpdate(Setting $setting, array $data): Setting
     {
-        $setting = Setting::find($settingId);
-
-        if (is_null($setting)) {
-            throw new Exception('Setting not found.', 404);
-        }
-
         if (isset($data['json_options'])) {
             $setting->json_options = $data['json_options'];
         }

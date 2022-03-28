@@ -4,6 +4,7 @@ namespace Nci\SettingsPackage\Traits;
 
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Nci\SettingsPackage\Enums\ErrorText;
 use Nci\SettingsPackage\Enums\SettingType;
 use Nci\SettingsPackage\Models\Setting;
 use stdClass;
@@ -88,7 +89,7 @@ trait HasSettings
                 $needle = (in_array($setting->type, [SettingType::Boolean, SettingType::Number, SettingType::String])) ?
                     $value : json_decode($value);
                 if (!in_array($needle, json_decode($setting->options()->data))) {
-                    throw new Exception("Setting's value not available.", 404);
+                    throw new Exception(ErrorText::API_E_SETTING01, 404);
                 }
             }
         }
