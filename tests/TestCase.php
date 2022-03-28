@@ -22,6 +22,10 @@ class TestCase extends TestbenchTestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        // TODO
+        include_once __DIR__.'/../database/migrations/2022_03_24_155550_create_settings_table.php';
+        include_once __DIR__.'/../database/migrations/2022_03_25_160000_create_user_setting_table.php';
+
+        (new \CreateSettingsTable)->up();
+        (new \CreateUserSettingTable)->up();
     }
 }

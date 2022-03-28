@@ -37,5 +37,8 @@
     "require-dev": {
         "orchestra/testbench": "^7.0",
         "phpunit/phpunit": "^9.5"
+    },
+    "require": {
+        "doctrine/dbal": "^3.3"
     }
 }
