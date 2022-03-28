@@ -60,8 +60,12 @@ trait HasSettings
 
         $settingsAry = DB::select($sql, $params);
 
+        // populate setting value in case of jsonsql
         foreach ($settingsAry as $setting) {
-            // TODO fetch jsonsql
+            if (str_contains($setting->json_options, 'jsonsql')) {
+                $data = $setting->options()->data;
+                $setting->value = DB::select($data->select . ' ' . $data->from . ' ' . $data->where);
+            }
         }
 
         return $settingsAry;
@@ -93,7 +97,9 @@ trait HasSettings
                 return;
             }
             // if value equals default abort
-            // TODO
+            if ($setting->default === $value) {
+                throw new Exception(ErrorText::API_E_SETTING03, 404);
+            }
             // either create
             DB::insert('INSERT INTO user_setting (user_id, setting_id, value) values (?, ?, ?)' , [$userId, $setting->id, $value]);
             return;

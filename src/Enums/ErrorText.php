@@ -11,4 +11,5 @@ class ErrorText
     // Settings
     const API_E_SETTING01 = 'API-E-SETTING01: Setting\'s value not available.';
     const API_E_SETTING02 = 'API-E-SETTING02: Setting not found.';
+    const API_E_SETTING03 = 'API-E-SETTING03: The value you are trying to add is the same that default.';
 }
