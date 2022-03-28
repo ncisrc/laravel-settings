@@ -2,14 +2,33 @@
 
 namespace Nci\SettingsPackage\Business;
 
-use Nci\SettingsPackage\Classes\App;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Nci\SettingsPackage\Models\Setting;
 
 class SettingBusiness
 {
-    public static function settingSearch(array $data): array
+    public static function settingSearch(array $data): Collection
     {
-        return App::settings($data);
+        $settings = DB::table('settings');
+
+        if (isset($data['group'])) {
+            $settings->where('groupe', 'LIKE', '%' . $data['group'] . '%');
+        }
+
+        if (isset($data['scope'])) {
+            $settings->where('scope', $data['scope']);
+        }
+
+        if (isset($data['code'])) {
+            $settings->where('code', 'LIKE', '%' . $data['code'] . '%');
+        }
+
+        if (isset($data['favorite'])) {
+            $settings->where('favorite', $data['favorite']);
+        }
+
+        return $settings->get();
     }
 
     public static function settingFind(int $settingId): Setting

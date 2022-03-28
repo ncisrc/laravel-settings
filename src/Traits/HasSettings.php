@@ -13,7 +13,7 @@ trait HasSettings
 {
     public static function settings(array $data = null, int $userId = null): array
     {
-        $forceScope = !is_null($userId);
+        $scope = (is_null($userId)) ? 'App' : 'User';
 
         $select = 'SELECT setting.id, setting.group, setting.scope, setting.code, setting.description, setting.type, 
             setting.json_options, setting.nullable, setting.default, setting.favorite, setting.width, ';
@@ -21,12 +21,8 @@ trait HasSettings
 
         $from  = 'FROM settings AS setting ';
 
-        $whereAry = [];
-
-        if (!is_null($userId)) {
-            $whereAry[] = ' setting.scope=:scope ';
-            $params['scope'] = 'User';
-        }
+        $whereAry[] = ' setting.scope=:scope ';
+        $params['scope'] = $scope;
 
         if (!is_null($data)) {
             if (array_key_exists('id', $data)) {
@@ -37,11 +33,6 @@ trait HasSettings
             if (array_key_exists('group', $data)) {
                 $whereAry[] = ' setting.group LIKE :group ';
                 $params['group'] = "%{$data['group']}%";
-            }
-
-            if (!$forceScope && (array_key_exists('scope', $data))) {
-                $whereAry[] = ' setting.scope=:scope ';
-                $params['scope'] = $data['scope'];
             }
 
             if (array_key_exists('code', $data)) {
@@ -61,10 +52,7 @@ trait HasSettings
             $params['user_id'] = $userId;
         }
 
-        $where = '';
-        if (!empty($whereAry)) {
-            $where = ' WHERE ' . implode('AND', $whereAry);
-        }
+        $where = ' WHERE ' . implode('AND', $whereAry);
 
         $orderBy = 'ORDER BY setting.group';
 
