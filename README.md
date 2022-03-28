@@ -15,3 +15,15 @@ git flow init # validez les valeurs par défaut
 composer install
 
 ```
+
+## Installation du package dans un projet :
+
+> Note : TODO
+
+```bash
+// TODO
+
+# Publish le fichier de configuration
+sail artisan vendor:publish --provider="Nci\SettingsPackage\SettingsPackageServiceProvider" --tag="config"
+
+```

@@ -14,8 +14,13 @@ class SettingsPackageServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        Route::group(['middleware'  => config('settingspackage.middleware')], function() {
-            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        Route::group([
+            'prefix'     => config('settingspackage.prefix'),
+            'middleware' => config('settingspackage.middleware')
+        ], function() {
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
 
         if ($this->app->runningInConsole()) {
