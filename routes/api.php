@@ -18,4 +18,3 @@ Route::post('/user/{userId}/setting/{settingId}', [UserSettingController::class,
 // AppSetting
 Route::get('/app/settings',             [AppSettingController::class, 'index']);
 Route::get('/app/setting/{settingId}',  [AppSettingController::class, 'show']);
-Route::post('/app/setting/{settingId}', [AppSettingController::class, 'store']);

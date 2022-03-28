@@ -11,8 +11,10 @@ use stdClass;
 
 trait HasSettings
 {
-    public static function settings(array $data = null, bool $forceScope = false, int $userId = null): array
+    public static function settings(array $data = null, int $userId = null): array
     {
+        $forceScope = !is_null($userId);
+
         $select = 'SELECT setting.id, setting.group, setting.scope, setting.code, setting.description, setting.type, 
             setting.json_options, setting.nullable, setting.default, setting.favorite, setting.width, ';
         $select .= (!is_null($userId)) ? 'IFNULL(user_setting.value, setting.default)' : 'setting.default' . ' AS value ';
@@ -21,9 +23,9 @@ trait HasSettings
 
         $whereAry = [];
 
-        if ($forceScope) {
+        if (!is_null($userId)) {
             $whereAry[] = ' setting.scope=:scope ';
-            $params['scope'] = class_basename(static::class);
+            $params['scope'] = 'User';
         }
 
         if (!is_null($data)) {
