@@ -1,13 +1,17 @@
 <?php
 
-namespace Database\Factories;
+namespace Nci\SettingsPackage\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Nci\SettingsPackage\Enums\SettingType;
+use Nci\SettingsPackage\Models\Setting;
 use ReflectionClass;
 
 class SettingFactory extends Factory
 {
+
+    protected $model = Setting::class;
+
     /**
      * Define the model's default state.
      *

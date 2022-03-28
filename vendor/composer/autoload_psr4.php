@@ -58,6 +58,7 @@ return array(
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src/PhpOption'),
     'Orchestra\\Testbench\\' => array($vendorDir . '/orchestra/testbench-core/src'),
     'Nci\\SettingsPackage\\Tests\\' => array($baseDir . '/tests'),
+    'Nci\\SettingsPackage\\Database\\Factories\\' => array($baseDir . '/database/factories'),
     'Nci\\SettingsPackage\\' => array($baseDir . '/src'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\MimeTypeDetection\\' => array($vendorDir . '/league/mime-type-detection/src'),

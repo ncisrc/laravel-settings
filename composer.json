@@ -15,7 +15,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Nci\\SettingsPackage\\": "src"
+            "Nci\\SettingsPackage\\": "src/",
+            "Nci\\SettingsPackage\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {

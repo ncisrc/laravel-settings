@@ -2,6 +2,8 @@
 
 namespace Nci\SettingsPackage;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 

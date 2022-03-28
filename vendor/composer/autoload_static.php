@@ -114,6 +114,7 @@ class ComposerStaticInit116613c777f5ffa534fa69efbc1dadd1
         'N' => 
         array (
             'Nci\\SettingsPackage\\Tests\\' => 26,
+            'Nci\\SettingsPackage\\Database\\Factories\\' => 39,
             'Nci\\SettingsPackage\\' => 20,
         ),
         'M' => 
@@ -382,6 +383,10 @@ class ComposerStaticInit116613c777f5ffa534fa69efbc1dadd1
         'Nci\\SettingsPackage\\Tests\\' => 
         array (
             0 => __DIR__ . '/../..' . '/tests',
+        ),
+        'Nci\\SettingsPackage\\Database\\Factories\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/database/factories',
         ),
         'Nci\\SettingsPackage\\' => 
         array (
