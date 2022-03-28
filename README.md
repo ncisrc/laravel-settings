@@ -26,4 +26,8 @@ composer install
 # Publish le fichier de configuration
 sail artisan vendor:publish --provider="Nci\SettingsPackage\SettingsPackageServiceProvider" --tag="config"
 
+# Ajouté le trait au model User
+use Nci\SettingsPackage\Traits\HasSettings;
+use HasSettings;
+
 ```
