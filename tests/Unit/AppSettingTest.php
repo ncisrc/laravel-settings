@@ -38,5 +38,8 @@ class AppSettingTest extends TestCase
 
         $this->assertEquals($value, $appSetting->default_value);
         $this->assertNotEquals($appSetting->default_value, $appSettingExpected->default_value);
+
+        $appSetting = AppSettingBusiness::appSettingFind($appSetting->id);
+        $this->assertEquals($value, $appSetting->value);
     }
 }

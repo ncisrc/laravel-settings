@@ -19,7 +19,7 @@ class UserSettingBusiness
 
     public static function userSettingSetValue(array $data): stdClass
     {
-        App::setSetting($data['setting_id'], $data['user_id'], $data['value']);
+        App::setSetting($data['setting_id'], $data['value'], $data['user_id']);
 
         return App::setting($data['setting_id'], $data['user_id']);
     }

@@ -16,7 +16,8 @@ trait HasSettings
         $scope = (is_null($userId)) ? 'App' : 'User';
 
         $select = 'SELECT s.id, s.namespace, s.scope, s.code, s.description, s.type, s.json_options, s.nullable, s.default_value, s.favorite, s.width, ';
-        $select .= (!is_null($userId)) ? ' IFNULL(user_setting.value, s.default_value) ' : ' s.default_value ' . ' AS value ';
+        $select .= (!is_null($userId)) ? ' IFNULL(user_setting.value, s.default_value) ' : ' s.default_value ';
+        $select .= ' AS value ';
 
         $from  = 'FROM settings AS s';
 
@@ -46,8 +47,7 @@ trait HasSettings
         }
 
         if (!is_null($userId)) {
-            $from  .= ' LEFT OUTER JOIN user_setting ON user_setting.setting_id=s.id ';
-            $whereAry[] = ' user_setting.user_id=:user_id ';
+            $from  .= ' LEFT OUTER JOIN user_setting ON user_setting.setting_id=s.id AND user_setting.user_id=:user_id';
             $params['user_id'] = $userId;
         }
 
