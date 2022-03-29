@@ -7,10 +7,8 @@ use stdClass;
 
 class AppSettingBusiness
 {
-    public static function appSettingSearch(array $data): array
+    public static function appSettingSearch(array $data = null): array
     {
-        $data['scope'] = 'App';
-
         return App::settings($data);
     }
 

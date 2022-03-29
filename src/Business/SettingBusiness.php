@@ -42,8 +42,8 @@ class SettingBusiness
             $setting->json_options = $data['json_options'];
         }
 
-        if (isset($data['default'])) {
-            $setting->default_value = $data['default'];
+        if (isset($data['default_value'])) {
+            $setting->default_value = $data['default_value'];
         }
 
         if (isset($data['favorite'])) {

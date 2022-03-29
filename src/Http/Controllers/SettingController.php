@@ -46,9 +46,9 @@ class SettingController extends Controller
         }
 
         $data = $request->validate([
-            'json_options' => 'nullable|string',
-            'default'      => 'nullable|string',
-            'favorite'     => 'nullable|boolean',
+            'json_options'  => 'nullable|string',
+            'default_value' => 'nullable|string',
+            'favorite'      => 'nullable|boolean',
         ]);
 
         if (count($data) === 0) {
