@@ -43,7 +43,7 @@ class SettingBusiness
         }
 
         if (isset($data['default'])) {
-            $setting->default = $data['default'];
+            $setting->default_value = $data['default'];
         }
 
         if (isset($data['favorite'])) {

@@ -24,7 +24,7 @@ class SettingFactory extends Factory
         $widths = ['1/4', '1/3', '1/2', '2/3', '3/4', 'full'];
 
         return [
-            'group'       => $this->faker->word(),
+            'namespace'   => $this->faker->word(),
             'scope'       => rand(0, 1) ? 'App' : 'User',
             'code'        => $this->faker->unique()->word(),
             'description' => $this->faker->text(),
@@ -33,5 +33,33 @@ class SettingFactory extends Factory
             'favorite'    => false,
             'width'       => $widths[array_rand($widths)]
         ];
+    }
+
+    /**
+     * Set setting scope to user
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function userScope()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'scope' => 'User'
+            ];
+        });
+    }
+
+    /**
+     * Set setting scope to app
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function appScope()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'scope' => 'App'
+            ];
+        });
     }
 }

@@ -15,46 +15,45 @@ trait HasSettings
     {
         $scope = (is_null($userId)) ? 'App' : 'User';
 
-        $select = 'SELECT setting.id, setting.group, setting.scope, setting.code, setting.description, setting.type,
-            setting.json_options, setting.nullable, setting.default, setting.favorite, setting.width, ';
-        $select .= (!is_null($userId)) ? 'IFNULL(user_setting.value, setting.default)' : 'setting.default' . ' AS value ';
+        $select = 'SELECT s.id, s.namespace, s.scope, s.code, s.description, s.type, s.json_options, s.nullable, s.default_value, s.favorite, s.width, ';
+        $select .= (!is_null($userId)) ? ' IFNULL(user_setting.value, s.default_value) ' : ' s.default_value ' . ' AS value ';
 
-        $from  = 'FROM settings AS setting ';
+        $from  = 'FROM settings AS s';
 
-        $whereAry[] = ' setting.scope=:scope ';
+        $whereAry[] = ' s.scope=:scope ';
         $params['scope'] = $scope;
 
         if (!is_null($data)) {
             if (array_key_exists('id', $data)) {
-                $whereAry[] = ' setting.id=:id ';
+                $whereAry[] = ' s.id=:id ';
                 $params['id'] = $data['id'];
             }
 
-            if (array_key_exists('group', $data)) {
-                $whereAry[] = ' setting.group LIKE :group ';
-                $params['group'] = "%{$data['group']}%";
+            if (array_key_exists('namespace', $data)) {
+                $whereAry[] = ' s.namespace LIKE :namespace ';
+                $params['namespace'] = "%{$data['namespace']}%";
             }
 
             if (array_key_exists('code', $data)) {
-                $whereAry[] = ' setting.code=:code ';
+                $whereAry[] = ' s.code=:code ';
                 $params['code'] = "%{$data['code']}%";
             }
 
             if (array_key_exists('favorite', $data)) {
-                $whereAry[] = ' setting.favorite=:favorite ';
+                $whereAry[] = ' s.favorite=:favorite ';
                 $params['favorite'] = $data['favorite'];
             }
         }
 
         if (!is_null($userId)) {
-            $from  .= 'LEFT OUTER JOIN user_setting ON user_setting.setting_id=setting.id ';
+            $from  .= ' LEFT OUTER JOIN user_setting ON user_setting.setting_id=s.id ';
             $whereAry[] = ' user_setting.user_id=:user_id ';
             $params['user_id'] = $userId;
         }
 
         $where = ' WHERE ' . implode('AND', $whereAry);
 
-        $orderBy = 'ORDER BY setting.group';
+        $orderBy = ' ORDER BY s.namespace ';
 
         $sql = $select . $from . $where . $orderBy;
 
@@ -97,7 +96,7 @@ trait HasSettings
                 return;
             }
             // if value equals default abort
-            if ($setting->default === $value) {
+            if ($setting->default_value === $value) {
                 throw new Exception(ErrorText::API_E_SETTING03, 404);
             }
             // either create
@@ -105,7 +104,7 @@ trait HasSettings
             return;
         }
 
-        $setting->default = $value;
+        $setting->default_value = $value;
         $setting->save();
     }
 }
