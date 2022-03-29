@@ -8,7 +8,7 @@ use Nci\SettingsPackage\Models\Setting;
 
 class SettingBusiness
 {
-    public static function settingSearch(array $data): Collection
+    public static function settingSearch(array $data = null): Collection
     {
         $settings = DB::table('settings');
 
