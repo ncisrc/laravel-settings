@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Nci\SettingsPackage\Http\Controllers\UserSettingController;
-use Nci\SettingsPackage\Http\Controllers\AppSettingController;
 use Nci\SettingsPackage\Http\Controllers\SettingController;
 
 // Setting
@@ -11,10 +10,5 @@ Route::get('/setting/{id}', [SettingController::class, 'show']);
 Route::put('/setting/{id}', [SettingController::class, 'update']);
 
 // UserSetting
-Route::get('/user/{id}/settings',                 [UserSettingController::class, 'index']);
-Route::get('/user/{userId}/setting/{settingId}',  [UserSettingController::class, 'show']);
-Route::post('/user/{userId}/setting/{settingId}', [UserSettingController::class, 'store']);
-
-// AppSetting
-Route::get('/app/settings',            [AppSettingController::class, 'index']);
-Route::get('/app/setting/{settingId}', [AppSettingController::class, 'show']);
+Route::get('/settings/user/{id}',                 [UserSettingController::class, 'index']);
+Route::post('/setting/{settingId}/user/{userId}', [UserSettingController::class, 'store']);

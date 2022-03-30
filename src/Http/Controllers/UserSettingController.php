@@ -8,38 +8,15 @@ use Nci\SettingsPackage\Business\UserSettingBusiness;
 
 class UserSettingController extends Controller
 {
-    public function index(Request $request, int $userId)
+    public function index(int $userId)
     {
-        $request->request->add(['user_id' => $userId]);
-
-        $data = $request->validate([
-            'user_id'  => 'required|integer|exists:users',
-            'group'    => 'nullable|string',
-            'code'     => 'nullable|string',
-            'favorite' => 'nullable|boolean',
-        ]);
-
-        try {
-            return UserSettingBusiness::userSettingSearch($data);
-        } catch (Exception $e) {
-            throw new Exception($e);
-        }
-    }
-
-    public function show(int $userId, int $settingId)
-    {
-        $request = static::getNewRequest([
-            'user_id'    => $userId,
-            'setting_id' => $settingId,
-        ]);
-
-        $data = $request->validate([
+        $request = static::getNewRequest(['user_id' => $userId]);
+        $request->validate([
             'user_id'    => 'required|integer|exists:users',
-            'setting_id' => 'required|integer|exists:settings',
         ]);
 
         try {
-            return UserSettingBusiness::userSettingFind($data['user_id'], $data['setting_id']);
+            return UserSettingBusiness::get($userId);
         } catch (Exception $e) {
             throw new Exception($e);
         }
@@ -59,7 +36,7 @@ class UserSettingController extends Controller
         ]);
 
         try {
-            return UserSettingBusiness::userSettingSetValue($data);
+            return UserSettingBusiness::setValue($data);
         } catch (Exception $e) {
             throw new Exception($e);
         }

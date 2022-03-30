@@ -14,7 +14,7 @@ Objectif : gérer les paramètres de l'application au travers d'objets gérable 
 | code        | Identifiant texte du paramètre                                                       | x      |               | terminalFont
 | description | Explication du paramètre en Français                                                 | x      |               | Lorem ipsum et bla bla
 | type        | type du paramètre: Boolean, Number, String, Array, Json                              | x      |               |
-| json_otpions| {"type":"array/jsonarray/jsonsql","data":[]} ou null                                 |        |               |
+| json_options| {"type":"array/jsonarray/jsonsql","data":[]} ou null                                 |        |               |
 | nullable    | Boolean indiquant si le paramètre peut être null ou non                              | x      |               |
 | default     | Valeur par défaut du paramètre                                                       |        |               |
 | favorite    | Indique si le paramètre est souvent utilisé ou non                                   | x      | false         |

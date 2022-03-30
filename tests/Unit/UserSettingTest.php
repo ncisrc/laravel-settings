@@ -3,17 +3,19 @@
 namespace Nci\SettingsPackage\Tests\Unit;
 
 use Nci\SettingsPackage\Business\UserSettingBusiness;
+use Nci\SettingsPackage\Models\AppSetting;
 use Nci\SettingsPackage\Models\Setting;
+use Nci\SettingsPackage\Models\UserSetting;
 use Nci\SettingsPackage\Tests\TestCase;
 use stdClass;
 
 class UserSettingTest extends TestCase
 {
-    private Setting  $appSetting;
-    private Setting  $defSetting;
-    private Setting  $johnRawSetting;
-    private Setting  $janeRawSetting;
-    private stdClass $johnSetting;
+    private Setting $appSetting;
+    private Setting $defSetting;
+    private Setting $johnRawSetting;
+    private Setting $janeRawSetting;
+    private Setting $johnSetting;
 
     public function setUp(): void
     {
@@ -24,17 +26,19 @@ class UserSettingTest extends TestCase
         $this->johnRawSetting = Setting::factory()->userScope()->create();
         $this->janeRawSetting = Setting::factory()->userScope()->create();
 
-        $this->johnSetting = UserSettingBusiness::userSettingSetValue([
+        UserSettingBusiness::setValue([
             'setting_id' => $this->johnRawSetting->id,
             'user_id'    => 1,
             'value'      => 'john'
         ]);
+        $this->johnSetting = UserSettingBusiness::find(1, $this->johnRawSetting->id);
 
-        $this->janeSetitng = UserSettingBusiness::userSettingSetValue([
+        UserSettingBusiness::setValue([
             'setting_id' => $this->janeRawSetting->id,
             'user_id'    => 2,
             'value'      => 'jane'
         ]);
+        $this->janeSetitng = UserSettingBusiness::find(2, $this->janeRawSetting->id);
     }
 
     /** @test */
@@ -44,7 +48,7 @@ class UserSettingTest extends TestCase
         $this->assertEquals('john', $this->johnSetting->value);
         $this->assertNotEquals($this->johnRawSetting->default_value, $this->johnSetting->value);
 
-        $janeVersion = UserSettingBusiness::userSettingFind(2, $this->johnRawSetting->id);
+        $janeVersion = UserSettingBusiness::find(2, $this->johnRawSetting->id);
         $this->assertEquals($this->johnSetting->id, $janeVersion->id);
         $this->assertEquals($this->johnRawSetting->default_value, $janeVersion->value);
         $this->assertNotEquals($this->johnSetting->value, $janeVersion->value);
@@ -53,13 +57,9 @@ class UserSettingTest extends TestCase
     /** @test */
     public function user_should_only_see_his_own_settings_or_default()
     {
-        $johnSettings = UserSettingBusiness::userSettingSearch([
-            'user_id' => 1
-        ]);
+        $johnSettings = UserSettingBusiness::get(1);
         $this->assertCount(3, $johnSettings);
-        $janeSettings = UserSettingBusiness::userSettingSearch([
-            'user_id' => 2
-        ]);
+        $janeSettings = UserSettingBusiness::get(2);
         $this->assertCount(3, $janeSettings);
 
         $appMissing = true;
