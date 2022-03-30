@@ -2,12 +2,10 @@
 
 namespace Nci\SettingsPackage\Tests\Unit;
 
+use Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\SettingOptionHandlerList;
 use Nci\SettingsPackage\Business\UserSettingBusiness;
-use Nci\SettingsPackage\Models\AppSetting;
 use Nci\SettingsPackage\Models\Setting;
-use Nci\SettingsPackage\Models\UserSetting;
 use Nci\SettingsPackage\Tests\TestCase;
-use stdClass;
 
 class UserSettingTest extends TestCase
 {
@@ -21,10 +19,10 @@ class UserSettingTest extends TestCase
     {
         parent::setUp();
 
-        $this->appSetting     = Setting::factory()->appScope()->create();
-        $this->defSetting     = Setting::factory()->userScope()->create();
-        $this->johnRawSetting = Setting::factory()->userScope()->create();
-        $this->janeRawSetting = Setting::factory()->userScope()->create();
+        $this->appSetting     = Setting::factory()->create();
+        $this->defSetting     = Setting::factory()->create();
+        $this->johnRawSetting = Setting::factory()->create();
+        $this->janeRawSetting = Setting::factory()->create();
 
         UserSettingBusiness::setValue([
             'setting_id' => $this->johnRawSetting->id,
@@ -58,9 +56,9 @@ class UserSettingTest extends TestCase
     public function user_should_only_see_his_own_settings_or_default()
     {
         $johnSettings = UserSettingBusiness::get(1);
-        $this->assertCount(3, $johnSettings);
+        $this->assertCount(4, $johnSettings);
         $janeSettings = UserSettingBusiness::get(2);
-        $this->assertCount(3, $janeSettings);
+        $this->assertCount(4, $janeSettings);
 
         $appMissing = true;
         foreach ($johnSettings as $johnSetting) {
@@ -89,8 +87,6 @@ class UserSettingTest extends TestCase
                 }
             }
             $this->assertTrue($found);
-            $this->assertEquals('User', $johnSetting->scope);
         }
-        $this->assertTrue($appMissing);
     }
 }

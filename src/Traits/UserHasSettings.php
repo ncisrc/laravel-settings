@@ -9,17 +9,22 @@ use Nci\SettingsPackage\Models\Setting;
 
 trait UserHasSettings
 {
-    public function settings(): Collection
+    public function getSettings(): Collection
     {
         return UserSettingBusiness::get($this->id);
     }
 
-    public function setting(int $settingId): Setting
+    public function getSetting(string $code): string
     {
-        return UserSettingBusiness::find($this->id, $settingId);
+        return UserSettingBusiness::getValue($this->id, $code);
     }
 
-    public function settingByCode(string $code): Setting
+    public function getSettingById(int $userId): Setting
+    {
+        return UserSettingBusiness::find($this->id, $userId);
+    }
+
+    public function getSettingByCode(string $code): Setting
     {
         return UserSettingBusiness::findByCode($this->id, $code);
     }

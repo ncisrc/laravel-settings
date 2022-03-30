@@ -2,8 +2,11 @@
 
 namespace Nci\SettingsPackage\Business;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\SettingOptionHandlerList;
+use Nci\SettingsPackage\Enums\ErrorText;
 use Nci\SettingsPackage\Models\Setting;
 
 class SettingBusiness
@@ -12,12 +15,8 @@ class SettingBusiness
     {
         $settings = DB::table('settings');
 
-        if (isset($data['group'])) {
-            $settings->where('groupe', 'LIKE', '%' . $data['group'] . '%');
-        }
-
-        if (isset($data['scope'])) {
-            $settings->where('scope', $data['scope']);
+        if (isset($data['overridable'])) {
+            $settings->where('overridable', $data['overridable']);
         }
 
         if (isset($data['code'])) {
@@ -41,16 +40,43 @@ class SettingBusiness
         return Setting::where('code', $code)->first();
     }
 
+    public static function getValue(string $code): string
+    {
+        return static::findByCode($code)->default_value;
+    }
+
+    public static function getOptions(int $settingId): array
+    {
+        return static::find($settingId)->getOptions();
+    }
+
+    public static function getOptionsClass(): array
+    {
+        return SettingOptionHandlerList::get();
+    }
+
     public static function update(int $settingId, array $data): Setting
     {
         $setting = Setting::find($settingId);
 
-        if (isset($data['json_options'])) {
-            $setting->json_options = $data['json_options'];
+        if (isset($data['options_class'])) {
+            if (!in_array($data['options_class'], SettingOptionHandlerList::get())) {
+                throw new Exception(ErrorText::API_E_SETTING05, 404);
+            }
+            $setting->options_data = $data['options_class'];
+        }
+
+        if (isset($data['options_data'])) {
+            $setting->options_data = $data['options_data'];
         }
 
         if (isset($data['default_value'])) {
-            $setting->default_value = $data['default_value'];
+            try {
+                $setting->checkOptions($data['default_value']);
+                $setting->default_value = $data['default_value'];
+            } catch (Exception $e) {
+                throw new Exception($e->getMessage(), 404);
+            }
         }
 
         if (isset($data['favorite'])) {

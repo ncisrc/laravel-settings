@@ -26,18 +26,24 @@ class UserSettingBusiness
         return static::getQuery($userId)->where('settings.code', $code)->first();
     }
 
+    public static function getValue(int $userId, string $code): string
+    {
+        $setting = static::findByCode($userId, $code);
+        return (is_null($setting->value)) ? $setting->default_value : $setting->value;
+    }
+
     public static function setValue(array $data): bool
     {
-        $userSetting = UserSetting::where('user_id', $data['user_id'])->where('setting_id', $data['setting_id'])->first();
+        $setting = static::find($data['user_id'], $data['setting_id']);
 
-        if (is_null($userSetting)) {
-            $userSetting = new UserSetting();
-            $userSetting->user_id    = $data['user_id'];
-            $userSetting->setting_id = $data['setting_id'];
+        if (!$setting->overridable) {
+            throw new Exception(ErrorText::API_E_SETTING04, 404);
         }
 
+        $userSetting = static::findOrCreateUserSetting($data['user_id'], $data['setting_id']);
+
         try {
-            static::checkOptions($data['setting_id'], $data['value']);
+            $setting->checkOptions($data['value']);
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), 404);
         }
@@ -48,24 +54,23 @@ class UserSettingBusiness
         return true;
     }
 
-    private static function checkOptions(int $settingId, string $value): void
-    {
-        $setting = Setting::find($settingId);
-        if (!is_null($setting->options())) {
-            if (in_array($setting->options()->type, ['array', 'jsonArray'])) {
-                $needle = (in_array($setting->type, [SettingType::Boolean, SettingType::Number, SettingType::String])) ?
-                    $value : json_decode($value);
-                if (!in_array($needle, json_decode($setting->options()->data))) {
-                    throw new Exception(ErrorText::API_E_SETTING01, 404);
-                }
-            }
-        }
-    }
-
     private static function getQuery(int $userId)
     {
         return Setting::leftJoin('user_setting', function($join) use($userId){
             $join->on('user_setting.setting_id', 'settings.id')->where('user_setting.user_id', $userId);
-        })->where('scope', 'User');
+        });
+    }
+
+    private static function findOrCreateUserSetting(int $userId, int $settingId): UserSetting
+    {
+        $userSetting = UserSetting::where('user_id', $userId)->where('setting_id', $settingId)->first();
+
+        if (is_null($userSetting)) {
+            $userSetting = new UserSetting();
+            $userSetting->user_id    = $userId;
+            $userSetting->setting_id = $settingId;
+        }
+
+        return $userSetting;
     }
 }

@@ -6,17 +6,15 @@ use Exception;
 use Illuminate\Http\Request;
 use Nci\SettingsPackage\Business\SettingBusiness;
 use Nci\SettingsPackage\Enums\ErrorText;
-use Nci\SettingsPackage\Models\Setting;
 
 class SettingController extends Controller
 {
     public function index(Request $request)
     {
         $data = $request->validate([
-            'scope'    => 'nullable|string',
-            'group'    => 'nullable|string',
-            'code'     => 'nullable|string',
-            'favorite' => 'nullable|boolean',
+            'overridable' => 'nullable|boolean',
+            'code'        => 'nullable|string',
+            'favorite'    => 'nullable|boolean',
         ]);
 
         try {
@@ -44,7 +42,8 @@ class SettingController extends Controller
         $request->request->add(['setting_id' => $settingId]);
         $data = $request->validate([
             'setting_id'    => 'required|integer|exists:settings',
-            'json_options'  => 'nullable|string',
+            'options_class' => 'nullable|string',
+            'options_data'  => 'nullable|string',
             'default_value' => 'nullable|string',
             'favorite'      => 'nullable|boolean',
         ]);

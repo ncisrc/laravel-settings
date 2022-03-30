@@ -15,20 +15,20 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('namespace');
-            $table->string('scope');
             $table->string('code')->unique();
             $table->text('description');
             $table->string('type');
-            $table->text('json_options')->nullable();
+            $table->string('options_class')->nullable();
+            $table->text('options_data')->nullable();
             $table->boolean('nullable');
             $table->text('default_value')->nullable();
-            $table->boolean('favorite');
-            $table->string('width');
+            $table->boolean('overridable')->default(true);
+            $table->boolean('favorite')->default(false);
+            $table->string('width')->default('1/4');
             $table->timestamps();
 
-            $table->index('group');
-            $table->index('scope');
+            $table->index('code');
+            $table->index('overridable');
             $table->index('favorite');
         });
     }
