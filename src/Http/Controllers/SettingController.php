@@ -13,14 +13,14 @@ class SettingController extends Controller
     public function index(Request $request)
     {
         $data = $request->validate([
-            'group'    => 'nullable|string',
             'scope'    => 'nullable|string',
+            'group'    => 'nullable|string',
             'code'     => 'nullable|string',
             'favorite' => 'nullable|boolean',
         ]);
 
         try {
-            return SettingBusiness::settingSearch($data);
+            return SettingBusiness::get($data);
         } catch (Exception $e) {
             throw new Exception($e);
         }
@@ -33,7 +33,7 @@ class SettingController extends Controller
         }
 
         try {
-            return SettingBusiness::settingFind($settingId);
+            return SettingBusiness::find($settingId);
         } catch (Exception $e) {
             throw new Exception($e);
         }
@@ -41,11 +41,9 @@ class SettingController extends Controller
 
     public function update(Request $request, int $settingId)
     {
-        if (!is_numeric($settingId)) {
-            throw new Exception(ErrorText::API_E_PARAM01);
-        }
-
+        $request->request->add(['setting_id' => $settingId]);
         $data = $request->validate([
+            'setting_id'    => 'required|integer|exists:settings',
             'json_options'  => 'nullable|string',
             'default_value' => 'nullable|string',
             'favorite'      => 'nullable|boolean',
@@ -55,14 +53,8 @@ class SettingController extends Controller
             throw new Exception(ErrorText::API_E_PARAM02);
         }
 
-        $setting = Setting::find($settingId);
-
-        if (is_null($setting)) {
-            throw new Exception(ErrorText::API_E_SETTING02);
-        }
-
         try {
-            return SettingBusiness::settingUpdate($setting, $data);
+            return SettingBusiness::update($settingId, $data);
         } catch (Exception $e) {
             throw new Exception($e);
         }

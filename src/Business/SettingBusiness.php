@@ -8,7 +8,7 @@ use Nci\SettingsPackage\Models\Setting;
 
 class SettingBusiness
 {
-    public static function settingSearch(array $data = null): Collection
+    public static function get(array $data = null): Collection
     {
         $settings = DB::table('settings');
 
@@ -31,13 +31,20 @@ class SettingBusiness
         return $settings->get();
     }
 
-    public static function settingFind(int $settingId): Setting
+    public static function find(int $settingId): Setting
     {
         return Setting::find($settingId);
     }
 
-    public static function settingUpdate(Setting $setting, array $data): Setting
+    public static function findByCode(string $code): Setting
     {
+        return Setting::where('code', $code)->first();
+    }
+
+    public static function update(int $settingId, array $data): Setting
+    {
+        $setting = Setting::find($settingId);
+
         if (isset($data['json_options'])) {
             $setting->json_options = $data['json_options'];
         }
