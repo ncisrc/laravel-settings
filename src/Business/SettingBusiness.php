@@ -42,7 +42,7 @@ class SettingBusiness
 
     public static function getValue(string $code): string
     {
-        return static::findByCode($code)->default_value;
+        return Setting::where('code', $code)->pluck('default_value')->first();
     }
 
     public static function getOptionsClass(): array
