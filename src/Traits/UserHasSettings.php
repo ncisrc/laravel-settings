@@ -32,11 +32,7 @@ trait UserHasSettings
     public function setSetting(int $settingId, string $value): bool
     {
         try {
-            return UserSettingBusiness::setValue([
-                'user_id'    => $this->id,
-                'setting_id' => $settingId,
-                'value'      => $value
-            ]);
+            return UserSettingBusiness::setValue($this->id, $settingId, $value);
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), 404);
         }

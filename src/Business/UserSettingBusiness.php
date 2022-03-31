@@ -27,27 +27,32 @@ class UserSettingBusiness
 
     public static function getValue(int $userId, string $code): string
     {
-        $setting = static::findByCode($userId, $code);
-        return (is_null($setting->value)) ? $setting->default_value : $setting->value;
+        $value = UserSetting::where([
+            'user_id'=> $userId,
+            'setting_id' => SettingBusiness::getId($code)
+            ])->pluck('value')->first();
+        if (empty($value)) $value = SettingBusiness::getValue($code);
+
+        return empty($value) ? '' : $value;
     }
 
-    public static function setValue(array $data): bool
+    public static function setValue(int $userId, int $settingId, string $value): bool
     {
-        $setting = static::find($data['user_id'], $data['setting_id']);
+        $setting = static::find($userId, $settingId);
 
         if (!$setting->overridable) {
             throw new Exception(ErrorText::API_E_SETTING04, 404);
         }
 
-        $userSetting = static::findOrCreate($data['user_id'], $data['setting_id']);
+        $userSetting = static::findOrCreate($userId, $settingId);
 
         try {
-            $setting->checkOptions($data['value']);
+            $setting->checkOptions($value);
         } catch (Exception $e) {
             throw new Exception($e->getMessage(), 404);
         }
 
-        $userSetting->value = $data['value'];
+        $userSetting->value = $value;
         $userSetting->save();
 
         return true;

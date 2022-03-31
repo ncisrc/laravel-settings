@@ -10,7 +10,7 @@ class UserSettingController extends Controller
 {
     public function index(int $userId)
     {
-        $request = static::getNewRequest(['user_id' => $userId]);
+        $request = $this->getNewRequest(['user_id' => $userId]);
         $request->validate([
             'user_id'    => 'required|integer|exists:users',
         ]);
@@ -36,7 +36,7 @@ class UserSettingController extends Controller
         ]);
 
         try {
-            return UserSettingBusiness::setValue($data);
+            return UserSettingBusiness::setValue($data['user_id'], $data['setting_id'], $data['value']);
         } catch (Exception $e) {
             throw new Exception($e);
         }

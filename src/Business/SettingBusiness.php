@@ -40,9 +40,15 @@ class SettingBusiness
         return Setting::where('code', $code)->first();
     }
 
+    public static function getId(string $code): int
+    {
+        return static::getFieldValue($code, 'id');
+    }
+
     public static function getValue(string $code): string
     {
-        return Setting::where('code', $code)->pluck('default_value')->first();
+        $value = static::getFieldValue($code, 'default_value');
+        return empty($value) ? '' : $value;
     }
 
     public static function getOptionsClass(): array
@@ -81,5 +87,10 @@ class SettingBusiness
         $setting->save();
 
         return $setting;
+    }
+
+    private static function getFieldValue(string $code, string $field): mixed
+    {
+        return Setting::where('code', $code)->pluck($field)->first();
     }
 }

@@ -18,14 +18,14 @@ class SettingTest extends TestCase
     }
 
     /** @test */
-    function setting_should_have_options()
+    public function setting_should_have_options()
     {
         $setting = Setting::factory()->create();
         $this->assertIsArray($setting->options);
     }
 
     /** @test */
-    function setting_with_strings_array_options_should_have_it_in_options()
+    public function setting_with_strings_array_options_should_have_it_in_options()
     {
         $setting = $this->assertOptions('Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\ArrayOptionHandler',
             '["test1","test2","test3"]');
@@ -36,7 +36,7 @@ class SettingTest extends TestCase
     }
 
     /** @test */
-    function setting_with_json_array_options_should_have_it_in_options()
+    public function setting_with_json_array_options_should_have_it_in_options()
     {
         $setting = $this->assertOptions('Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\JsonArrayOptionHandler',
         '[
@@ -52,7 +52,7 @@ class SettingTest extends TestCase
     }
 
     /** @test */
-    function setting_with_jsonsql_should_execute_sql_request()
+    public function setting_with_jsonsql_should_execute_sql_request()
     {
         $select = 'item1 as code, item2 as value';
         try {
@@ -67,7 +67,7 @@ class SettingTest extends TestCase
     }
 
     /** @test */
-    function settings_can_be_listed_and_filtered()
+    public function settings_can_be_listed_and_filtered()
     {
         Setting::factory()->count(30)->create();
         Setting::factory()->withCode('user.background.color')->create();
@@ -84,7 +84,7 @@ class SettingTest extends TestCase
     }
 
     /** @test  */
-    function  options_class_can_be_updated()
+    public function  options_class_can_be_updated()
     {
         $settingExpected = Setting::factory()->create();
         $falseClass      = 'Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\DummyOptionHandler';
@@ -104,7 +104,7 @@ class SettingTest extends TestCase
     }
 
     /** @test */
-    function default_value_can_be_updated()
+    public function default_value_can_be_updated()
     {
         $settingExpected = Setting::factory()->create();
         $value           = 'test';
@@ -117,7 +117,7 @@ class SettingTest extends TestCase
     }
 
     /** @test */
-    function options_class_available_can_be_listed()
+    public function options_class_available_can_be_listed()
     {
         $classes = SettingBusiness::getOptionsClass();
         $this->assertIsArray($classes);
@@ -125,7 +125,7 @@ class SettingTest extends TestCase
     }
 
     /** @test */
-    function setting_value_can_get_alone()
+    public function setting_value_can_get_alone()
     {
         $code     = 'user.background.wallpaper';
         $expected = 'nci.png';

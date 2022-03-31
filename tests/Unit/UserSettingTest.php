@@ -2,13 +2,14 @@
 
 namespace Nci\SettingsPackage\Tests\Unit;
 
+use Exception;
 use Nci\SettingsPackage\Business\UserSettingBusiness;
+use Nci\SettingsPackage\Enums\ErrorText;
 use Nci\SettingsPackage\Models\Setting;
 use Nci\SettingsPackage\Tests\TestCase;
 
 class UserSettingTest extends TestCase
 {
-    private Setting $appSetting;
     private Setting $defSetting;
     private Setting $johnRawSetting;
     private Setting $janeRawSetting;
@@ -18,24 +19,15 @@ class UserSettingTest extends TestCase
     {
         parent::setUp();
 
-        $this->appSetting     = Setting::factory()->create();
-        $this->defSetting     = Setting::factory()->create();
+        $this->defSetting     = Setting::factory()->withOverridable(false)->create();
         $this->johnRawSetting = Setting::factory()->create();
         $this->janeRawSetting = Setting::factory()->create();
 
-        UserSettingBusiness::setValue([
-            'setting_id' => $this->johnRawSetting->id,
-            'user_id'    => 1,
-            'value'      => 'john'
-        ]);
+        UserSettingBusiness::setValue(1, $this->johnRawSetting->id, 'john');
         $this->johnSetting = UserSettingBusiness::find(1, $this->johnRawSetting->id);
 
-        UserSettingBusiness::setValue([
-            'setting_id' => $this->janeRawSetting->id,
-            'user_id'    => 2,
-            'value'      => 'jane'
-        ]);
-        $this->janeSetitng = UserSettingBusiness::find(2, $this->janeRawSetting->id);
+        UserSettingBusiness::setValue(2, $this->janeRawSetting->id, 'jane');
+        $this->janeSetting = UserSettingBusiness::find(2, $this->janeRawSetting->id);
     }
 
     /** @test */
@@ -52,40 +44,20 @@ class UserSettingTest extends TestCase
     }
 
     /** @test */
-    public function user_should_only_see_his_own_settings_or_default()
+    public function user_can_not_update_non_overridable_setting()
     {
-        $johnSettings = UserSettingBusiness::get(1);
-        $this->assertCount(4, $johnSettings);
-        $janeSettings = UserSettingBusiness::get(2);
-        $this->assertCount(4, $janeSettings);
-
-        $appMissing = true;
-        foreach ($johnSettings as $johnSetting) {
-            $found = false;
-            if ($johnSetting->id === $this->appSetting->id) {
-                $appMissing = false;
-            }
-            foreach ($janeSettings as $janeSetting) {
-                if ($johnSetting->id === $janeSetting->id) {
-                    $found = true;
-
-                    if ($johnSetting->id === $this->defSetting->id) {
-                        $this->assertEquals($this->defSetting->default_value, $johnSetting->value);
-                        $this->assertEquals($this->defSetting->default_value, $janeSetting->value);
-                    }
-
-                    if ($johnSetting->id === $this->johnRawSetting->id) {
-                        $this->assertNotEquals($this->johnRawSetting->default_value, $johnSetting->value);
-                        $this->assertEquals($this->johnRawSetting->default_value, $janeSetting->value);
-                    }
-
-                    if ($johnSetting->id === $this->janeRawSetting->id) {
-                        $this->assertEquals($this->janeRawSetting->default_value, $johnSetting->value);
-                        $this->assertNotEquals($this->janeRawSetting->default_value, $janeSetting->value);
-                    }
-                }
-            }
-            $this->assertTrue($found);
+        try {
+            UserSettingBusiness::setValue(1, $this->defSetting->id, 'test');
+        } catch (Exception $e) {
+            $this->assertEquals(ErrorText::API_E_SETTING04, $e->getMessage());
         }
+    }
+
+    /** @test */
+    public function user_can_get_setting_value()
+    {
+        $value = UserSettingBusiness::getValue(1, $this->johnSetting->code);
+        $this->assertEquals('john', $value);
+        $this->assertEmpty(UserSettingBusiness::getValue(1, $this->defSetting->code));
     }
 }

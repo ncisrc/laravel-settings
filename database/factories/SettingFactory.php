@@ -69,4 +69,13 @@ class SettingFactory extends Factory
             ];
         });
     }
+
+    public function withOverridable(bool $value)
+    {
+        return $this->state(function (array $attributes) use ($value) {
+            return [
+                'overridable' => $value,
+            ];
+        });
+    }
 }

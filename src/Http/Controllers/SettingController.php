@@ -26,9 +26,10 @@ class SettingController extends Controller
 
     public function show(int $settingId)
     {
-        if (!is_numeric($settingId)) {
-            throw new Exception(ErrorText::API_E_PARAM01);
-        }
+        $request = $this->getNewRequest(['setting_id' => $settingId]);
+        $request->validate([
+            'setting_id'    => 'required|integer|exists:settings',
+        ]);
 
         try {
             return SettingBusiness::find($settingId);
