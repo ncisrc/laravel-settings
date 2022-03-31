@@ -31,6 +31,13 @@ class UserSettingTest extends TestCase
     }
 
     /** @test */
+    public function user_can_get_a_settings_list()
+    {
+        $settings = UserSettingBusiness::get(1);
+        $this->assertCount(3, $settings);
+    }
+
+    /** @test */
     public function user_can_have_custom_setting_value()
     {
         $this->assertEquals($this->johnRawSetting->id, $this->johnSetting->id);
