@@ -2,7 +2,6 @@
 
 namespace Nci\SettingsPackage\Tests\Unit;
 
-use Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\SettingOptionHandlerList;
 use Nci\SettingsPackage\Business\UserSettingBusiness;
 use Nci\SettingsPackage\Models\Setting;
 use Nci\SettingsPackage\Tests\TestCase;

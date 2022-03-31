@@ -15,18 +15,4 @@ class SettingOptionController extends Controller
             throw new Exception($e->getMessage());
         }
     }
-
-    public function show(int $settingId)
-    {
-        $request = static::getNewRequest(['setting_id' => $settingId]);
-        $request->validate([
-            'setting_id' => 'required|integer|exists:settings',
-        ]);
-
-        try {
-            return SettingBusiness::getOptions($settingId);
-        } catch (Exception $e) {
-            throw new Exception($e->getMessage());
-        }
-    }
 }

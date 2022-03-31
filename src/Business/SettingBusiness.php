@@ -45,11 +45,6 @@ class SettingBusiness
         return static::findByCode($code)->default_value;
     }
 
-    public static function getOptions(int $settingId): array
-    {
-        return static::find($settingId)->getOptions();
-    }
-
     public static function getOptionsClass(): array
     {
         return SettingOptionHandlerList::get();
@@ -63,7 +58,7 @@ class SettingBusiness
             if (!in_array($data['options_class'], SettingOptionHandlerList::get())) {
                 throw new Exception(ErrorText::API_E_SETTING05, 404);
             }
-            $setting->options_data = $data['options_class'];
+            $setting->options_class = $data['options_class'];
         }
 
         if (isset($data['options_data'])) {

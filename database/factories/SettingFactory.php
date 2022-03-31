@@ -33,4 +33,40 @@ class SettingFactory extends Factory
             'width'       => $widths[array_rand($widths)]
         ];
     }
+
+    public function withOptionsClass(string $class)
+    {
+        return $this->state(function (array $attributes) use ($class) {
+            return [
+                'options_class' => $class,
+            ];
+        });
+    }
+
+    public function withOptionsData(string $data)
+    {
+        return $this->state(function (array $attributes) use ($data) {
+            return [
+                'options_data' => $data,
+            ];
+        });
+    }
+
+    public function withCode(string $code)
+    {
+        return $this->state(function (array $attributes) use ($code) {
+            return [
+                'code' => $code,
+            ];
+        });
+    }
+
+    public function withDefaultValue(string $value)
+    {
+        return $this->state(function (array $attributes) use ($value) {
+            return [
+                'default_value' => $value,
+            ];
+        });
+    }
 }

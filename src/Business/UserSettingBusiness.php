@@ -4,7 +4,6 @@ namespace Nci\SettingsPackage\Business;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Nci\SettingsPackage\Enums\SettingType;
 use Nci\SettingsPackage\Models\Setting;
 use Nci\SettingsPackage\Models\UserSetting;
 use Nci\SettingsPackage\Enums\ErrorText;
@@ -40,7 +39,7 @@ class UserSettingBusiness
             throw new Exception(ErrorText::API_E_SETTING04, 404);
         }
 
-        $userSetting = static::findOrCreateUserSetting($data['user_id'], $data['setting_id']);
+        $userSetting = static::findOrCreate($data['user_id'], $data['setting_id']);
 
         try {
             $setting->checkOptions($data['value']);
@@ -61,7 +60,7 @@ class UserSettingBusiness
         });
     }
 
-    private static function findOrCreateUserSetting(int $userId, int $settingId): UserSetting
+    private static function findOrCreate(int $userId, int $settingId): UserSetting
     {
         $userSetting = UserSetting::where('user_id', $userId)->where('setting_id', $settingId)->first();
 
