@@ -15,7 +15,7 @@ Route::put('/setting/{id}', [SettingController::class, 'update']);
 Route::get('/setting/options', [SettingOptionController::class, 'index']);
 
 // SettingTypes
-Route::get('setting/types', [SettingTypeController::class, 'index']);
+Route::get('/setting/types', [SettingTypeController::class, 'index']);
 
 // UserSetting
 Route::get('/settings/user/{id}',                 [UserSettingController::class, 'index']);

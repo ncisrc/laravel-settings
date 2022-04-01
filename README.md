@@ -38,4 +38,21 @@ sail artisan vendor:publish --provider="Nci\SettingsPackage\SettingsPackageServi
 use Nci\SettingsPackage\Traits\HasSettings;
 use HasSettings;
 
+# Routes disponibles
+
+// Setting
+Get /settings
+Get /setting/{id}
+Put /setting/{id}
+
+// SettingOptions
+Get /setting/options
+
+// SettingTypes
+Get /setting/types
+
+// UserSetting
+Get /settings/user/{id}
+Get /setting/{settingId}/user/{userId}
+
 ```
