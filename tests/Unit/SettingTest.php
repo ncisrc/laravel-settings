@@ -125,6 +125,14 @@ class SettingTest extends TestCase
     }
 
     /** @test */
+    public function types_available_can_be_listed()
+    {
+        $types = SettingBusiness::getTypes();
+        $this->assertIsArray($types);
+        $this->assertNotEmpty($types);
+    }
+
+    /** @test */
     public function setting_value_can_get_alone()
     {
         $code     = 'user.background.wallpaper';
