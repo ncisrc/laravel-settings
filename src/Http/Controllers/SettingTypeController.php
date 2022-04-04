@@ -1,6 +1,6 @@
 <?php
 
-namespace Nci\Settings²\Http\Controllers;
+namespace Nci\Settings\Http\Controllers;
 
 use Exception;
 use Nci\Settings\Business\SettingBusiness;
