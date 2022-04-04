@@ -17,6 +17,10 @@ Route::get('/settings/options', [SettingOptionController::class, 'index']);
 // SettingTypes
 Route::get('/settings/types', [SettingTypeController::class, 'index']);
 
+Route::get('/settings/test', function() {
+    return 'TEST';
+});
+
 // UserSetting
 Route::get('/settings/user/{id}',                 [UserSettingController::class, 'index']);
 Route::post('/setting/{settingId}/user/{userId}', [UserSettingController::class, 'store']);
