@@ -1,6 +1,6 @@
 <?php
 
-namespace Nci\SettingsPackage\Enums;
+namespace Nci\Settings\Enums;
 
 enum SettingType: string
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Nci\SettingsPackage\Business;
+namespace Nci\Settings\Business;
 
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\SettingOptionHandlerList;
-use Nci\SettingsPackage\Enums\ErrorText;
-use Nci\SettingsPackage\Enums\SettingType;
-use Nci\SettingsPackage\Models\Setting;
+use Nci\Settings\Business\Interfaces\SettingOptionHandler\SettingOptionHandlerList;
+use Nci\Settings\Enums\ErrorText;
+use Nci\Settings\Enums\SettingType;
+use Nci\Settings\Models\Setting;
 
 class SettingBusiness
 {

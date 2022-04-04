@@ -23,19 +23,40 @@ composer test-f ma_fonction_test
 
 ## Installation du package dans un projet :
 
-> Note : TODO
-
 ```bash
-// TODO
+# Ajoutez le repository au composer.json du projet
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token-1:Nqx129U7QWBZziNThYJM@git-cloud.nci.fr/laravel-package/settings.git"
+        }
+    ],
+    "require": {
+        "nci/settings": "master"
+    }
+}
+
+# Installez les vendors
+composer install ou composer update
+
+# Ajouter le provider dans "config/app.php"
+/*
+* Package Service Providers...
+*/
+Nci\Settings\SettingsPackageServiceProvider::class,
 
 # Publish le fichier de configuration
-sail artisan vendor:publish --provider="Nci\SettingsPackage\SettingsPackageServiceProvider" --tag="config"
+sail artisan vendor:publish --provider="Nci\Settings\SettingsPackageServiceProvider" --tag="config"
 # Champs disponibles dans le fichier de configuration :
 # prefix => définit la chaîne de caractère se trouvant avant les routes disponnibles, par défaut "ncisettings" (exemple: ncisettings/settings/user/1).
 # middleware => array des middleware à appliquer avant toutes requête, par défaut contient le middleware "web".
 
-# Ajouté le trait au model User
-use Nci\SettingsPackage\Traits\HasSettings;
+# Lancez les migrations
+sail artisan migrate
+
+# Ajoutez le trait au model User
+use Nci\Settings\Traits\HasSettings;
 use HasSettings;
 
 # Routes disponibles

@@ -1,12 +1,12 @@
 <?php
 
-namespace Nci\SettingsPackage\Tests\Unit;
+namespace Nci\Settings\Tests\Unit;
 
 use Exception;
-use Nci\SettingsPackage\Business\UserSettingBusiness;
-use Nci\SettingsPackage\Enums\ErrorText;
-use Nci\SettingsPackage\Models\Setting;
-use Nci\SettingsPackage\Tests\TestCase;
+use Nci\Settings\Business\UserSettingBusiness;
+use Nci\Settings\Enums\ErrorText;
+use Nci\Settings\Models\Setting;
+use Nci\Settings\Tests\TestCase;
 
 class UserSettingTest extends TestCase
 {

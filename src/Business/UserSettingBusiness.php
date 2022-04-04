@@ -1,12 +1,12 @@
 <?php
 
-namespace Nci\SettingsPackage\Business;
+namespace Nci\Settings\Business;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Nci\SettingsPackage\Models\Setting;
-use Nci\SettingsPackage\Models\UserSetting;
-use Nci\SettingsPackage\Enums\ErrorText;
+use Nci\Settings\Models\Setting;
+use Nci\Settings\Models\UserSetting;
+use Nci\Settings\Enums\ErrorText;
 
 class UserSettingBusiness
 {

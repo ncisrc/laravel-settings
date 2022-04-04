@@ -1,6 +1,6 @@
 <?php
 
-namespace Nci\SettingsPackage\Http\Controllers;
+namespace Nci\Settings\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

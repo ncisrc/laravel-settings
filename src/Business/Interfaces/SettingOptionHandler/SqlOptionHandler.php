@@ -1,6 +1,6 @@
 <?php
 
-namespace Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler;
+namespace Nci\Settings\Business\Interfaces\SettingOptionHandler;
 
 use Exception;
 use Illuminate\Support\Facades\DB;

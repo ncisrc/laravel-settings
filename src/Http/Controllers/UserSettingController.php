@@ -1,10 +1,10 @@
 <?php
 
-namespace Nci\SettingsPackage\Http\Controllers;
+namespace Nci\Settings\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Nci\SettingsPackage\Business\UserSettingBusiness;
+use Nci\Settings\Business\UserSettingBusiness;
 
 class UserSettingController extends Controller
 {

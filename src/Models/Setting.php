@@ -1,14 +1,14 @@
 <?php
 
-namespace Nci\SettingsPackage\Models;
+namespace Nci\Settings\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Nci\SettingsPackage\Enums\SettingType;
-use Nci\SettingsPackage\Database\Factories\SettingFactory;
-use Nci\SettingsPackage\Enums\ErrorText;
+use Nci\Settings\Enums\SettingType;
+use Nci\Settings\Database\Factories\SettingFactory;
+use Nci\Settings\Enums\ErrorText;
 
 class Setting extends Model
 {

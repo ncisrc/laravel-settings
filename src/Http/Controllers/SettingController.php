@@ -1,11 +1,11 @@
 <?php
 
-namespace Nci\SettingsPackage\Http\Controllers;
+namespace Nci\Settings\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Nci\SettingsPackage\Business\SettingBusiness;
-use Nci\SettingsPackage\Enums\ErrorText;
+use Nci\Settings\Business\SettingBusiness;
+use Nci\Settings\Enums\ErrorText;
 
 class SettingController extends Controller
 {

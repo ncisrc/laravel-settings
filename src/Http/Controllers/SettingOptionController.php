@@ -1,9 +1,9 @@
 <?php
 
-namespace Nci\SettingsPackage\Http\Controllers;
+namespace Nci\Settings\Http\Controllers;
 
 use Exception;
-use Nci\SettingsPackage\Business\SettingBusiness;
+use Nci\Settings\Business\SettingBusiness;
 
 class SettingOptionController extends Controller
 {
