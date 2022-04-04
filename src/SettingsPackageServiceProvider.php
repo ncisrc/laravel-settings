@@ -9,7 +9,7 @@ class SettingsPackageServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'settingspackage');
+        $this->mergeConfigFrom(__DIR__.'/config/config.php', 'settingspackage');
     }
 
     public function boot()
@@ -25,7 +25,7 @@ class SettingsPackageServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('settingspackage.php'),
+                __DIR__.'/config/config.php' => config_path('settingspackage.php'),
             ], 'config');
         }
     }
