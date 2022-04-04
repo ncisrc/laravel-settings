@@ -12,10 +12,10 @@ Route::get('/setting/{id}', [SettingController::class, 'show']);
 Route::put('/setting/{id}', [SettingController::class, 'update']);
 
 // SettingOptions
-Route::get('/setting/options', [SettingOptionController::class, 'index']);
+Route::get('/settings/options', [SettingOptionController::class, 'index']);
 
 // SettingTypes
-Route::get('/setting/types', [SettingTypeController::class, 'index']);
+Route::get('/settings/types', [SettingTypeController::class, 'index']);
 
 // UserSetting
 Route::get('/settings/user/{id}',                 [UserSettingController::class, 'index']);
