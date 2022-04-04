@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'prefix'     => 'ncisettings',
+    'prefix'     => 'api',
     'middleware' => ['web'],
 ];
