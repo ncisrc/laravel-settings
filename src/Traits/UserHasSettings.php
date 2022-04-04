@@ -1,11 +1,11 @@
 <?php
 
-namespace Nci\SettingsPackage\Traits;
+namespace Nci\Settings\Traits;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Nci\SettingsPackage\Business\UserSettingBusiness;
-use Nci\SettingsPackage\Models\Setting;
+use Nci\Settings\Business\UserSettingBusiness;
+use Nci\Settings\Models\Setting;
 
 trait UserHasSettings
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Nci\SettingsPackage\Tests\Unit;
+namespace Nci\Settings\Tests\Unit;
 
 use Exception;
-use Nci\SettingsPackage\Models\Setting;
-use Nci\SettingsPackage\Business\SettingBusiness;
-use Nci\SettingsPackage\Enums\ErrorText;
-use Nci\SettingsPackage\Tests\TestCase;
+use Nci\Settings\Models\Setting;
+use Nci\Settings\Business\SettingBusiness;
+use Nci\Settings\Enums\ErrorText;
+use Nci\Settings\Tests\TestCase;
 
 class SettingTest extends TestCase
 {
@@ -27,7 +27,7 @@ class SettingTest extends TestCase
     /** @test */
     public function setting_with_strings_array_options_should_have_it_in_options()
     {
-        $setting = $this->assertOptions('Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\ArrayOptionHandler',
+        $setting = $this->assertOptions('Nci\Settings\Business\Interfaces\SettingOptionHandler\ArrayOptionHandler',
             '["test1","test2","test3"]');
 
         $this->assertEquals('test1', $setting->options[0]);
@@ -38,7 +38,7 @@ class SettingTest extends TestCase
     /** @test */
     public function setting_with_json_array_options_should_have_it_in_options()
     {
-        $setting = $this->assertOptions('Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\JsonArrayOptionHandler',
+        $setting = $this->assertOptions('Nci\Settings\Business\Interfaces\SettingOptionHandler\JsonArrayOptionHandler',
         '[
             {"code": ["ItemID1"], "value": ["ItemValue1"]},
             {"code": ["ItemID2"], "value": ["ItemValue2"]},
@@ -57,7 +57,7 @@ class SettingTest extends TestCase
         $select = 'item1 as code, item2 as value';
         try {
             Setting::factory()
-                    ->withOptionsClass('Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\SqlOptionHandler')
+                    ->withOptionsClass('Nci\Settings\Business\Interfaces\SettingOptionHandler\SqlOptionHandler')
                     ->withOptionsData('{"select":"'.$select.'","from":"test","where":"item3 > 10"}')
                     ->create();
         } catch (Exception $e) {
@@ -87,8 +87,8 @@ class SettingTest extends TestCase
     public function  options_class_can_be_updated()
     {
         $settingExpected = Setting::factory()->create();
-        $falseClass      = 'Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\DummyOptionHandler';
-        $trueClass       = 'Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\ArrayOptionHandler';
+        $falseClass      = 'Nci\Settings\Business\Interfaces\SettingOptionHandler\DummyOptionHandler';
+        $trueClass       = 'Nci\Settings\Business\Interfaces\SettingOptionHandler\ArrayOptionHandler';
 
         try {
             SettingBusiness::update($settingExpected->id, ['options_class' => $falseClass]);
@@ -122,6 +122,14 @@ class SettingTest extends TestCase
         $classes = SettingBusiness::getOptionsClass();
         $this->assertIsArray($classes);
         $this->assertNotEmpty($classes);
+    }
+
+    /** @test */
+    public function types_available_can_be_listed()
+    {
+        $types = SettingBusiness::getTypes();
+        $this->assertIsArray($types);
+        $this->assertNotEmpty($types);
     }
 
     /** @test */

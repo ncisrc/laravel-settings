@@ -1,31 +1,29 @@
 <?php
 
-namespace Nci\SettingsPackage\Business;
+namespace Nci\Settings\Business;
 
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Nci\SettingsPackage\Business\Interfaces\SettingOptionHandler\SettingOptionHandlerList;
-use Nci\SettingsPackage\Enums\ErrorText;
-use Nci\SettingsPackage\Models\Setting;
+use Nci\Settings\Business\Interfaces\SettingOptionHandler\SettingOptionHandlerList;
+use Nci\Settings\Enums\ErrorText;
+use Nci\Settings\Enums\SettingType;
+use Nci\Settings\Models\Setting;
 
 class SettingBusiness
 {
     public static function get(array $data = null): Collection
     {
-        $settings = DB::table('settings');
-
-        if (isset($data['overridable'])) {
-            $settings->where('overridable', $data['overridable']);
-        }
-
-        if (isset($data['code'])) {
-            $settings->where('code', 'LIKE', '%' . $data['code'] . '%');
-        }
-
-        if (isset($data['favorite'])) {
-            $settings->where('favorite', $data['favorite']);
-        }
+        $settings = DB::table('settings')
+                        ->when(isset($data['overridable']), function ($query) use($data) {
+                            $query->where('overridable', $data['overridable']);
+                        })
+                        ->when(isset($data['code']), function ($query) use($data) {
+                            $query->where('code', 'LIKE', '%' . $data['code'] . '%');
+                        })
+                        ->when(isset($data['favorite']), function ($query) use($data) {
+                            $query->where('favorite', $data['favorite']);
+                        });
 
         return $settings->get();
     }
@@ -54,6 +52,11 @@ class SettingBusiness
     public static function getOptionsClass(): array
     {
         return SettingOptionHandlerList::get();
+    }
+
+    public static function getTypes(): array
+    {
+        return SettingType::cases();
     }
 
     public static function update(int $settingId, array $data): Setting

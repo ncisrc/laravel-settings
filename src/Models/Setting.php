@@ -1,14 +1,14 @@
 <?php
 
-namespace Nci\SettingsPackage\Models;
+namespace Nci\Settings\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Nci\SettingsPackage\Enums\SettingType;
-use Nci\SettingsPackage\Database\Factories\SettingFactory;
-use Nci\SettingsPackage\Enums\ErrorText;
+use Nci\Settings\Enums\SettingType;
+use Nci\Settings\Database\Factories\SettingFactory;
+use Nci\Settings\Enums\ErrorText;
 
 class Setting extends Model
 {
@@ -36,15 +36,17 @@ class Setting extends Model
 
     public function checkOptions(string $value): void
     {
-        if (!empty($this->options_class)) {
-            $optionHandler = new $this->options_class();
-            if ($optionHandler->canCheckOptions()) {
-                $needle = (in_array($this->type, [SettingType::Boolean, SettingType::Number, SettingType::String])) ?
-                    $value : json_decode($value);
-                if (!in_array($needle, $optionHandler->process($this->options_data))) {
-                    throw new Exception(ErrorText::API_E_SETTING01, 404);
-                }
-            }
+        if (empty($this->options_class)) return;
+
+        $optionHandler = new $this->options_class();
+        if (!$optionHandler->canCheckOptions()) return;
+
+        $isSimpleType = in_array($this->type, [SettingType::Boolean, SettingType::Number, SettingType::String]);
+        $needle       = ($isSimpleType) ? $value : json_decode($value);
+        $options      = $optionHandler->process($this->options_data);
+
+        if (!in_array($needle, $options)) {
+            throw new Exception(ErrorText::API_E_SETTING01, 404);
         }
     }
 

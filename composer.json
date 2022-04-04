@@ -15,13 +15,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Nci\\SettingsPackage\\": "src/",
-            "Nci\\SettingsPackage\\Database\\Factories\\": "database/factories"
+            "Nci\\Settings\\": "src/",
+            "Nci\\Settings\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-          "Nci\\SettingsPackage\\Tests\\": "tests"
+          "Nci\\Settings\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -31,7 +31,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Nci\\SettingsPackage\\SettingsPackageServiceProvider"
+                "Nci\\Settings\\SettingsPackageServiceProvider"
             ]
         }
     },

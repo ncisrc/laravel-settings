@@ -1,10 +1,10 @@
 <?php
 
-namespace Nci\SettingsPackage\Database\Factories;
+namespace Nci\Settings\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Nci\SettingsPackage\Enums\SettingType;
-use Nci\SettingsPackage\Models\Setting;
+use Nci\Settings\Enums\SettingType;
+use Nci\Settings\Models\Setting;
 use ReflectionClass;
 
 class SettingFactory extends Factory

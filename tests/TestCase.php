@@ -1,8 +1,8 @@
 <?php
 
-namespace Nci\SettingsPackage\Tests;
+namespace Nci\Settings\Tests;
 
-use Nci\SettingsPackage\SettingsPackageServiceProvider;
+use Nci\Settings\SettingsPackageServiceProvider;
 use Orchestra\Testbench\TestCase as TestbenchTestCase;
 
 class TestCase extends TestbenchTestCase

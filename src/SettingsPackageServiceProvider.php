@@ -1,9 +1,7 @@
 <?php
 
-namespace Nci\SettingsPackage;
+namespace Nci\Settings;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 

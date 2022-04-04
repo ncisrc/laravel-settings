@@ -1,12 +1,12 @@
 <?php
 
-namespace Nci\SettingsPackage\Business;
+namespace Nci\Settings\Business;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
-use Nci\SettingsPackage\Models\Setting;
-use Nci\SettingsPackage\Models\UserSetting;
-use Nci\SettingsPackage\Enums\ErrorText;
+use Nci\Settings\Models\Setting;
+use Nci\Settings\Models\UserSetting;
+use Nci\Settings\Enums\ErrorText;
 
 class UserSettingBusiness
 {
@@ -42,6 +42,10 @@ class UserSettingBusiness
 
         if (!$setting->overridable) {
             throw new Exception(ErrorText::API_E_SETTING04, 404);
+        }
+
+        if ($setting->default_value === $value) {
+            throw new Exception(ErrorText::API_E_SETTING03, 404);
         }
 
         $userSetting = static::findOrCreate($userId, $settingId);

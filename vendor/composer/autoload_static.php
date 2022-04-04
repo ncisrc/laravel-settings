@@ -14,22 +14,22 @@ class ComposerStaticInit116613c777f5ffa534fa69efbc1dadd1
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
+        '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
+        'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         'eb46fcca3fbadc07be542e9e42c8b07c' => __DIR__ . '/..' . '/orchestra/testbench-core/src/helpers.php',
         '3074abeef0bacf5811f59e9dee6311d1' => __DIR__ . '/..' . '/spatie/ray/src/helpers.php',
-        '8825ede83f2f289127722d4e842cf7e8' => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -113,9 +113,9 @@ class ComposerStaticInit116613c777f5ffa534fa69efbc1dadd1
         ),
         'N' => 
         array (
-            'Nci\\SettingsPackage\\Tests\\' => 26,
-            'Nci\\SettingsPackage\\Database\\Factories\\' => 39,
-            'Nci\\SettingsPackage\\' => 20,
+            'Nci\\Settings\\Tests\\' => 19,
+            'Nci\\Settings\\Database\\Factories\\' => 32,
+            'Nci\\Settings\\' => 13,
         ),
         'M' => 
         array (
@@ -380,15 +380,15 @@ class ComposerStaticInit116613c777f5ffa534fa69efbc1dadd1
         array (
             0 => __DIR__ . '/..' . '/orchestra/testbench-core/src',
         ),
-        'Nci\\SettingsPackage\\Tests\\' => 
+        'Nci\\Settings\\Tests\\' => 
         array (
             0 => __DIR__ . '/../..' . '/tests',
         ),
-        'Nci\\SettingsPackage\\Database\\Factories\\' => 
+        'Nci\\Settings\\Database\\Factories\\' => 
         array (
             0 => __DIR__ . '/../..' . '/database/factories',
         ),
-        'Nci\\SettingsPackage\\' => 
+        'Nci\\Settings\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
@@ -765,7 +765,6 @@ class ComposerStaticInit116613c777f5ffa534fa69efbc1dadd1
         'PHPUnit\\Framework\\MockObject\\MockObject' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/MockObject.php',
         'PHPUnit\\Framework\\MockObject\\MockTrait' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/MockTrait.php',
         'PHPUnit\\Framework\\MockObject\\MockType' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/MockType.php',
-        'PHPUnit\\Framework\\MockObject\\MockedCloneMethod' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Api/MockedCloneMethod.php',
         'PHPUnit\\Framework\\MockObject\\OriginalConstructorInvocationRequiredException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/OriginalConstructorInvocationRequiredException.php',
         'PHPUnit\\Framework\\MockObject\\ReflectionException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ReflectionException.php',
         'PHPUnit\\Framework\\MockObject\\ReturnValueNotConfiguredException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/ReturnValueNotConfiguredException.php',
@@ -796,7 +795,6 @@ class ComposerStaticInit116613c777f5ffa534fa69efbc1dadd1
         'PHPUnit\\Framework\\MockObject\\UnknownClassException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/UnknownClassException.php',
         'PHPUnit\\Framework\\MockObject\\UnknownTraitException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/UnknownTraitException.php',
         'PHPUnit\\Framework\\MockObject\\UnknownTypeException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Exception/UnknownTypeException.php',
-        'PHPUnit\\Framework\\MockObject\\UnmockedCloneMethod' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Api/UnmockedCloneMethod.php',
         'PHPUnit\\Framework\\MockObject\\Verifiable' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/MockObject/Verifiable.php',
         'PHPUnit\\Framework\\NoChildTestSuiteException' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/NoChildTestSuiteException.php',
         'PHPUnit\\Framework\\OutputError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Exception/OutputError.php',
