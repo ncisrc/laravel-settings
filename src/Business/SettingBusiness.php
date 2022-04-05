@@ -59,10 +59,8 @@ class SettingBusiness
         return SettingType::cases();
     }
 
-    public static function update(int $settingId, array $data): Setting
+    public static function update(Setting $setting, array $data): Setting
     {
-        $setting = Setting::find($settingId);
-
         if (isset($data['options_class'])) {
             if (!in_array($data['options_class'], SettingOptionHandlerList::get())) {
                 throw new Exception(ErrorText::API_E_SETTING05, 404);

@@ -27,11 +27,11 @@ class SettingController extends Controller
 
     public function show(int $settingId)
     {
-        try {
-            return SettingBusiness::find($settingId);
-        } catch (Exception $e) {
-            throw new Exception($e);
+        $setting = SettingBusiness::find($settingId);
+        if (is_null($setting)) {
+            throw new Exception(ErrorText::API_E_SETTING02);
         }
+        return $setting;
     }
 
     public function update(Request $request, int $settingId)
