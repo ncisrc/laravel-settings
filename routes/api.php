@@ -22,5 +22,5 @@ Route::get('/settings/test', function() {
 });
 
 // UserSetting
-Route::get('/settings/user/{id}',                 [UserSettingController::class, 'index']);
+Route::get('/user/{id}/settings',                 [UserSettingController::class, 'index']);
 Route::post('/settings/{settingId}/user/{userId}', [UserSettingController::class, 'store']);
