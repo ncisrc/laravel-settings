@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Nci\Settings\Business\SettingBusiness;
 use Nci\Settings\Enums\ErrorText;
 use Nci\Settings\Models\Setting;
+use Nci\Settings\Http\Controllers\Controller;
 
 class SettingController extends Controller
 {
