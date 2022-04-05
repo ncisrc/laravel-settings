@@ -10,10 +10,10 @@ class UserSettingController extends Controller
 {
     public function index(int $userId)
     {
-        $request = $this->getNewRequest(['user_id' => $userId]);
-        $request->validate([
-            'user_id'    => 'required|integer|exists:users',
-        ]);
+        // $request = $this->getNewRequest(['user_id' => $userId]);
+        // $request->validate([
+        //     'user_id'    => 'required|integer|exists:users',
+        // ]);
 
         try {
             return UserSettingBusiness::get($userId);
