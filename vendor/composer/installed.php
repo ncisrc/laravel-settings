@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '734149c4199cd8bcb3b378b19c199d2c86aac2d3',
+        'reference' => '2c07afc88d2c8678e3e7bc6dc4b5cffed4241130',
         'name' => 'nci/settings',
         'dev' => true,
     ),
@@ -457,7 +457,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '734149c4199cd8bcb3b378b19c199d2c86aac2d3',
+            'reference' => '2c07afc88d2c8678e3e7bc6dc4b5cffed4241130',
             'dev_requirement' => false,
         ),
         'nesbot/carbon' => array(
