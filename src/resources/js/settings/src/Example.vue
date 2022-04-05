@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import NciInput from "./components/NciInput.vue";
-import NciSelect from "./components/NciSelect.vue";
-import NciSwitch from "./components/NciSwitch.vue";
+import NciSettingsInput from "./components/NciSettingsInput.vue";
+import NciSettingsSelect from "./components/NciSettingsSelect.vue";
+import NciSettingsSwitch from "./components/NciSettingsSwitch.vue";
 
 export default {
   data() {
