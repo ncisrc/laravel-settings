@@ -12,4 +12,8 @@ export default class Setting {
         this.favorite = favorite;
         this.width = width;
     }
+
+    sum(a, b){
+        return a+b;
+    }
 }
