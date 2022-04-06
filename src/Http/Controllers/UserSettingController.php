@@ -10,8 +10,13 @@ class UserSettingController extends Controller
 {
     public function index(Request $request, int $userId)
     {
-        // TODO check user
-        dd($request);
+        $request->request->add([
+            'user_id' => $userId
+        ]);
+
+        $request->validate([
+            'user_id'    => 'required|integer|exists:users'
+        ]);
 
         try {
             return UserSettingBusiness::get($userId);
