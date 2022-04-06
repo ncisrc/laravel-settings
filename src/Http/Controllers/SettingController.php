@@ -48,12 +48,9 @@ class SettingController extends Controller
             throw new Exception(ErrorText::API_E_PARAM02);
         }
 
-        $setting = Setting::find($settingId);
-        if (is_null($setting)) {
-            throw new Exception(ErrorText::API_E_SETTING02);
-        }
-
         try {
+            $setting = Setting::find($settingId);
+
             return SettingBusiness::update($setting, $data);
         } catch (Exception $e) {
             throw new Exception($e);

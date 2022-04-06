@@ -8,9 +8,10 @@ use Nci\Settings\Business\UserSettingBusiness;
 
 class UserSettingController extends Controller
 {
-    public function index(int $userId)
+    public function index(Request $request, int $userId)
     {
         // TODO check user
+        dd($request);
 
         try {
             return UserSettingBusiness::get($userId);
