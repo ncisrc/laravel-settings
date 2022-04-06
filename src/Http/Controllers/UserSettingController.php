@@ -12,7 +12,7 @@ class UserSettingController extends Controller
 {
     public function index(int $userId)
     {
-        if (!DB::table('users')->where('id', $userId)->first()->exists()) {
+        if (!DB::table('users')->where('id', $userId)->exists()) {
             throw new Exception('User not found.');
         }
         try {
