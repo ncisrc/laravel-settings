@@ -91,12 +91,12 @@ class SettingTest extends TestCase
         $trueClass       = 'Nci\Settings\Business\Interfaces\SettingOptionHandler\ArrayOptionHandler';
 
         try {
-            SettingBusiness::update($settingExpected->id, ['options_class' => $falseClass]);
+            SettingBusiness::update($settingExpected, ['options_class' => $falseClass]);
         } catch (Exception $e) {
             $this->assertEquals(ErrorText::API_E_SETTING05, $e->getMessage());
         }
 
-        SettingBusiness::update($settingExpected->id, ['options_class' => $trueClass]);
+        SettingBusiness::update($settingExpected, ['options_class' => $trueClass]);
         $setting = SettingBusiness::find($settingExpected->id);
 
         $this->assertEquals($trueClass, $setting->options_class);
@@ -109,7 +109,7 @@ class SettingTest extends TestCase
         $settingExpected = Setting::factory()->create();
         $value           = 'test';
 
-        SettingBusiness::update($settingExpected->id, ['default_value' => $value]);
+        SettingBusiness::update($settingExpected, ['default_value' => $value]);
         $setting = SettingBusiness::find($settingExpected->id);
 
         $this->assertEquals($value, $setting->default_value);

@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Nci\Settings\Business\SettingBusiness;
 use Nci\Settings\Enums\ErrorText;
+use Nci\Settings\Models\Setting;
+use Nci\Settings\Http\Controllers\Controller;
 
 class SettingController extends Controller
 {
@@ -26,11 +28,6 @@ class SettingController extends Controller
 
     public function show(int $settingId)
     {
-        $request = $this->getNewRequest(['setting_id' => $settingId]);
-        $request->validate([
-            'setting_id'    => 'required|integer|exists:settings',
-        ]);
-
         try {
             return SettingBusiness::find($settingId);
         } catch (Exception $e) {
@@ -40,9 +37,7 @@ class SettingController extends Controller
 
     public function update(Request $request, int $settingId)
     {
-        $request->request->add(['setting_id' => $settingId]);
         $data = $request->validate([
-            'setting_id'    => 'required|integer|exists:settings',
             'options_class' => 'nullable|string',
             'options_data'  => 'nullable|string',
             'default_value' => 'nullable|string',
@@ -54,7 +49,9 @@ class SettingController extends Controller
         }
 
         try {
-            return SettingBusiness::update($settingId, $data);
+            $setting = Setting::find($settingId);
+
+            return SettingBusiness::update($setting, $data);
         } catch (Exception $e) {
             throw new Exception($e);
         }

@@ -7,9 +7,9 @@ use Nci\Settings\Http\Controllers\SettingOptionController;
 use Nci\Settings\Http\Controllers\SettingTypeController;
 
 // Setting
-Route::get('/settings',     [SettingController::class, 'index']);
-Route::get('/setting/{id}', [SettingController::class, 'show']);
-Route::put('/setting/{id}', [SettingController::class, 'update']);
+Route::get('/settings',            [SettingController::class, 'index']);
+Route::get('/setting/{settingId}', [SettingController::class, 'show']);
+Route::put('/setting/{settingId}', [SettingController::class, 'update']);
 
 // SettingOptions
 Route::get('/settings/options', [SettingOptionController::class, 'index']);
@@ -18,5 +18,5 @@ Route::get('/settings/options', [SettingOptionController::class, 'index']);
 Route::get('/settings/types', [SettingTypeController::class, 'index']);
 
 // UserSetting
-Route::get('/settings/user/{id}',                 [UserSettingController::class, 'index']);
+Route::get('/settings/user/{userId}',             [UserSettingController::class, 'index']);
 Route::post('/setting/{settingId}/user/{userId}', [UserSettingController::class, 'store']);
