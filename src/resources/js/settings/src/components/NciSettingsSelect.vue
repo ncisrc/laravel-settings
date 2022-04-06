@@ -1,10 +1,16 @@
 <template>
   <div class="NciComponent NciSelect">
-    {{ title }} 
+    {{ title }}
     {{ path }}
     {{ description }}
 
-    <n-select v-model:value="value" :options="options" />
+    <n-select
+      v-if="multipleSelect"
+      v-model:value="value"
+      multiple
+      :options="options"
+    />
+    <n-select v-else v-model:value="value" :options="options" />
   </div>
 </template>
 
@@ -21,6 +27,7 @@ export default {
     path: String,
     value: String,
     options: Array,
+    multipleSelect: Boolean,
   },
 };
 </script>
