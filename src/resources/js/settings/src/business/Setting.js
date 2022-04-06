@@ -1,5 +1,5 @@
 export default class Setting {
-    constructor(id, code, description, type, options_class = null, options_data = null, nullable, overridable = true, default_ , favorite = false, width = "1/4") {
+    constructor(id, code, description, type, options_class = null, options_data = null, nullable, overridable = true, default_, favorite = false, width = "1/4") {
         this.id = id;
         this.code = code;
         this.description = description;
@@ -13,7 +13,43 @@ export default class Setting {
         this.width = width;
     }
 
-    sum(a, b){
-        return a+b;
+    getId() {
+        return this.id;
+    }
+
+    getCode() {
+        return this.code;
+    }
+
+    getDescription() {
+        return this.description;
+    }
+
+    getType() {
+        return this.type;
+    }
+
+    getOptions() {
+        return this.options_data;
+    }
+
+    getNullable() {
+        return this.nullable;
+    }
+
+    getOverridable() {
+        return this.overridable;
+    }
+
+    getDefault() {
+        return this.default_;
+    }
+
+    getFavorite() {
+        return this.Favorite;
+    }
+
+    getWidth() {
+        return this.width;
     }
 }
