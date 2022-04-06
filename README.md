@@ -73,7 +73,7 @@ Get /setting/options
 Get /setting/types
 
 // UserSetting
-Get /settings/user/{id}
+Get /settings/user/{userId}
 Get /setting/{settingId}/user/{userId}
 
 ```
