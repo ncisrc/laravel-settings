@@ -1,23 +1,23 @@
-import MyNciSettingsInput from '../components/NciSettingsInput';
+import MyNciSettingsSwitch from '../components/NciSettingsSwitch';
 
 export default {
-  title: 'NciSettingsList/MyNciSettingsInput',
-  component: MyNciSettingsInput,
+  title: 'NciSettingsList/MyNciSettingsSwitch',
+  component: MyNciSettingsSwitch,
 };
 
 const Template = (args) => ({
   // Components used in your story `template` are defined in the `components` object
-  components: { MyNciSettingsInput },
+  components: { MyNciSettingsSwitch },
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
     // Story args can be spread into the returned object
     return { ...args };
   },
   // Then, the spread values can be accessed directly in the template
-  template: '<my-nci-settings-input v-model:value="value"/>',
+  template: '<my-nci-settings-switch v-model:value="value"/>',
 });
 
-export const NciSettingsInput = Template.bind({});
-NciSettingsInput.args = {
+export const NciSettingsSwitch = Template.bind({});
+NciSettingsSwitch.args = {
   value: "",
 };
