@@ -30,7 +30,13 @@ class SettingBusiness
 
     public static function find(int $settingId): Setting
     {
-        return Setting::find($settingId);
+        $setting = Setting::find($settingId);
+
+        if (is_null($setting)) {
+            throw new Exception(ErrorText::API_E_SETTING02, 404);
+        }
+
+        return $setting;
     }
 
     public static function findByCode(string $code): Setting
