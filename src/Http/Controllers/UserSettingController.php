@@ -15,6 +15,7 @@ class UserSettingController extends Controller
         if (!DB::table('users')->where('id', $userId)->exists()) {
             throw new Exception('User not found.');
         }
+
         try {
             return UserSettingBusiness::get($userId);
         } catch (Exception $e) {
@@ -27,6 +28,10 @@ class UserSettingController extends Controller
         $data = $request->validate([
             'value'      => 'required|string',
         ]);
+
+        if (!DB::table('users')->where('id', $userId)->exists()) {
+            throw new Exception('User not found.');
+        }
 
         try {
             $setting = SettingBusiness::find($settingId);
