@@ -40,14 +40,14 @@ composer test-f ma_fonction_test
 # Installez les vendors
 composer install ou composer update
 
-# Ajouter le provider dans "config/app.php"
+# Ajouter le provider dans "config/app.php" - OPTIONNEL
 /*
 * Package Service Providers...
 */
 Nci\Settings\SettingsPackageServiceProvider::class,
 
 # Publish le fichier de configuration
-sail artisan vendor:publish --provider="Nci\Settings\SettingsPackageServiceProvider" --tag="config"
+sail artisan vendor:publish --provider="Nci\Settings\SettingsPackageServiceProvider"
 # Champs disponibles dans le fichier de configuration :
 # prefix => définit la chaîne de caractère se trouvant avant les routes disponnibles, par défaut "ncisettings" (exemple: ncisettings/settings/user/1).
 # middleware => array des middleware à appliquer avant toutes requête, par défaut contient le middleware "web".
