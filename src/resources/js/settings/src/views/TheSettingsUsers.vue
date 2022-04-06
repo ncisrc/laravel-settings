@@ -1,24 +1,30 @@
 <template>
   <div>
-    <n-input v-model:value="search" type="text" placeholder="search" />
-    <n-select v-model:value="select" placeholder="Choix de l'utilisateur" />
-    <nci-settings-tree/>
-    <nci-settings-select :options="options" :multipleSelect="false"/>
+    <nci-input :value="search" type="text" :placeholder="search" />
+    <nci-select :value="select" placeholder="Choix de l'utilisateur" />
+    <nci-settings-tree />
+
   </div>
 </template>
 
 <script>
-import { NInput, NSelect, NTree } from "naive-ui";
-import NciSettingsTree from '../components/NciSettingsTree.vue';
-import NciSettingsSelect from '../components/NciSettingsSelect.vue';
+import NciInput from "../components/ui/NciInput.vue";
+import NciSelect from "../components/ui/NciSelect.vue";
+import NciTree from "../components/ui/NciTree.vue";
+import NciSettingsInput from "../components/NciSettingsInput.vue";
+import NciSettingsTree from "../components/NciSettingsTree.vue";
+import NciSettingsSelect from "../components/NciSettingsSelect.vue";
+import NciSettingsSwitch from "../components/NciSettingsSwitch.vue";
 
 export default {
   components: {
-    NInput,
-    NSelect,
-    NTree,
+    NciInput,
+    NciSelect,
+    NciTree,
+    NciSettingsInput,
     NciSettingsTree,
     NciSettingsSelect,
+    NciSettingsSwitch,
   },
 
   data() {
@@ -26,20 +32,25 @@ export default {
       search: "",
       select: null,
 
-      options: [
-        {
-          label: "toto",
-          value: "toto",
-        },
-        {
-          label: "tata",
-          value: "tata",
-        },
-        {
-          label: "titi",
-          value: "titi",
-        },
-      ],
+      setting: {
+        title: "coucou",
+        path: "10",
+        description: "hello",
+        options: [
+          {
+            label: "toto",
+            value: "toto",
+          },
+          {
+            label: "tata",
+            value: "tata",
+          },
+          {
+            label: "titi",
+            value: "titi",
+          },
+        ],
+      },
     };
   },
 };

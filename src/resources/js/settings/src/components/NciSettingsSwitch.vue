@@ -1,25 +1,22 @@
 <template>
   <div class="NciComponent NciSwitch">
-    {{ title }}
-    {{ path }}
-    {{ description }}
+    {{ setting.title }}
+    {{ setting.path }}
+    {{ setting.description }}
 
-    <n-switch v-model:value="value" />
+    <nci-switch v-model:value="setting.value" />
   </div>
 </template>
 
 <script>
-import { NSwitch } from "naive-ui";
+import NciSwitch from "./ui/NciSwitch.vue";
 
 export default {
   components: {
-    NSwitch,
+    NciSwitch,
   },
   props: {
-    title: String,
-    description: String,
-    path: String,
-    value: Boolean,
+    setting: Object,
   },
 };
 </script>

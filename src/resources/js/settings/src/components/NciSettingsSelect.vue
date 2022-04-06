@@ -1,33 +1,29 @@
 <template>
-  <div class="NciComponent NciSelect">
-    {{ title }}
-    {{ path }}
-    {{ description }}
+  <div>
+    {{ setting.title }}
+    {{ setting.path }}
+    {{ setting.description }}
 
-    <n-select
-      v-if="multipleSelect"
-      v-model:value="value"
-      multiple
-      :options="options"
+    <nci-select
+      v-model:value="setting.value"
+      :multiple = "multiple"
+      :filterable= "filterable"
+      :options="setting.options"
     />
-    <n-select v-else v-model:value="value" :options="options" />
   </div>
 </template>
 
 <script>
-import { NSelect } from "naive-ui";
+import NciSelect from "./ui/NciSelect.vue"
 
 export default {
   components: {
-    NSelect,
+    NciSelect,
   },
   props: {
-    title: String,
-    description: String,
-    path: String,
-    value: String,
-    options: Array,
-    multipleSelect: Boolean,
+    setting: Object,
+    multiple: Boolean,
+    filterable: Boolean,
   },
 };
 </script>

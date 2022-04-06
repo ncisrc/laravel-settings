@@ -1,25 +1,23 @@
 <template>
-  <div class="NciComponent NciInput">
-    {{ title }} 
-    {{ path }}
-    {{ description }}
+  <div>
+    {{ setting.title }} 
+    {{ setting.path }}
+    {{ setting.description }}
 
-    <n-input v-model:value="value" type="text" placeholder="Basic Input" />
+    <nci-input v-model:value="setting.value" type="text" :placeholder="placeholder" />
   </div>
 </template>
 
 <script>
-import { NInput } from "naive-ui";
+import NciInput from "./ui/NciInput.vue";
 
 export default {
   components: {
-    NInput,
+    NciInput,
   },
   props: {
-    title: String,
-    description: String,
-    path: String,
-    value: String,
+    setting: Object,
+    placeholder: String,
   },
 };
 </script>
