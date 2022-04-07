@@ -5,6 +5,7 @@
       :data="settingsManager.get()"
       :default-expanded-keys="defaultExpandedKeys"
       selectable
+      :node-props="nodeProps"
     />
   </div>
 </template>
@@ -33,7 +34,15 @@ export default {
   },
 
   methods: {
-    //
+    nodeProps: ({ option }) => {
+      return {
+        onClick(){
+          console.log('1 :' + option.label);
+          console.log('2 :' + this.settingsManager);
+          console.log('3 :' + this.settingsManager.load(option.label));
+        },
+      };
+    },
   },
 };
 </script>
