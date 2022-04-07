@@ -7,9 +7,17 @@ export const useSettings = defineStore('useSettings', {
         }
     },
 
+    getters: {
+        settingsPath() {
+            var rAry = [];
+            this.settings.forEach((item) => stringToPath("", item.code, rAry));
+            return rAry;
+        },
+    },
+
     actions : {
         load(persistanceLayer) {
-            this.settings = persistanceLayer.loadAll();
+            this.settings = persistanceLayer.load();
         },
 
         get(partialCode) {
@@ -19,12 +27,6 @@ export const useSettings = defineStore('useSettings', {
 
         find(code) {
             return this.settings.find((item) => item.code == code);
-        },
-
-        getSettingsPath() {
-            var rAry = [];
-            this.settings.forEach((item) => stringToPath("", item.code, rAry));
-            return rAry;
         },
 
         length() {

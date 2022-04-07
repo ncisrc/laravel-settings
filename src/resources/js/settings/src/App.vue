@@ -12,13 +12,15 @@
 </template>
 
 <script>
-import TheSettingsApplication from "./views/TheSettingsApplication.vue";
-import TheSettingsUsers from "./views/TheSettingsUsers.vue";
 import { NTabs, NTabPane } from "naive-ui";
 
-import { useSettings } from '@/business/stores/useSettings'
-import MockPersistanceLayer from './mocks/MockPersistanceLayer';
+import TheSettingsApplication from "./views/TheSettingsApplication.vue";
+import TheSettingsUsers from "./views/TheSettingsUsers.vue";
+
 import { mapActions } from 'pinia';
+import { useSettings } from '@/business/stores/useSettings'
+
+import MockPersistanceLayer from './mocks/MockPersistanceLayer';
 const persistanceLayer = new MockPersistanceLayer();
 
 export default {
@@ -29,20 +31,15 @@ export default {
     TheSettingsUsers,
   },
 
-
   mounted() {
     this.refresh();
   },
 
-  data() {
-    return {};
-  },
-
   methods: {
-    ...mapActions(useSettings, ['load']),
+    ...mapActions(useSettings, {settingsStoreLoad: 'load'}),
 
     refresh() {
-      this.load(persistanceLayer);
+      this.settingsStoreLoad(persistanceLayer);
     }
   }
 };

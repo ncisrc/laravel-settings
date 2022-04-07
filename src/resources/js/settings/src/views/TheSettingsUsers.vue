@@ -3,7 +3,7 @@
     <nci-input v-model:value="search" type="text" :placeholder="search" />
     <nci-select v-model:value="select" placeholder="Choix de l'utilisateur" />
 
-    <nci-settings-tree :pathItems="useSettingsStore.getSettingsPath()" />
+    <nci-settings-tree :pathItems="pathItems" />
   </div>
 </template>
 
@@ -17,7 +17,7 @@ import {
   NciSettingsTree
 } from "@/components/NciSettings";
 
-import { mapStores } from 'pinia';
+import { mapState } from 'pinia';
 import { useSettings } from '@/business/stores/useSettings'
 
 export default {
@@ -28,7 +28,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useSettings),
+    ...mapState(useSettings, {pathItems: 'settingsPath'}),
   },
 
   data() {

@@ -2,7 +2,7 @@ import Setting from '@/business/objects/Setting';
 
 export default class MockPersistanceLayer {
 
-    loadAll() {
+    load() {
         return [
             new Setting(1, 'groupe1.sousgroupe1.param1', 'groupe1.sousgroupe1.param1', 'Number', null, null, false, true, "", false, "1/4"),
             new Setting(2, 'groupe1.param1', 'groupe1.param1', 'Number', null, null, false, true, "", false, "1/4"),
