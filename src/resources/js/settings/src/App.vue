@@ -16,6 +16,11 @@ import TheSettingsApplication from "./views/TheSettingsApplication.vue";
 import TheSettingsUsers from "./views/TheSettingsUsers.vue";
 import { NTabs, NTabPane } from "naive-ui";
 
+import { useSettings } from '@/business/stores/useSettings'
+import MockPersistanceLayer from './mocks/MockPersistanceLayer';
+import { mapActions } from 'pinia';
+const persistanceLayer = new MockPersistanceLayer();
+
 export default {
   components: {
     NTabPane,
@@ -24,9 +29,22 @@ export default {
     TheSettingsUsers,
   },
 
+
+  mounted() {
+    this.refresh();
+  },
+
   data() {
     return {};
   },
+
+  methods: {
+    ...mapActions(useSettings, ['load']),
+
+    refresh() {
+      this.load(persistanceLayer);
+    }
+  }
 };
 </script>
 

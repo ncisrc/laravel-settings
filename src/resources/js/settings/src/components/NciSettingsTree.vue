@@ -2,7 +2,7 @@
   <div>
     <n-tree
       block-line
-      :data="toto"
+      :data="pathItems"
       :default-expanded-keys="defaultExpandedKeys"
       selectable
       @update:selected-keys="handleClick"
@@ -19,7 +19,7 @@ export default {
   },
 
   props: {
-    toto: Object
+    pathItems: Object
   },
 
   data() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ setting.title }} 
+    {{ setting.title }}
     {{ setting.path }}
     {{ setting.description }}
 
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import NciInput from "./ui/NciInput.vue";
+import { NciInput } from "./ui/NciUI";
 
 export default {
   components: {

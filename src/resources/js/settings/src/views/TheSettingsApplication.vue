@@ -1,6 +1,8 @@
 <template>
   <div>
-    <n-input v-model:value="search" type="text" placeholder="search" />
+    Hello Application
+
+    <nci-input v-model:value="search" type="text" placeholder="search" />
     <nci-settings-tree />
 
     <nci-settings-input :setting="setting" />
@@ -25,37 +27,34 @@
       :multiple="true"
       :filterable="false"
     />
+
   </div>
 </template>
 
 <script>
-import { NInput, NTree } from "naive-ui";
-import NciSettingsInput from "../components/NciSettingsInput.vue";
-import NciSettingsTree from "../components/NciSettingsTree.vue";
-import NciSettingsSelect from "../components/NciSettingsSelect.vue";
-import NciSettingsSwitch from "../components/NciSettingsSwitch.vue";
-import settingsManager from "../business/SettingsManager";
+import {
+  NciInput
+} from "@/components/ui/NciUI";
+
+import {
+  NciSettingsInput,
+  NciSettingsTree,
+  NciSettingsSelect,
+  NciSettingsSwitch,
+} from "@/components/NciSettings";
 
 export default {
   components: {
-    NInput,
-    NTree,
+    NciInput,
     NciSettingsInput,
     NciSettingsTree,
     NciSettingsSelect,
     NciSettingsSwitch,
   },
 
-  beforeRouteEnter(to, from, next) {
-    next(async (vm) => {
-      vm.settingsManager.loadAll();
-    })
-  },
-
   data() {
     return {
       search: "",
-      settingsManager,
       setting: {
         title: "coucou",
         path: "10",
