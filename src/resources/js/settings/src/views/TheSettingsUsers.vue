@@ -2,8 +2,7 @@
   <div>
     <nci-input :value="search" type="text" :placeholder="search" />
     <nci-select :value="select" placeholder="Choix de l'utilisateur" />
-    <nci-settings-tree />
-
+    <nci-settings-tree :toto="settingsManager.get()" />
   </div>
 </template>
 
@@ -15,6 +14,8 @@ import NciSettingsInput from "../components/NciSettingsInput.vue";
 import NciSettingsTree from "../components/NciSettingsTree.vue";
 import NciSettingsSelect from "../components/NciSettingsSelect.vue";
 import NciSettingsSwitch from "../components/NciSettingsSwitch.vue";
+import settingsManager from "../business/SettingsManager";
+import MockPersistanceLayer from "../mocks/MockPersistanceLayer";
 
 export default {
   components: {
@@ -27,11 +28,21 @@ export default {
     NciSettingsSwitch,
   },
 
+  beforeRouteEnter(to, from, next) {
+    next(async (vm) => {
+      vm.settingsManager.loadAll();
+    });
+  },
+
+  mounted() {
+    this.settingsManager.setPersistanceLayer(new MockPersistanceLayer());
+  },
+
   data() {
     return {
       search: "",
       select: null,
-
+      settingsManager,
       setting: {
         title: "coucou",
         path: "10",

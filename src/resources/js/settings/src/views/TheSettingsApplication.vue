@@ -34,22 +34,28 @@ import NciSettingsInput from "../components/NciSettingsInput.vue";
 import NciSettingsTree from "../components/NciSettingsTree.vue";
 import NciSettingsSelect from "../components/NciSettingsSelect.vue";
 import NciSettingsSwitch from "../components/NciSettingsSwitch.vue";
+import settingsManager from "../business/SettingsManager";
 
 export default {
   components: {
     NInput,
     NTree,
-
     NciSettingsInput,
     NciSettingsTree,
     NciSettingsSelect,
     NciSettingsSwitch,
   },
 
+  beforeRouteEnter(to, from, next) {
+    next(async (vm) => {
+      vm.settingsManager.loadAll();
+    })
+  },
+
   data() {
     return {
       search: "",
-
+      settingsManager,
       setting: {
         title: "coucou",
         path: "10",

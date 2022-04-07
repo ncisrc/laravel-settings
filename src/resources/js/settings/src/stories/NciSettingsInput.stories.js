@@ -1,4 +1,4 @@
-import MyNciSettingsInput from '../components/NciSettingsInput';
+import MyNciInput from '../components/ui/NciInput';
 
 export default {
   title: 'NciSettingsList/MyNciSettingsInput',
