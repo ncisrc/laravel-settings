@@ -1,7 +1,5 @@
 <template>
-  <div class="NciComponent NciInput">
-    <n-input v-model:value="value" type="text" :placeholder="placeholder" />
-  </div>
+  <n-input v-model:value="value" type="text" :placeholder="placeholder" />
 </template>
 
 <script>

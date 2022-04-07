@@ -1,5 +1,4 @@
 <template>
-  <div class="NciComponent NciSelect">
     <n-select
       v-model:value="value"
       :multiple="multiple"
@@ -7,7 +6,6 @@
       :options="options"
       :placeholder="placeholder"
     />
-  </div>
 </template>
 
 <script>

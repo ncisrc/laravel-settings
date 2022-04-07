@@ -1,7 +1,5 @@
 <template>
-  <div class="NciComponent NciSwitch">
-    <n-switch v-model:value="value" />
-  </div>
+  <n-switch v-model:value="value" />
 </template>
 
 <script>
