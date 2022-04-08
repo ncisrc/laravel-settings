@@ -1,7 +1,7 @@
 <template>
   <n-tree
     block-line
-    :data="settingsManager.get()"
+    :data="rawData"
     :default-expanded-keys="defaultExpandedKeys"
     selectable
   />
@@ -14,6 +14,10 @@ export default {
   components: {
     NTree,
   },
+
+  props:{
+    rawData : Object,
+  }
 
   data() {
     return {

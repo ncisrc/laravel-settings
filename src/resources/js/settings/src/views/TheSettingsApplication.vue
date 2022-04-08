@@ -7,20 +7,16 @@
       @update:value="updateSearch"
     />
     <nci-settings-tree
-    :pathItems="pathItemsFiltered"
-    @select:key="displayParams"/>
+      :pathItems="pathItemsFiltered"
+      @select:key="displayParams"
+    />
   </div>
 </template>
 
 <script>
 import { NciInput } from "@/components/ui/NciUI";
 
-import {
-  NciSettingsInput,
-  NciSettingsTree,
-  NciSettingsSelect,
-  NciSettingsSwitch,
-} from "@/components/NciSettings";
+import { NciSettingsTree } from "@/components/NciSettings";
 import { NInput } from "naive-ui";
 import { mapState } from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
@@ -29,14 +25,14 @@ export default {
   components: {
     NInput,
     NciInput,
-    NciSettingsInput,
     NciSettingsTree,
-    NciSettingsSelect,
-    NciSettingsSwitch,
   },
 
   computed: {
-    ...mapState(useSettings, { pathItems: "settingsPath", loadParams: "listParams" }),
+    ...mapState(useSettings, {
+      pathItems: "settingsPath",
+      loadParams: "listParams",
+    }),
 
     pathItemsFiltered() {
       // console.log(this.pathItems);
@@ -98,7 +94,7 @@ export default {
     },
     displayParams(key) {
       this.loadParams(key);
-    }
+    },
   },
 
   data() {
@@ -114,5 +110,4 @@ export default {
 .n-tree {
   width: 15%;
 }
-
 </style>
