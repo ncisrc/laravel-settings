@@ -4,7 +4,7 @@
     {{ setting.path }}
     {{ setting.description }}
 
-    <nci-switch v-model:value="setting.value" />
+    <nci-switch v-model:value="setting.value"/>
   </div>
 </template>
 

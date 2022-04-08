@@ -5,6 +5,7 @@
         v-model:value="search"
         type="text"
         placeholder="search"
+        @update:value="updateSearch"
         class="nciInput"
       />
       <nci-select
@@ -20,6 +21,9 @@
         class="nciTree"
       />
     </div>
+    <div v-for="param in listParams" :key="param.code">
+      <nci-settings :setting="param" />
+    </div>
   </div>
 </template>
 
@@ -30,12 +34,14 @@ import { NciSettingsTree } from "@/components/NciSettings";
 
 import { mapState } from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
+import NciSettings from "../components/NciSettings.vue";
 
 export default {
   components: {
     NciInput,
     NciSelect,
     NciSettingsTree,
+    NciSettings,
   },
 
   computed: {
@@ -52,6 +58,14 @@ export default {
   },
 
   methods: {
+    updateSearch(text) {
+      this.search = text;
+    },
+
+    displayParams(key) {
+      this.listParams = this.loadParams(key);
+    },
+
     getItem(item, ary) {
       let found = item.key.toLowerCase().includes(this.search.toLowerCase());
       if (found) ary.push(item);
@@ -63,8 +77,9 @@ export default {
 
   data() {
     return {
-      search: "",
-      select: null,
+      search    : "",
+      select    : null,
+      listParams: [],
     };
   },
 };

@@ -17,7 +17,7 @@ export default {
 
   props:{
     rawData : Object,
-  }
+  },
 
   data() {
     return {

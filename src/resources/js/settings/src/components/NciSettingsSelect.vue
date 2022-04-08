@@ -7,7 +7,7 @@
     <nci-select
       v-model:value="setting.value"
       :multiple = "multiple"
-      :filterable= "filterable"
+      :filterable = "filterable"
       :options="setting.options"
     />
   </div>
@@ -21,8 +21,8 @@ export default {
     NciSelect,
   },
   props: {
-    setting: Object,
-    multiple: Boolean,
+    setting   : Object,
+    multiple  : Boolean,
     filterable: Boolean,
   },
 };
