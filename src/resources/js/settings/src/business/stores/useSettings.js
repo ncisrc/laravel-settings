@@ -31,6 +31,10 @@ export const useSettings = defineStore('useSettings', {
 
         length() {
             return this.settings.length;
+        },
+
+        listParams(code) {
+            return this.settings.filter((item) => code == item.code.substring(0, item.code.lastIndexOf(".")));
         }
     }
 });

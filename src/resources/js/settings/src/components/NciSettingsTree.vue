@@ -15,22 +15,19 @@ export default {
   components: {
     NTree,
   },
-
   props: {
     pathItems: Object
   },
-
+  emits: ["select:key"],
+  methods: {
+    handleClick(label) {
+      this.$emit("select:key", label)
+    },
+  },
   data() {
     return {
       defaultExpandedKeys: [],
     };
-  },
-
-  methods: {
-    handleClick(label) {
-      console.log("handleClick", label);
-      
-    },
   },
 };
 

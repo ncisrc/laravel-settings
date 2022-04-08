@@ -7,7 +7,9 @@
       placeholder="search"
       @update:value="updateSearch"
     />
-    <nci-settings-tree :pathItems="pathItemsFiltered" />
+    <nci-settings-tree
+    :pathItems="pathItemsFiltered"
+    @select:key="displayParams"/>
   </div>
 </template>
 
@@ -35,10 +37,10 @@ export default {
   },
 
   computed: {
-    ...mapState(useSettings, { pathItems: "settingsPath" }),
+    ...mapState(useSettings, { pathItems: "settingsPath", loadParams: "listParams" }),
 
     pathItemsFiltered() {
-      console.log(this.pathItems);
+      // console.log(this.pathItems);
       // return this.pathItems.filter((item) => {
       //   if (item.key.toLowerCase().includes(this.search.toLowerCase())) {
       //     console.log("item " + item.key);
@@ -67,10 +69,10 @@ export default {
             .toLowerCase()
             .includes(this.search.toLowerCase())
         ) {
-          console.log(this.pathItems[i].key);
+          // console.log(this.pathItems[i].key);
           toto.push(this.pathItems[i]);
         }
-        
+
         if (this.pathItems[i].children)
           for (let j = 0; j < this.pathItems[i].children.length; j++) {
             if (
@@ -81,12 +83,12 @@ export default {
                 .toLowerCase()
                 .includes(this.search.toLowerCase())
             ) {
-              console.log(this.pathItems[i].children[j].key);
+              // console.log(this.pathItems[i].children[j].key);
               toto.push(this.pathItems[i].children[j]);
             }
           }
       }
-      console.log("testfah", toto);
+      // console.log("testfah", toto);
       return toto;
     },
   },
@@ -95,6 +97,9 @@ export default {
     updateSearch(text) {
       this.search = text;
     },
+    displayParams(key) {
+      this.loadParams(key);
+    }
   },
 
   data() {
