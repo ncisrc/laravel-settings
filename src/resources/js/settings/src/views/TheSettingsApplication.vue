@@ -35,56 +35,9 @@ export default {
     }),
 
     pathItemsFiltered() {
-      // console.log(this.pathItems);
-      // return this.pathItems.filter((item) => {
-      //   if (item.key.toLowerCase().includes(this.search.toLowerCase())) {
-      //     console.log("item " + item.key);
-      //     return item;
-      //   }
-
-      //   if (item.children) {
-      //     for (let i = 0; i < item.children.length; i++) {
-      //       console.log("fah", item.children[i].key);
-      //       //     if (
-      //       //       item.children[i].key
-      //       //         .toLowerCase()
-      //       //         .includes(this.search.toLowerCase())
-      //       //     ) {
-      //       //       console.log("testfah " + item.children[i].key);
-      //       //       // return item.children[i];
-      //       //       return { key: "groupe1.sousgroupe1", label: "i18n-groupe1.sousgroupe1"}
-      //       //     }
-      //     }
-      //   }
-      // });
-      let toto = [];
-      for (let i = 0; i < this.pathItems.length; i++) {
-        if (
-          this.pathItems[i].key
-            .toLowerCase()
-            .includes(this.search.toLowerCase())
-        ) {
-          // console.log(this.pathItems[i].key);
-          toto.push(this.pathItems[i]);
-        }
-
-        if (this.pathItems[i].children)
-          for (let j = 0; j < this.pathItems[i].children.length; j++) {
-            if (
-              this.pathItems[i].children[j].key
-                .toLowerCase()
-                .includes(this.search.toLowerCase()) &&
-              !this.pathItems[i].key
-                .toLowerCase()
-                .includes(this.search.toLowerCase())
-            ) {
-              // console.log(this.pathItems[i].children[j].key);
-              toto.push(this.pathItems[i].children[j]);
-            }
-          }
-      }
-      // console.log("testfah", toto);
-      return toto;
+      var rAry = [];
+      this.pathItems.forEach((item) => this.getItem(item, rAry));
+      return rAry;
     },
   },
 
@@ -92,8 +45,17 @@ export default {
     updateSearch(text) {
       this.search = text;
     },
+
     displayParams(key) {
       this.loadParams(key);
+    },
+
+    getItem(item, ary) {
+      let found = item.key.toLowerCase().includes(this.search.toLowerCase());
+      if (found) ary.push(item);
+      if (!found && item.children) {
+        item.children.forEach((toto) => this.getItem(toto, ary));
+      }
     },
   },
 
