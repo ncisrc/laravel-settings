@@ -45,6 +45,10 @@ export default {
 };
 </script>
 
-<style >
-@import "./App.scss";
+<style lang="scss">
+ .NciSettingsInput {
+    border: 1px solid black;
+    margin: 2rem;
+    padding: 2rem;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="NciComponent NciSwitch">
+  <div class="NciSettingsInput">
     {{ setting.title }}
     {{ setting.path }}
     {{ setting.description }}

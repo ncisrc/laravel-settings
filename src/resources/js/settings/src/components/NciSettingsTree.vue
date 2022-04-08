@@ -1,5 +1,4 @@
 <template>
-  <div>
     <n-tree
       block-line
       :data="pathItems"
@@ -7,7 +6,6 @@
       selectable
       @update:selected-keys="handleClick"
     />
-  </div>
 </template>
 
 <script>

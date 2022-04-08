@@ -16,6 +16,7 @@ export default {
     NSelect,
   },
   props: {
+    value: String,
     options: Array,
     multiple: Boolean,
     filterable: Boolean,

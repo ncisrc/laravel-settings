@@ -1,5 +1,5 @@
 <template>
-  <n-input v-model:value="value" type="text" :placeholder="placeholder" />
+  <n-input v-model:value="value" type="text" :placeholder="placeholder" @keyup="sendValueUpdate"/>
 </template>
 
 <script>
@@ -13,5 +13,13 @@ export default {
     value: String,
     placeholder: String,
   },
+
+  emits:['update:value'],
+
+  methods:{
+    sendValueUpdate() {
+      this.$emit('update:value', this.value)
+    }
+  }
 };
 </script>

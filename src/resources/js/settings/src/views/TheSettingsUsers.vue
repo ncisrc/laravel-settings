@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nci-input v-model:value="search" type="text" :placeholder="search" />
+    <nci-input v-model:value="search" type="text" placeholder="search" />
     <nci-select v-model:value="select" placeholder="Choix de l'utilisateur" />
 
     <nci-settings-tree :pathItems="pathItems" />

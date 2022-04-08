@@ -1,0 +1,20 @@
+{
+  "name": "settings",
+  "version": "1.0.0",
+  "description": "## Installation :",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git-cloud.nci.fr:laravel-package/settings.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
