@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <nci-input v-model:value="search" type="text" placeholder="search" />
-    <nci-select v-model:value="select" placeholder="Choix de l'utilisateur" />
-
-    <nci-settings-tree :pathItems="pathItems" />
+  <div class = "TheSettingsUsers">
+    <nci-input v-model:value="search" type="text" placeholder="search" class="nciInput" />
+    <nci-select v-model:value="select" placeholder="Choix de l'utilisateur" class="nciSelect" />
   </div>
+  <nci-settings-tree :pathItems="pathItems" class="nciTree"/>
 </template>
 
 <script>
@@ -39,3 +38,17 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.TheSettingsUsers {
+    display: flex;
+}
+
+.n-input {
+  margin-right: 2rem;
+}
+
+.n-tree {
+  width: 15%;
+}
+</style>

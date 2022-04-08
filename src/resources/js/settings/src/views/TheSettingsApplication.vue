@@ -1,6 +1,5 @@
 <template>
   <div>
-    Hello Application
     <nci-input
       :value="search"
       type="text"
@@ -109,3 +108,11 @@ export default {
   },
 };
 </script>
+
+
+<style lang="scss" scoped>
+.n-tree {
+  width: 15%;
+}
+
+</style>

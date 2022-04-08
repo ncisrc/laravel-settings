@@ -1,4 +1,4 @@
-import Setting from '@/business/objects/Setting';
+import Setting from '../business/objects/Setting';
 
 export default class MockPersistanceLayer {
 
