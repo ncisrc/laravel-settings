@@ -29,6 +29,7 @@ export default {
   methods: {
     handleClick(label) {
       console.log("handleClick", label);
+      
     },
   },
 };
