@@ -3,7 +3,7 @@
     <nci-input
       :value="search"
       type="text"
-      placeholder="search"
+      :placeholder="$t('bt.search')"
       @update:value="updateSearch"
     />
     <nci-settings-tree
@@ -19,7 +19,6 @@
 
 <script>
 import { NciInput } from "@/components/ui/NciUI";
-
 import { NciSettingsTree } from "@/components/NciSettings";
 import { NInput } from "naive-ui";
 import { mapState } from "pinia";

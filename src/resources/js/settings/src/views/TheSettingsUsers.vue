@@ -4,7 +4,7 @@
       <nci-input
         v-model:value="search"
         type="text"
-        placeholder="search"
+        :placeholder="$t('bt.search')"
         @update:value="updateSearch"
         class="nciInput"
       />

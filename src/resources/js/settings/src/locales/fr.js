@@ -1,4 +1,7 @@
+import settings from "./fr/settings.js"
+
 export default {
+  settings,
   bt: {
     add     : "Ajouter",
     new     : "Nouveau",

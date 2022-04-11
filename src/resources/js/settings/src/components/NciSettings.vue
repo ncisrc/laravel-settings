@@ -5,7 +5,6 @@
       :setting="setting"
       :placeholder="placeholder"
     />
-
     <nci-settings-select
       v-if="setting.type == 'Array'"
       :setting="setting"
@@ -13,7 +12,6 @@
       :multiple="true"
       :filterable="true"
     />
-
     <nci-settings-switch
       v-if="setting.type == 'Boolean'"
       :setting="setting"

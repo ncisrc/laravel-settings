@@ -6,10 +6,10 @@ export default class MockPersistanceLayer {
         return [
             new Setting(1, 'groupe1.sousgroupe1.param1', 'groupe1.sousgroupe1.param1', 'Number', null, null, false, true, "", false, "1/4"),
             new Setting(2, 'groupe1.sousgroupe2.param1', 'groupe1.sousgroupe2.param1', 'Number', null, null, false, true, "", false, "1/4"),
-            new Setting(3, 'groupe1.param1', 'groupe1.param1', 'Boolean', null, null, false, true, "", false, "1/4"),
-            new Setting(4, 'groupe1.param2', 'groupe1.param2', 'Number', null, null, false, true, "", false, "1/4"),
-            new Setting(5, 'groupe1.param3', 'groupe1.param3', 'String', null, null, false, true, "", false, "1/4"),
-            new Setting(6, 'groupe1.param4', 'groupe1.param4', 'Array', null, [
+            new Setting(3, 'groupe1.param1', 'Premier test', 'Boolean', null, null, false, true, "", false, "1/4"),
+            new Setting(4, 'groupe1.param2', 'Deuxième test', 'Number', null, null, false, true, "", false, "1/4"),
+            new Setting(5, 'groupe1.param3', 'Troisième test', 'String', null, null, false, true, "", false, "1/4"),
+            new Setting(6, 'groupe1.param4', 'Quatrième test', 'Array', null, [
                 {
                     label: "toto",
                     value: "toto",

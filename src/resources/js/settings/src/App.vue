@@ -38,8 +38,8 @@ export default {
 
     refresh() {
       this.settingsStoreLoad(persistanceLayer);
-    }
-  }
+    },
+  },
 };
 </script>
 

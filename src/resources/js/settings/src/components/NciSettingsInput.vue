@@ -4,7 +4,7 @@
     {{ setting.path }}
     {{ setting.description }}
 
-    <nci-input v-model:value="setting.value" type="text" :placeholder="placeholder" />
+    <nci-input v-model:value="setting.value" type="text" :placeholder="$t('settings.input')" />
   </div>
 </template>
 

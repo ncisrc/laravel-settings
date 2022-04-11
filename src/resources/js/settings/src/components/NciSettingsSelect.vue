@@ -9,6 +9,7 @@
       :multiple = "multiple"
       :filterable = "filterable"
       :options="setting.options_data"
+      :placeholder="$t('settings.select')"
     />
   </div>
 </template>
