@@ -1,19 +1,18 @@
 <template>
   <div class="main">
-    <n-tabs type="line" animated>
-      <n-tab-pane name="application" tab="application">
+    <nci-tabs type="line" animated>
+      <template #settingsApplication>
         <the-settings-application />
-      </n-tab-pane>
-      <n-tab-pane name="users" tab="users">
+      </template>
+      <template #settingsUsers>
         <the-settings-users />
-      </n-tab-pane>
-    </n-tabs>
+      </template>
+    </nci-tabs>
   </div>
 </template>
 
 <script>
-import { NTabs, NTabPane } from "naive-ui";
-
+import { NciTabs } from "@/components/ui/NciUI";
 import TheSettingsApplication from "./views/TheSettingsApplication.vue";
 import TheSettingsUsers from "./views/TheSettingsUsers.vue";
 
@@ -25,8 +24,7 @@ const persistanceLayer = new MockPersistanceLayer();
 
 export default {
   components: {
-    NTabPane,
-    NTabs,
+    NciTabs,
     TheSettingsApplication,
     TheSettingsUsers,
   },
