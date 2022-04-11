@@ -8,7 +8,7 @@
       v-model:value="setting.value"
       :multiple = "multiple"
       :filterable = "filterable"
-      :options="setting.options"
+      :options="setting.options_data"
     />
   </div>
 </template>

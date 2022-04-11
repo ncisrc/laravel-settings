@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="NciSettings">
     <nci-settings-input
       v-if="setting.type == 'String' || setting.type == 'Number'"
       :setting="setting"
@@ -10,6 +10,8 @@
       v-if="setting.type == 'Array'"
       :setting="setting"
       :placeholder="placeholder"
+      :multiple="true"
+      :filterable="true"
     />
 
     <nci-settings-switch
@@ -32,8 +34,19 @@ export default {
     NciSettingsSwitch,
   },
   props: {
+    multiple: Boolean,
     setting: Object,
     placeholder: String,
+    filterable: String,
   },
 };
 </script>
+
+<style lang="scss" scoped>
+
+.NciSettings {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 1rem;
+}
+</style>

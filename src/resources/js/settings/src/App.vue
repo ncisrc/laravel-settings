@@ -47,11 +47,7 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  margin: 2rem;
-  }
-@media screen and (min-width:700px) {
- .main {
     margin: 8rem;
-  }
 }
+
 </style>

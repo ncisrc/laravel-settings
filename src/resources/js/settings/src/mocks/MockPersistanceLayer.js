@@ -24,7 +24,7 @@ export default class MockPersistanceLayer {
                 },
             ], false, true, "", false, "1/4"),
             new Setting(7, 'groupe2.param1', 'groupe2.param1', 'Number', null, null, false, true, "", false, "1/4"),
-            new Setting(8, 'groupe2.sousgroupe2.param1', 'groupe2.sousgroupe2.param1', 'Number', null, null, false, true, "", false, "1/4"),
+            new Setting(8, 'groupe2.sousgroupe2.param1', 'groupe2.sousgroupe2.param1', 'Boolean', null, null, false, true, "", false, "1/4"),
         ];
     }
 }
