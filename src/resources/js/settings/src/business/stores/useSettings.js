@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useSettings = defineStore('useSettings', {
     state: () => {
         return {
-            settings: []
+            settings: [],
         }
     },
 
@@ -35,6 +35,10 @@ export const useSettings = defineStore('useSettings', {
 
         listParams(code) {
             return this.settings.filter((item) => code == item.code.substring(0, item.code.lastIndexOf(".")));
+        },
+
+        loadAll() {
+            return this.settings
         }
     }
 });
