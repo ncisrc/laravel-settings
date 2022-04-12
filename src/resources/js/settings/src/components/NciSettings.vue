@@ -47,4 +47,7 @@ export default {
   padding: 1rem;
   margin: 1rem;
 }
+.settingsLabel {
+  font-weight: bold;
+}
 </style>

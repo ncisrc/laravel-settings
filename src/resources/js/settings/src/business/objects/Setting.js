@@ -1,8 +1,8 @@
 export default class Setting {
-    constructor(id, code, description, type, options_class = null, options_data = null, nullable, overridable = true, default_, favorite = false, width = "1/4") {
+    constructor(id, code, description, type, options_class = null, options_data = null, nullable, overridable = true, default_, favorite = false, width = "1/4", label, text) {
         this.id = id;
         this.code = code;
-        this.description = description
+        this.description = description;
         this.type = type;
         this.options_class = options_class;
         this.options_data = options_data;
@@ -11,6 +11,8 @@ export default class Setting {
         this.default_ = default_;
         this.favorite = favorite;
         this.width = width;
+        this.label = label;
+        this.text = text;
     }
 
     getId() {
@@ -51,5 +53,13 @@ export default class Setting {
 
     getWidth() {
         return this.width;
+    }
+
+    getLabel() {
+        return this.label;
+    }
+
+    getText() {
+        return this.text;
     }
 }

@@ -10,9 +10,8 @@
       :pathItems="pathItemsFiltered"
       @select:key="displayParams"
     />
-
     <div v-for="param in listParams" :key="param.code">
-      <nci-settings :setting="param" />
+      <nci-settings :setting="param"/>
     </div>
   </div>
 </template>
@@ -20,14 +19,12 @@
 <script>
 import { NciInput } from "@/components/ui/NciUI";
 import { NciSettingsTree } from "@/components/NciSettings";
-import { NInput } from "naive-ui";
 import { mapState } from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
 import NciSettings from "../components/NciSettings.vue";
 
 export default {
   components: {
-    NInput,
     NciInput,
     NciSettingsTree,
     NciSettings,
@@ -72,7 +69,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss" scoped>
 .n-tree {
