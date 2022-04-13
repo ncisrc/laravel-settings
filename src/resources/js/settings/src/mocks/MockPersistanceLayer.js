@@ -1,30 +1,18 @@
-import Setting from '../business/objects/Setting';
-import localeSettings from '../locales/fr/settings.js';
-export default class MockPersistanceLayer {
+export default {
 
     load() {
         return [
-            new Setting(1, 'groupe1.sousgroupe1.param1', 'groupe1.sousgroupe1.param1', 'Number', null, null, false, true, "", false, "1/4", localeSettings.locale.groupe1.sousgroupe1.param1_label, localeSettings.locale.groupe1.sousgroupe1.param1_text),
-            new Setting(2, 'groupe1.sousgroupe2.param1', 'groupe1.sousgroupe2.param1', 'Number', null, null, false, true, "", false, "1/4", localeSettings.locale.groupe1.sousgroupe1.param1_label, localeSettings.locale.groupe1.sousgroupe1.param1_text),
-            new Setting(3, 'groupe1.param1', 'Premier test', 'Boolean', null, null, false, true, "", false, "1/4", localeSettings.locale.groupe1.sousgroupe1.param1_label, localeSettings.locale.groupe1.sousgroupe1.param1_text),
-            new Setting(4, 'groupe1.param2', 'Deuxième test', 'Number', null, null, false, true, "", false, "1/4", localeSettings.locale.groupe1.sousgroupe1.param1_label, localeSettings.locale.groupe1.sousgroupe1.param1_text),
-            new Setting(5, 'groupe1.param3', 'Troisième test', 'String', null, null, false, true, "", false, "1/4", localeSettings.locale.groupe1.sousgroupe1.param1_label, localeSettings.locale.groupe2.sousgroupe2.param1_text),
-            new Setting(6, 'groupe1.param4', 'Quatrième test', 'Array', null, [
-                {
-                    label: "toto",
-                    value: "toto",
-                },
-                {
-                    label: "tata",
-                    value: "tata",
-                },
-                {
-                    label: "titi",
-                    value: "titi",
-                },
-            ], false, true, "", false, "1/4", localeSettings.locale.groupe1.sousgroupe1.param1_label, localeSettings.locale.groupe2.sousgroupe2.param1_text),
-            new Setting(7, 'groupe2.param1', 'groupe2.param1', 'Number', null, null, false, true, "", false, "1/4", localeSettings.locale.groupe2.sousgroupe2.param1_label, localeSettings.locale.groupe2.sousgroupe2.param1_text),
-            new Setting(8, 'groupe2.sousgroupe2.param1', 'groupe2.sousgroupe2.param1', 'Boolean', null, null, false, true, "", false, "1/4",localeSettings.locale.groupe2.sousgroupe2.param1_label, localeSettings.locale.groupe2.sousgroupe2.param1_text),
+            {id: 1, code:"test1.soustest1.param1", type:'Number', overridable:true, value: '123', favorite: true, width:"1/4"},
+            {id: 2, code:"test1.soustest1.param2", type:'String', overridable:true, value: 'Hello World', favorite: false, width:"1/4"},
+            {id: 3, code:"test1.soustest2.param3", type:'Boolean', overridable:true, value: true, favorite: true, width:"1/4"},
+            {id: 4, code:"test1.soustest2.param4", type:'Boolean', overridable:true, value: false, favorite: false, width:"1/4"},
+            {id: 5, code:"test1.soustest2.param5", type:'Array', options:[
+                {label: "Test 1", value:"test1"},
+                {label: "Test 2", value:"test2"},
+                {label: "Test 3", value:"test3"},
+            ], overridable:true, value: '123', favorite: true, width:"1/4"},
+            {id: 6, code:"test1.soustest3.param1", type:'Number', overridable:true, value: '123', favorite: true, width:"1/4"}
         ];
-    }
+    },
+
 }

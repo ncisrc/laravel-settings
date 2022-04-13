@@ -1,51 +1,33 @@
 <template>
-  <div class="main">
-    <nci-tabs>
-      <template #settingsApplication>
-        <the-settings-application />
-      </template>
-      <template #settingsUsers>
-        <the-settings-users />
-      </template>
-    </nci-tabs>
-  </div>
+  <n-tabs type="line" animated>
+      <n-tab-pane name="application" :tab="$t('settings.application')">
+          <the-settings-application />
+      </n-tab-pane>
+  </n-tabs>
 </template>
 
 <script>
-import { NciTabs } from "@/components/ui/NciUI";
 import TheSettingsApplication from "./views/TheSettingsApplication.vue";
-import TheSettingsUsers from "./views/TheSettingsUsers.vue";
 
-import { mapActions } from 'pinia';
-import { useSettings } from '@/business/stores/useSettings'
-
-import MockPersistanceLayer from './mocks/MockPersistanceLayer';
-const persistanceLayer = new MockPersistanceLayer();
+import { mapStores }    from "pinia";
+import { useSettings }  from '@/business/stores/useSettings'
+import persistanceLayer from './mocks/MockPersistanceLayer';
+import { NTabs, NTabPane } from "naive-ui";
 
 export default {
   components: {
-    NciTabs,
     TheSettingsApplication,
-    TheSettingsUsers,
+    NTabs,
+    NTabPane
+  },
+
+  computed: {
+    ...mapStores(useSettings)
   },
 
   mounted() {
-    this.refresh();
-  },
-
-  methods: {
-    ...mapActions(useSettings, {settingsStoreLoad: 'load'}),
-
-    refresh() {
-      this.settingsStoreLoad(persistanceLayer);
-    },
+    this.useSettingsStore.setTranslator(this.$t);
+    this.useSettingsStore.load(persistanceLayer);
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.main {
-    margin: 8rem;
-}
-
-</style>

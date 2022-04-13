@@ -14,6 +14,7 @@
         class="nciSelect"
       />
     </div>
+
     <div>
       <nci-settings-tree
         :pathItems="pathItemsFiltered"
@@ -21,6 +22,7 @@
         class="nciTree"
       />
     </div>
+
     <div v-for="param in listParams" :key="param.code">
       <nci-settings :setting="param" />
     </div>

@@ -1,93 +1,71 @@
 <template>
   <div>
-    <nci-input
-      :value="search"
-      type="text"
-      :placeholder="$t('bt.search')"
-      @update:value="updateSearch"
-    />
-    <nci-settings-tree
-      :pathItems="pathItemsFiltered"
-      @select:key="displayParams"
-    />
-    <div v-for="param in listParams" :key="param.code">
-      <nci-settings :setting="param"/>
+    <div>
+      <input
+        v-model="filter"
+        type="text"
+        :placeholder="$t('bt.filter')"
+      />
+    </div>
+
+    <div class="flex">
+      <div class="w-1/4">
+        <n-tree
+            block-line
+            :data="filteredPaths"
+            selectable
+          />
+      </div>
+      <div class="w-3/4">
+        <div v-for="setting in filteredSettings" :key="setting.id">
+          {{ setting.code }}<br />
+          {{ setting.label }} <br />
+          {{ setting.text }}
+          <hr />
+        </div>
+      </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import { NciInput } from "@/components/ui/NciUI";
-import { NciSettingsTree, NciSettingsInput } from "@/components/NciSettings";
-import { mapState } from "pinia";
+import { mapStores } from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
-import NciSettings from "../components/NciSettings.vue";
+import { NTree } from "naive-ui";
+import stringToPath from "../libs/stringToPath";
 
 export default {
+  setup() {
+    return { stringToPath };
+  },
   components: {
-    NciSettingsInput,
-    NciInput,
-    NciSettingsTree,
-    NciSettings,
-  },
-
-  mounted() {
-    this.listParams = this.loadAllParams();
-    console.log(this.listParams)
-  },
-
-  computed: {
-    ...mapState(useSettings, {
-      pathItems: "settingsPath",
-      loadParams: "listParams",
-      loadAllParams: "loadAll",
-    }),
-
-    pathItemsFiltered() {
-      var rAry = [];
-      this.pathItems.forEach((item) => this.getItem(item, rAry));
-      return rAry;
-    },
-  },
-
-  methods: {
-    updateSearch(text) {
-      this.search = text;
-      console.log(this.loadAllSettingsParams());
-    },
-
-    displayParams(key) {
-      this.listParams = this.loadParams(key);
-    },
-
-    getItem(item, ary) {
-      let found = item.key.toLowerCase().includes(this.search.toLowerCase());
-      if (found) ary.push(item);
-      if (!found && item.children) {
-        item.children.forEach((toto) => this.getItem(toto, ary));
-      }
-    },
-
-    loadAllSettingsParams() {
-      this.listParams = this.loadAllParams();
-      this.listParams = this.listParams.filter(params => {
-        return params.text.toLowerCase().includes(this.search.toLowerCase()) || params.label.toLowerCase().includes(this.search.toLowerCase())
-      })
-    }
+    NTree
   },
 
   data() {
     return {
-      search    : "",
-      listParams: [],
-    };
+      filter:''
+    }
+  },
+
+  computed: {
+    ...mapStores(useSettings),
+
+    filteredSettings() {
+      if (this.useSettingsStore.applicationSettings.length == 0)
+        return [];
+
+      if (this.filter == '')
+        return this.useSettingsStore.applicationSettings;
+
+      return this.useSettingsStore.applicationSettings.filter(item => {
+        return item.matchFilter(this.filter)
+      });
+    },
+
+    filteredPaths() {
+      return this.stringToPath(this.filteredSettings);
+    }
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.n-tree {
-  width: 15%;
-}
-</style>
