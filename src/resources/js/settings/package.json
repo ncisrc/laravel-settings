@@ -12,6 +12,8 @@
   "dependencies": {
     "i18n": "^0.14.2",
     "pinia": "^2.0.13",
+    "primeicons": "^5.0.0",
+    "primevue": "^3.12.4",
     "vue": "^3.2.31",
     "vue-i18n": "^9.1.9"
   },

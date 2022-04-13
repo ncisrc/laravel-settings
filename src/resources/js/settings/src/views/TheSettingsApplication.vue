@@ -14,26 +14,34 @@
       <nci-settings :setting="param"/>
     </div>
   </div>
+
 </template>
 
 <script>
 import { NciInput } from "@/components/ui/NciUI";
-import { NciSettingsTree } from "@/components/NciSettings";
+import { NciSettingsTree, NciSettingsInput } from "@/components/NciSettings";
 import { mapState } from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
 import NciSettings from "../components/NciSettings.vue";
 
 export default {
   components: {
+    NciSettingsInput,
     NciInput,
     NciSettingsTree,
     NciSettings,
+  },
+
+  mounted() {
+    this.listParams = this.loadAllParams();
+    console.log(this.listParams)
   },
 
   computed: {
     ...mapState(useSettings, {
       pathItems: "settingsPath",
       loadParams: "listParams",
+      loadAllParams: "loadAll",
     }),
 
     pathItemsFiltered() {
@@ -46,6 +54,7 @@ export default {
   methods: {
     updateSearch(text) {
       this.search = text;
+      console.log(this.loadAllSettingsParams());
     },
 
     displayParams(key) {
@@ -59,6 +68,13 @@ export default {
         item.children.forEach((toto) => this.getItem(toto, ary));
       }
     },
+
+    loadAllSettingsParams() {
+      this.listParams = this.loadAllParams();
+      this.listParams = this.listParams.filter(params => {
+        return params.text.toLowerCase().includes(this.search.toLowerCase()) || params.label.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   },
 
   data() {

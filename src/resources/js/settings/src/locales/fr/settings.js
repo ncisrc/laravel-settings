@@ -16,5 +16,11 @@ export default {
                 param1_text: "tata"
             }
         },
+        groupe1: {
+            sousgroupe1: {
+                param1_label: "test",
+                param1_text: "toto"
+            }
+        },
     }
 }
