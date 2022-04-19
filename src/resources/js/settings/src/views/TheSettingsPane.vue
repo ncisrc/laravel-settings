@@ -18,9 +18,7 @@
       </div>
       <div class="w-3/4">
         <div v-for="setting in filteredSettings" :key="setting.id">
-          {{ setting.code }}<br />
-          {{ setting.label }} <br />
-          {{ setting.text }}
+          <nci-settings :setting="setting" />
           <hr />
         </div>
       </div>
@@ -29,27 +27,25 @@
 </template>
 
 <script>
-import { mapStores }   from "pinia";
+import { mapStores } from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
-import { NTree }       from "naive-ui";
-import stringToPath    from "../libs/stringToPath";
-
-import NciSettingInput from ...
-...
-
+import { NTree } from "naive-ui";
+import stringToPath from "../libs/stringToPath";
+import NciSettings from "../components/NciSettings.vue";
 
 export default {
   setup() {
     return { stringToPath };
   },
   components: {
-    NTree
+    NTree,
+    NciSettings,
   },
 
   data() {
     return {
-      filter:''
-    }
+      filter: "",
+    };
   },
 
   computed: {
@@ -69,7 +65,7 @@ export default {
 
     filteredPaths() {
       return this.stringToPath(this.filteredSettings);
-    }
+    },
   },
 };
 </script>

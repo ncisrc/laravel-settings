@@ -26,6 +26,15 @@ export default class Setting {
         return matchCode || matchLabel || matchText;
     }
 
+    getTypeInput() {
+        let typeInput = "";
+        if (this.type == 'String' || this.type == 'Number') typeInput = "Input"
+        if (this.type == 'Array') typeInput = "Select"
+        if (this.type == 'Boolean') typeInput = "Switch"
+
+        return typeInput;
+    }
+
 
     getId() {
         return this.id;

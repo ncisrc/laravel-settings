@@ -1,7 +1,7 @@
 <template>
-  <TheSettingApplication/>
+  <the-settings />
 </template>
 
 <script setup>
-import TheSettingsApplication from "./views/TheSettingsApplication.vue";
+import TheSettings from "./views/TheSettings.vue";
 </script>

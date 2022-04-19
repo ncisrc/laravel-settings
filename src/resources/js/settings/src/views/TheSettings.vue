@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <div>
       <input v-model="settingType" type="radio" name="typeSettings" value="A"> {{ $t('settings.app') }}
@@ -7,18 +6,16 @@
     </div>
 
     <div>
-      <the-settings-pane :settingType="settingType"></the-settings-pane>>
+      <the-settings-pane :settingType="settingType"></the-settings-pane>
     </div>
   </div>
 </template>
 
 <script>
-import TheSettingsPane from "./views/TheSettingsPane.vue";
-
+import TheSettingsPane from "./TheSettingsPane.vue";
 import { mapStores }    from "pinia";
 import { useSettings }  from '@/business/stores/useSettings'
-import persistanceLayer from './mocks/MockPersistanceLayer';
-import { NTabs, NTabPane } from "naive-ui";
+import persistanceLayer from '../mocks/MockPersistanceLayer';
 
 export default {
   components: {
@@ -27,7 +24,7 @@ export default {
 
   data() {
     return {
-      settingType
+      settingType: "A",
     }
   },
 
