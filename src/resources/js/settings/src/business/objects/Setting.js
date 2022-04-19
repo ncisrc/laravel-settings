@@ -26,6 +26,7 @@ export default class Setting {
         return matchCode || matchLabel || matchText;
     }
 
+
     getId() {
         return this.id;
     }

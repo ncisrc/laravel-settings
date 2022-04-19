@@ -29,10 +29,14 @@
 </template>
 
 <script>
-import { mapStores } from "pinia";
+import { mapStores }   from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
-import { NTree } from "naive-ui";
-import stringToPath from "../libs/stringToPath";
+import { NTree }       from "naive-ui";
+import stringToPath    from "../libs/stringToPath";
+
+import NciSettingInput from ...
+...
+
 
 export default {
   setup() {
