@@ -6,6 +6,13 @@
         type="text"
         :placeholder="$t('bt.filter')"
       />
+
+      <nci-select
+        v-if="settingType=='U'"
+        v-model="select"
+        placeholder="Choix de l'utilisateur"
+        class="nciSelect"
+      />
     </div>
 
     <div class="flex">
@@ -32,6 +39,7 @@ import { useSettings } from "@/business/stores/useSettings";
 import { NTree } from "naive-ui";
 import stringToPath from "../libs/stringToPath";
 import NciSettings from "../components/NciSettings.vue";
+import { NciSelect } from "@/components/ui/NciUI";
 
 export default {
   setup() {
@@ -40,11 +48,17 @@ export default {
   components: {
     NTree,
     NciSettings,
+    NciSelect,
+  },
+
+  props: {
+    settingType: String,
   },
 
   data() {
     return {
       filter: "",
+      select: null,
     };
   },
 
