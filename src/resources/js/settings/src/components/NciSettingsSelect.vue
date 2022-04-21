@@ -1,23 +1,24 @@
 <template>
   <div class="NciSettingsInput">
-    {{ setting.label }}
-    {{ setting.text }}
-    {{ setting.title }}
-    {{ setting.path }}
-    {{ setting.description }}
+    <div class="flex w-full">
+      <div>
+        {{ setting.label }}
+      </div>
+      <div class="text-gray-500 ml-3">{{ setting.code }}</div>
+    </div>
+    <div class="w-full my-3">{{ setting.text }}</div>
 
     <nci-select
       v-model:value="setting.value"
-      :multiple = "multiple"
-      :filterable = "filterable"
-      :options="setting.options_data"
+      filterable
+      :options="setting.options"
       :placeholder="$t('settings.select')"
     />
   </div>
 </template>
 
 <script>
-import NciSelect from "./ui/NciSelect.vue"
+import NciSelect from "./ui/NciSelect.vue";
 
 export default {
   components: {
@@ -25,7 +26,6 @@ export default {
   },
   props: {
     setting   : Object,
-    multiple  : Boolean,
     filterable: Boolean,
   },
 };

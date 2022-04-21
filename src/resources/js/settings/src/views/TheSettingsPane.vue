@@ -1,25 +1,29 @@
 <template>
   <div>
-    <div>
-      <input
-        v-model="filter"
-        type="text"
-        :placeholder="$t('bt.filter')"
-      />
-
-      <nci-select
-        v-if="settingType=='U'"
-        v-model="select"
-        placeholder="Choix de l'utilisateur"
-        class="nciSelect"
-      />
+    <div class="flex">
+      <div class="w-full ml-4">
+        <input
+          v-model="filter"
+          type="text"
+          :placeholder="$t('bt.filter')"
+          @keyup="updateFilter"
+        />
+      </div>
+      <div class="w-1/4 mr-4">
+        <nci-select
+          v-if="settingType=='U'"
+          v-model="select"
+          placeholder="Choix de l'utilisateur"
+          class="nciSelect"
+        />
+      </div>
     </div>
 
     <div class="flex">
       <div class="w-1/4">
         <n-tree
             block-line
-            :data="filteredPaths"
+            :data="filteredSettingsPaths"
             selectable
           />
       </div>
@@ -37,14 +41,10 @@
 import { mapStores } from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
 import { NTree } from "naive-ui";
-import stringToPath from "../libs/stringToPath";
 import NciSettings from "../components/NciSettings.vue";
 import { NciSelect } from "@/components/ui/NciUI";
 
 export default {
-  setup() {
-    return { stringToPath };
-  },
   components: {
     NTree,
     NciSettings,
@@ -66,20 +66,18 @@ export default {
     ...mapStores(useSettings),
 
     filteredSettings() {
-      if (this.useSettingsStore.applicationSettings.length == 0)
-        return [];
-
-      if (this.filter == '')
-        return this.useSettingsStore.applicationSettings;
-
-      return this.useSettingsStore.applicationSettings.filter(item => {
-        return item.matchFilter(this.filter)
-      });
+      return this.settingType == "A" ? this.useSettingsStore.applicationSettingsFiltered : this.useSettingsStore.userSettingsFiltered;
     },
 
-    filteredPaths() {
-      return this.stringToPath(this.filteredSettings);
+    filteredSettingsPaths() {
+      return this.settingType == "A" ? this.useSettingsStore.applicationSettingsPaths : this.useSettingsStore.userSettingsPaths;
     },
   },
+
+  methods:{
+    updateFilter(){
+      this.useSettingsStore.setFilter(this.filter);
+    }
+  }
 };
 </script>

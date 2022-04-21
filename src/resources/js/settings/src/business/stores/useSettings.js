@@ -1,34 +1,40 @@
 import { defineStore } from 'pinia';
 import Setting from "../objects/Setting";
 import i18n from '../../locales';
+import stringToPath from '../../libs/stringToPath';
 
 export const useSettings = defineStore('useSettings', {
   state: () => {
     return {
       settings: [],
       translator: null,
+      filter: "",
     }
   },
 
   getters: {
     applicationSettings() {
-      return this.settings.filter(item => (item.overridable == true));
-    },
-
-    applicationSettingPaths() {
-      var rAry = [];
-      this.applicationSettings.map((item) => this.stringToPath("", item.code, rAry, item.localeEngine));
-      return rAry;
-    },
-
-    userSettings() {
       return this.settings.filter(item => (item.overridable == false));
     },
 
-    userSettingPath() {
-      var rAry = [];
-      this.applicationSettings.map((item) => this.stringToPath("", item.code, rAry, item.localeEngine));
-      return rAry;
+    applicationSettingsFiltered() {
+      return this.applicationSettings.filter(item => item.matchFilter(this.filter));
+    },
+
+    applicationSettingsPaths() {
+      return stringToPath(this.applicationSettingsFiltered);
+    },
+
+    userSettings() {
+      return this.settings.filter(item => (item.overridable == true));
+    },
+
+    userSettingsFiltered() {
+      return this.userSettings.filter(item => item.matchFilter(this.filter));
+    },
+
+    userSettingsPaths() {
+      return stringToPath(this.userSettingsFiltered);
     },
 
     length() {
@@ -63,6 +69,9 @@ export const useSettings = defineStore('useSettings', {
       return this.settings.find((item) => item.code == code);
     },
 
+    setFilter(filter){
+      this.filter = filter;
+    }
 
   }
 });

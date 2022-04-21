@@ -23,7 +23,6 @@ export default {
     multiple: Boolean,
     setting: Object,
     placeholder: String,
-    filterable: String,
   },
 };
 </script>

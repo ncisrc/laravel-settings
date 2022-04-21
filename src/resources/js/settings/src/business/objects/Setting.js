@@ -18,6 +18,7 @@ export default class Setting {
     }
 
     matchFilter(filter) {
+        if (filter == "" ) return true;
         const filterLC   = filter.toLowerCase();
         const matchCode  = this.code.toLowerCase().includes(filterLC);
         const matchLabel = this.label.toLowerCase().includes(filterLC);

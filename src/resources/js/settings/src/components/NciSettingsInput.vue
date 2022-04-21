@@ -1,12 +1,18 @@
 <template>
   <div class="NciSettingsInput">
-    {{ setting.label }}
-    {{ setting.text }}
-    {{ setting.title }}
-    {{ setting.path }}
-    {{ setting.description }}
-
-    <nci-input v-model:value="setting.value" type="text" :placeholder="$t('settings.input')" />
+    <div class="flex w-full">
+      <div>
+        {{ setting.label }}
+      </div>
+      <div class="text-gray-500 ml-3">{{ setting.code }}</div>
+    </div>
+    <div class="w-full my-3">{{ setting.text }}</div>
+    
+    <nci-input
+      v-model:value="setting.value"
+      type="text"
+      :placeholder="$t('settings.input')"
+    />
   </div>
 </template>
 
@@ -18,7 +24,7 @@ export default {
     NciInput,
   },
   props: {
-    setting: Object,
+    setting    : Object,
     placeholder: String,
   },
 };
