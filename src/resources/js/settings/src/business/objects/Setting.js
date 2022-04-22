@@ -1,5 +1,7 @@
 export default class Setting {
     constructor(data, localeEngine) {
+        this.localeEngine  = localeEngine;
+
         this.id            = data.id          || null;
         this.code          = data.code;
         this.type          = data.type        || 'String';
@@ -11,10 +13,10 @@ export default class Setting {
         this.width         = data.width       || '1/4';
 
         const label_code   = `settings.code.${this.code}.label`;
-        this.label         = localeEngine(label_code) || label_code;
+        this.label         = this.localeEngine(label_code) || label_code;
 
         const label_text   = `settings.code.${this.code}.text`;
-        this.text          = localeEngine(label_text) || '';
+        this.text          = this.localeEngine(label_text) || '';
     }
 
     matchFilter(filter) {
@@ -23,7 +25,6 @@ export default class Setting {
         const matchCode  = this.code.toLowerCase().includes(filterLC);
         const matchLabel = this.label.toLowerCase().includes(filterLC);
         const matchText  = this.text.toLowerCase().includes(filterLC);
-        console.log(matchCode, matchLabel, matchText);
         return matchCode || matchLabel || matchText;
     }
 
@@ -32,7 +33,6 @@ export default class Setting {
         if (this.type == 'String' || this.type == 'Number') typeInput = "Input"
         if (this.type == 'Array') typeInput = "Select"
         if (this.type == 'Boolean') typeInput = "Switch"
-
         return typeInput;
     }
 

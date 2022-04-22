@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
 import Setting from "../objects/Setting";
-import i18n from '../../locales';
-import stringToPath from '../../libs/stringToPath';
 
 export const useSettings = defineStore('useSettings', {
   state: () => {
@@ -22,7 +20,7 @@ export const useSettings = defineStore('useSettings', {
     },
 
     applicationSettingsPaths() {
-      return stringToPath(this.applicationSettingsFiltered);
+      return this.stringToPath(this.applicationSettingsFiltered);
     },
 
     userSettings() {
@@ -34,7 +32,7 @@ export const useSettings = defineStore('useSettings', {
     },
 
     userSettingsPaths() {
-      return stringToPath(this.userSettingsFiltered);
+      return this.stringToPath(this.userSettingsFiltered);
     },
 
     length() {
@@ -71,8 +69,38 @@ export const useSettings = defineStore('useSettings', {
 
     setFilter(filter){
       this.filter = filter;
+    },
+
+    stringToPath(items) {
+      var rAry = [];
+      items.forEach(item => this.recursivePathFinder("", item.code, rAry, item.localeEngine));
+      return rAry;
+    },
+
+    recursivePathFinder(prefix, code, ary, localeEngine) {
+      const codePath = code.split('.');
+      const name     = codePath[0];
+      const fullname = (prefix == '') ? name : `${prefix}.${name}`;
+
+      // On recherche si l'item existe déjà dans le tableau
+      let item = ary.find(item => item.key == fullname);
+
+      // Sinon on le crée et on l'ajoute au tableau
+      if (!item) {
+        item = {
+          key : fullname,
+          label : localeEngine(`settings.menu.${fullname}_label`),
+          children : []
+        }
+        ary.push(item);
+      }
+
+      // Puis on parse les suivants si c'est nécessaire
+      if (codePath.length > 2) {
+        const nextCode = codePath.splice(1).join('.');
+        this.recursivePathFinder(fullname, nextCode, item.children, localeEngine)
+      }
     }
 
   }
 });
-

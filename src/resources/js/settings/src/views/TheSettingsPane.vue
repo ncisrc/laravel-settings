@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import { mapStores } from "pinia";
 import { useSettings } from "@/business/stores/useSettings";
 import { NTree } from "naive-ui";
 import NciSettings from "../components/NciSettings.vue";
@@ -62,8 +61,14 @@ export default {
     };
   },
 
+  setup() {
+    const useSettingsStore = useSettings();
+    return {
+      useSettingsStore
+    }
+  },
+
   computed: {
-    ...mapStores(useSettings),
 
     filteredSettings() {
       return this.settingType == "A" ? this.useSettingsStore.applicationSettingsFiltered : this.useSettingsStore.userSettingsFiltered;
