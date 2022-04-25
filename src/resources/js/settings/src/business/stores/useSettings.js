@@ -17,7 +17,7 @@ export const useSettings = defineStore('useSettings', {
     },
 
     applicationSettingsFiltered() {
-      return this.applicationSettings.filter(item => item.matchFilter(this.filter)).filter(item => item.matchCode(this.key));
+      return this.applicationSettings.filter(item => item.matchCode(this.key)).filter(item => item.matchFilter(this.filter));
     },
 
     applicationSettingsPaths() {
@@ -29,7 +29,7 @@ export const useSettings = defineStore('useSettings', {
     },
 
     userSettingsFiltered() {
-      return this.userSettings.filter(item => item.matchFilter(this.filter)).filter(item => item.matchCode(this.key));
+      return this.userSettings.filter(item => item.matchCode(this.key)).filter(item => item.matchFilter(this.filter));
     },
 
     userSettingsPaths() {

@@ -3,24 +3,24 @@
     <div class="flex mt-5">
       <div class="w-4/6 ml-5">
         <InputText
-        class="w-full"
+        class="w-full mr-3"
           v-model="filter"
           :placeholder="$t('bt.filter')"
           @keyup="updateFilter"
         />
       </div>
       <div class="w-2/6 ml-3 pr-5">
-        <nci-select
+        <Dropdown
           class="w-full"
           v-if="settingType == 'U'"
           v-model="select"
-          placeholder="Choix de l'utilisateur"
+          :placeholder="$t('settings.selectUser')"
         />
       </div>
     </div>
 
     <div class="flex">
-      <div class="w-1/6 mt-5 ml-5">
+      <div class="nci-setting_menu">
         <Tree
           :value="filteredSettingsPaths"
           selectionMode="single"
@@ -33,7 +33,7 @@
       </div>
       <div class="w-3/6 ml-5">
         <div
-          class="border border-current p-5 my-5 mr-2"
+          class="nci-setting_item"
           v-for="setting in filteredSettings"
           :key="setting.id"
         >
@@ -48,15 +48,15 @@
 <script>
 import { useSettings } from "@/business/stores/useSettings";
 import NciSettings from "../components/NciSettings.vue";
-import { NciSelect } from "@/components/ui/NciUI";
 import InputText from "primevue/inputtext";
 import Tree from "primevue/tree";
+import Dropdown from 'primevue/dropdown';
 
 export default {
   components: {
+    Dropdown,
     InputText,
     NciSettings,
-    NciSelect,
     Tree,
   },
 

@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.nci-setting_menu {
+    @apply w-1/6 mt-5 ml-5
+}
+.nci-setting_item {
+    @apply border border-current p-5 my-5 mr-2
+}
+
+.nci-setting_item-container {
+    @apply flex w-full
+}
+
+.nci-setting_item-label {
+    @apply font-medium
+}
+
+.nci-setting_item-code {
+    @apply text-gray-500 ml-3
+}
+
+.nci-setting_item-text {
+    @apply w-full my-3
+}
+
+.nci-setting_item-value_switch {
+    @apply flex w-full mt-3 align-middle
+}

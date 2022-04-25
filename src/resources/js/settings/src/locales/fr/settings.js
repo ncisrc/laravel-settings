@@ -3,6 +3,7 @@ export default {
     users: "Utilisateurs",
     input: "Écrire ici",
     select: "Sélectionnez",
+    selectUser: "Choix de l'utilisateur",
     menu: {
         test1_label : "Menu Test1",
         test1 : {

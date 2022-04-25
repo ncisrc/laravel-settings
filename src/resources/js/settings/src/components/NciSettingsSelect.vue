@@ -1,28 +1,23 @@
 <template>
-  <div class="NciSettingsInput">
-    <div class="flex w-full">
-      <div>
+  <div>
+    <div class="nci-setting_item-container">
+      <div class="nci-setting_item-label">
         {{ setting.label }}
       </div>
-      <div class="text-gray-500 ml-3">{{ setting.code }}</div>
+      <div class="nci-setting_item-code">{{ setting.code }}</div>
     </div>
-    <div class="w-full my-3">{{ setting.text }}</div>
+    <div class="nci-setting_item-text">{{ setting.text }}</div>
 
-    <nci-select
-      v-model:value="setting.value"
-      filterable
-      :options="setting.options"
-      :placeholder="$t('settings.select')"
-    />
+    <Dropdown v-model:value="setting.value" :options="setting.options" optionLabel="label" :placeholder="$t('settings.select')" />
   </div>
 </template>
 
 <script>
-import NciSelect from "./ui/NciSelect.vue";
+import Dropdown from 'primevue/dropdown';
 
 export default {
   components: {
-    NciSelect,
+    Dropdown,
   },
   props: {
     setting   : Object,

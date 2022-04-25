@@ -1,24 +1,24 @@
 <template>
-  <div class="NciSettingsInput">
-    <div class="flex w-full">
-      <div>
+  <div>
+    <div class="nci-setting_item-container">
+      <div class="nci-setting_item-label">
         {{ setting.label }}
       </div>
-      <div class="text-gray-500 ml-3">{{ setting.code }}</div>
+      <div class="nci-setting_item-code">{{ setting.code }}</div>
     </div>
-    <div class="flex w-full my-3">
-      <nci-switch v-model:value="setting.value"/>
-      <div class="ml-3">{{ setting.text }}</div>
+    <div class="nci-setting_item-value_switch">
+      <InputSwitch v-model="setting.value" />
+      <div class="nci-setting_item-text">{{ setting.text }}</div>
     </div>
   </div>
 </template>
 
 <script>
-import NciSwitch from "./ui/NciSwitch.vue";
+import InputSwitch from 'primevue/inputswitch';
 
 export default {
   components: {
-    NciSwitch,
+     InputSwitch,
   },
   props: {
     setting: Object,

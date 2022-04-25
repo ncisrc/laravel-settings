@@ -1,27 +1,22 @@
 <template>
-  <div class="NciSettingsInput">
-    <div class="flex w-full">
-      <div>
+  <div>
+    <div class="nci-setting_item-container">
+      <div class="nci-setting_item-label">
         {{ setting.label }}
       </div>
-      <div class="text-gray-500 ml-3">{{ setting.code }}</div>
+      <div class="nci-setting_item-code">{{ setting.code }}</div>
     </div>
-    <div class="w-full my-3">{{ setting.text }}</div>
-    
-    <nci-input
-      v-model:value="setting.value"
-      type="text"
-      :placeholder="$t('settings.input')"
-    />
+    <div class="nci-setting_item-text">{{ setting.text }}</div>
+      <InputText v-model:value="setting.value" :placeholder="$t('settings.input')" />
   </div>
 </template>
 
 <script>
-import { NciInput } from "./ui/NciUI";
+import InputText from 'primevue/inputtext';
 
 export default {
   components: {
-    NciInput,
+   InputText,
   },
   props: {
     setting    : Object,
