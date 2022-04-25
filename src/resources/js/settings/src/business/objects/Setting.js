@@ -8,7 +8,7 @@ export default class Setting {
         this.options       = data.options     || null;
         this.nullable      = data.nullable    || true;
         this.overridable   = data.overridable || false;
-        this.value         = data.value       || '';
+        this.value         = data.value       || (this.type == 'Boolean' ? false : '');
         this.favorite      = data.favorite    || false;
         this.width         = data.width       || '1/4';
 
@@ -26,6 +26,13 @@ export default class Setting {
         const matchLabel = this.label.toLowerCase().includes(filterLC);
         const matchText  = this.text.toLowerCase().includes(filterLC);
         return matchCode || matchLabel || matchText;
+    }
+
+    matchCode(key) {
+        if (key == "" ) return true;
+        const keyLC = key.toLowerCase();
+        const matchCode  = this.code.toLowerCase().includes(keyLC);
+        return matchCode;
     }
 
     getTypeInput() {

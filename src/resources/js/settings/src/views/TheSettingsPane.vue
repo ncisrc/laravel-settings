@@ -23,6 +23,11 @@
       <div class="w-1/6 mt-5 ml-5">
         <Tree
           :value="filteredSettingsPaths"
+          selectionMode="single"
+          v-model:selectionKeys="selectedKey"
+          :metaKeySelection="false"
+          @nodeSelect="updateKey"
+          @nodeUnselect="updateKey"
           :expandedKeys="expandedKeys"
         ></Tree>
       </div>
@@ -73,6 +78,7 @@ export default {
       select: null,
       nodes: null,
       expandedKeys: {},
+      selectedKey: null,
     };
   },
 
@@ -109,6 +115,10 @@ export default {
           this.expandNode(child);
         }
       }
+    },
+
+    updateKey(node){
+      this.useSettingsStore.setKey(node.key);
     },
   },
 };

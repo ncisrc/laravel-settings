@@ -7,6 +7,7 @@ export const useSettings = defineStore('useSettings', {
       settings: [],
       translator: null,
       filter: "",
+      key:"",
     }
   },
 
@@ -16,7 +17,7 @@ export const useSettings = defineStore('useSettings', {
     },
 
     applicationSettingsFiltered() {
-      return this.applicationSettings.filter(item => item.matchFilter(this.filter));
+      return this.applicationSettings.filter(item => item.matchFilter(this.filter)).filter(item => item.matchCode(this.key));
     },
 
     applicationSettingsPaths() {
@@ -28,7 +29,7 @@ export const useSettings = defineStore('useSettings', {
     },
 
     userSettingsFiltered() {
-      return this.userSettings.filter(item => item.matchFilter(this.filter));
+      return this.userSettings.filter(item => item.matchFilter(this.filter)).filter(item => item.matchCode(this.key));
     },
 
     userSettingsPaths() {
@@ -69,6 +70,10 @@ export const useSettings = defineStore('useSettings', {
 
     setFilter(filter){
       this.filter = filter;
+    },
+
+    setKey(key){
+      this.key != key ? this.key = key : this.key = "";
     },
 
     stringToPath(items) {
