@@ -1,25 +1,19 @@
 <template>
-    <n-select
-      v-model:value="value"
-      :multiple="multiple"
-      :filterable="filterable"
-      :options="options"
-      :placeholder="placeholder"
-    />
+    <Dropdown v-model:value="value" :options="options" optionLabel="label" :placeholder="placeholder" />
 </template>
 
 <script>
 import { NSelect } from "naive-ui";
+import Dropdown from 'primevue/dropdown';
 
 export default {
   components: {
     NSelect,
+    Dropdown,
   },
   props: {
-    value: String,
-    options: Array,
-    multiple: Boolean,
-    filterable: Boolean,
+    value      : String,
+    options    : Array,
     placeholder: String,
   },
 };

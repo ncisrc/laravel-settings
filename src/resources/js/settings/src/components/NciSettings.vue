@@ -1,5 +1,5 @@
 <template>
-  <div class="NciSettings">
+  <div>
     <component
       :is="`NciSettings${setting.getTypeInput()}`"
       :setting="setting"
@@ -26,14 +26,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.NciSettings {
-  border: 1px solid black;
-  padding: 1rem;
-  margin: 1rem;
-}
-.settingsLabel {
-  font-weight: bold;
-}
-</style>

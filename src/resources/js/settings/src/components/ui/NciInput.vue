@@ -1,16 +1,16 @@
 <template>
-  <n-input v-model:value="value" type="text" :placeholder="placeholder" @keyup="sendValueUpdate"/>
+  <InputText v-model:value="value" :placeholder="placeholder" @keyup="sendValueUpdate" />
 </template>
 
 <script>
-import { NInput } from "naive-ui";
+import InputText from 'primevue/inputtext';
 
 export default {
   components: {
-    NInput,
+    InputText,
   },
   props: {
-    value: String,
+    value      : String,
     placeholder: String,
   },
 

@@ -1,16 +1,16 @@
 <template>
-  <n-switch v-model:value="value" />
+  <InputSwitch v-model="value" />
 </template>
 
 <script>
-import { NSwitch } from "naive-ui";
+import InputSwitch from 'primevue/inputswitch';
 
 export default {
   components: {
-    NSwitch,
+    InputSwitch,
   },
   props: {
-    value: String,
+    value: Boolean,
   },
 };
 </script>

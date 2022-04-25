@@ -36,7 +36,6 @@ export default class Setting {
         return typeInput;
     }
 
-
     getId() {
         return this.id;
     }

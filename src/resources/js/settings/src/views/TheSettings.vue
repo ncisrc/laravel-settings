@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div>
-      <input v-model="settingType" type="radio" name="typeSettings" value="A"> {{ $t('settings.application') }}
-      <input v-model="settingType" type="radio" name="typeSettings" value="U"> {{ $t('settings.users') }}
+    <div class="mt-5">
+      <input class="ml-5" v-model="settingType" type="radio" name="typeSettings" value="A"> {{ $t('settings.application') }}
+      <input class="ml-5" v-model="settingType" type="radio" name="typeSettings" value="U"> {{ $t('settings.users') }}
     </div>
 
     <div>
