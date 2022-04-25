@@ -21,7 +21,7 @@ export const useSettings = defineStore('useSettings', {
     },
 
     applicationSettingsPaths() {
-      return this.stringToPath(this.applicationSettingsFiltered);
+      return this.stringToPath(this.applicationSettings);
     },
 
     userSettings() {
@@ -33,7 +33,7 @@ export const useSettings = defineStore('useSettings', {
     },
 
     userSettingsPaths() {
-      return this.stringToPath(this.userSettingsFiltered);
+      return this.stringToPath(this.userSettings);
     },
 
     length() {
