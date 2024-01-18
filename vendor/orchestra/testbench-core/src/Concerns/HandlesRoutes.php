@@ -2,38 +2,63 @@
 
 namespace Orchestra\Testbench\Concerns;
 
-use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\Application as LaravelApplication;
+use Orchestra\Testbench\Attributes\DefineRoute;
+use Orchestra\Testbench\Features\TestingFeature;
 use Orchestra\Testbench\Foundation\Application;
 
+use function Illuminate\Filesystem\join_paths;
+use function Orchestra\Testbench\remote;
+
+/**
+ * @internal
+ */
 trait HandlesRoutes
 {
     /**
      * Setup routes requirements.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      */
-    protected function setUpApplicationRoutes(): void
+    protected function setUpApplicationRoutes($app): void
     {
-        if ($this->app->routesAreCached()) {
+        if ($app->routesAreCached()) {
             return;
         }
 
-        $this->defineRoutes($this->app['router']);
+        /** @var \Illuminate\Routing\Router $router */
+        $router = $app['router'];
 
-        $this->app['router']->middleware('web')
-            ->group(fn ($router) => $this->defineWebRoutes($router));
+        TestingFeature::run(
+            testCase: $this,
+            default: function () use ($router) {
+                $this->defineRoutes($router);
 
-        if (method_exists($this, 'parseTestMethodAnnotations')) {
-            $this->parseTestMethodAnnotations($this->app, 'define-route');
-        }
+                $router->middleware('web')
+                    ->group(fn ($router) => $this->defineWebRoutes($router));
+            },
+            annotation: fn () => $this->parseTestMethodAnnotations($app, 'define-route', function ($method) use ($router) {
+                $this->{$method}($router);
+            }),
+            attribute: fn () => $this->parseTestMethodAttributes($app, DefineRoute::class),
+            pest: function ($default) use ($router) {
+                $this->defineRoutesUsingPest($router); // @phpstan-ignore-line
 
-        $this->app['router']->getRoutes()->refreshNameLookups();
+                $router->middleware('web')
+                    ->group(fn ($router) => $this->defineWebRoutesUsingPest($router)); // @phpstan-ignore-line
+
+                value($default);
+            }
+        );
+
+        $router->getRoutes()->refreshNameLookups();
     }
 
     /**
      * Define routes setup.
      *
      * @param  \Illuminate\Routing\Router  $router
-     *
      * @return void
      */
     protected function defineRoutes($router)
@@ -45,7 +70,6 @@ trait HandlesRoutes
      * Define web routes setup.
      *
      * @param  \Illuminate\Routing\Router  $router
-     *
      * @return void
      */
     protected function defineWebRoutes($router)
@@ -57,7 +81,6 @@ trait HandlesRoutes
      * Define cache routes setup.
      *
      * @param  string  $route
-     *
      * @return void
      */
     protected function defineCacheRoutes(string $route)
@@ -66,19 +89,22 @@ trait HandlesRoutes
 
         $time = time();
 
-        $laravel = Application::create($this->getBasePath());
+        $basePath = static::applicationBasePath();
+        $bootstrapPath = $files->isDirectory(join_paths($basePath, '.laravel'))
+            ? join_paths($basePath, '.laravel')
+            : join_paths($basePath, 'bootstrap');
 
         $files->put(
-            $laravel->basePath("routes/testbench-{$time}.php"), $route
+            join_paths($basePath, 'routes', "testbench-{$time}.php"), $route
         );
 
-        $laravel->make(Kernel::class)->call('route:cache');
+        remote('route:cache')->mustRun();
 
         $this->assertTrue(
-            $files->exists(base_path('bootstrap/cache/routes-v7.php'))
+            $files->exists(join_paths($bootstrapPath, 'cache', 'routes-v7.php'))
         );
 
-        if (isset($this->app)) {
+        if ($this->app instanceof LaravelApplication) {
             $this->reloadApplication();
         }
 
@@ -91,14 +117,18 @@ trait HandlesRoutes
     protected function requireApplicationCachedRoutes(Filesystem $files): void
     {
         $this->afterApplicationCreated(function () {
-            require $this->app->getCachedRoutesPath();
+            if ($this->app instanceof LaravelApplication) {
+                require $this->app->getCachedRoutesPath();
+            }
         });
 
         $this->beforeApplicationDestroyed(function () use ($files) {
-            $files->delete(
-                base_path('bootstrap/cache/routes-v7.php'),
-                ...$files->glob(base_path('routes/testbench-*.php'))
-            );
+            if ($this->app instanceof LaravelApplication) {
+                $files->delete(
+                    $this->app->bootstrapPath(join_paths('cache', 'routes-v7.php')),
+                    ...$files->glob($this->app->basePath(join_paths('routes', 'testbench-*.php')))
+                );
+            }
 
             sleep(1);
         });

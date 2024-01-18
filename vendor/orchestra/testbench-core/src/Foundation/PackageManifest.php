@@ -4,8 +4,14 @@ namespace Orchestra\Testbench\Foundation;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\PackageManifest as IlluminatePackageManifest;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
+use function Illuminate\Filesystem\join_paths;
+
+/**
+ * @internal
+ */
 class PackageManifest extends IlluminatePackageManifest
 {
     /**
@@ -18,9 +24,10 @@ class PackageManifest extends IlluminatePackageManifest
     /**
      * List of required packages.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $requiredPackages = [
+        'laravel/dusk',
         'spatie/laravel-ray',
     ];
 
@@ -30,7 +37,7 @@ class PackageManifest extends IlluminatePackageManifest
      * @param  \Illuminate\Filesystem\Filesystem  $files
      * @param  string  $basePath
      * @param  string  $manifestPath
-     * @param  object|null  $testbench
+     * @param  \Orchestra\Testbench\Contracts\TestCase|object|null  $testbench
      */
     public function __construct(Filesystem $files, $basePath, $manifestPath, $testbench = null)
     {
@@ -44,11 +51,11 @@ class PackageManifest extends IlluminatePackageManifest
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @param  object|null  $testbench
-     *
      * @return void
      */
     public static function swap($app, $testbench = null)
     {
+        /** @var \Illuminate\Foundation\PackageManifest $base */
         $base = $app->make(IlluminatePackageManifest::class);
 
         $app->instance(
@@ -63,7 +70,6 @@ class PackageManifest extends IlluminatePackageManifest
      * Set Testbench instance.
      *
      * @param  object|null  $testbench
-     *
      * @return void
      */
     public function setTestbench($testbench): void
@@ -75,12 +81,11 @@ class PackageManifest extends IlluminatePackageManifest
      * Requires packages.
      *
      * @param  string[]  $packages
-     *
      * @return $this
      */
     public function requires(...$packages)
     {
-        $this->requiredPackages = array_merge($this->requiredPackages, $packages);
+        $this->requiredPackages = array_merge($this->requiredPackages, Arr::wrap($packages));
 
         return $this;
     }
@@ -90,6 +95,7 @@ class PackageManifest extends IlluminatePackageManifest
      *
      * @return array
      */
+    #[\Override]
     protected function getManifest()
     {
         $ignore = ! \is_null($this->testbench) && method_exists($this->testbench, 'ignorePackageDiscoveriesFrom')
@@ -118,6 +124,7 @@ class PackageManifest extends IlluminatePackageManifest
      *
      * @return array
      */
+    #[\Override]
     protected function packagesToIgnore()
     {
         return [];
@@ -130,28 +137,39 @@ class PackageManifest extends IlluminatePackageManifest
      */
     protected function providersFromRoot()
     {
-        if (! \defined('TESTBENCH_WORKING_PATH') || ! is_file(TESTBENCH_WORKING_PATH.'/composer.json')) {
-            return [];
+        $package = $this->providersFromTestbench();
+
+        return \is_array($package) ? [
+            $this->format($package['name']) => $package['extra']['laravel'] ?? [],
+        ] : [];
+    }
+
+    /**
+     * Get testbench root composer file.
+     *
+     * @return array{name: string, extra?: array{laravel?: array}}|null
+     */
+    protected function providersFromTestbench()
+    {
+        if (\defined('TESTBENCH_WORKING_PATH') && is_file(join_paths(TESTBENCH_WORKING_PATH, 'composer.json'))) {
+            /** @var array{name: string, extra?: array{laravel?: array}} $composer */
+            $composer = $this->files->json(join_paths(TESTBENCH_WORKING_PATH, 'composer.json'));
+
+            return $composer;
         }
 
-        $package = transform(file_get_contents(TESTBENCH_WORKING_PATH.'/composer.json'), function ($json) {
-            return json_decode($json, true);
-        });
-
-        return [
-            $this->format($package['name']) => $package['extra']['laravel'] ?? [],
-        ];
+        return null;
     }
 
     /**
      * Write the given manifest array to disk.
      *
      * @param  array  $manifest
+     * @return void
      *
      * @throws \Exception
-     *
-     * @return void
      */
+    #[\Override]
     protected function write(array $manifest)
     {
         parent::write(

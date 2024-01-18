@@ -8,20 +8,12 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that should not be reported.
-     *
-     * @var array
-     */
-    protected $dontReport = [
-        //
-    ];
-
-    /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $dontFlash = [
+        'current_password',
         'password',
         'password_confirmation',
     ];
@@ -32,9 +24,9 @@ class Handler extends ExceptionHandler
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
      * @param  \Throwable  $e
-     *
      * @return void
      */
+    #[\Override]
     public function report(Throwable $e)
     {
         parent::report($e);
@@ -45,9 +37,9 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $e
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response|\Illuminate\Http\Response
      */
+    #[\Override]
     public function render($request, Throwable $e)
     {
         return parent::render($request, $e);

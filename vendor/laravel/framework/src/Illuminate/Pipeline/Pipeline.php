@@ -5,15 +5,18 @@ namespace Illuminate\Pipeline;
 use Closure;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Pipeline\Pipeline as PipelineContract;
+use Illuminate\Support\Traits\Conditionable;
 use RuntimeException;
 use Throwable;
 
 class Pipeline implements PipelineContract
 {
+    use Conditionable;
+
     /**
      * The container implementation.
      *
-     * @var \Illuminate\Contracts\Container\Container
+     * @var \Illuminate\Contracts\Container\Container|null
      */
     protected $container;
 

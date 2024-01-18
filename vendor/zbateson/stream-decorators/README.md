@@ -2,7 +2,7 @@
 
 Psr7 stream decorators for character set conversion and common mail format content encodings.
 
-[![Build Status](https://travis-ci.org/zbateson/stream-decorators.svg?branch=master)](https://travis-ci.org/zbateson/stream-decorators)
+[![Tests](https://github.com/zbateson/stream-decorators/actions/workflows/tests.yml/badge.svg)](https://github.com/zbateson/stream-decorators/actions/workflows/tests.yml)
 [![Code Coverage](https://scrutinizer-ci.com/g/zbateson/stream-decorators/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/zbateson/stream-decorators/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zbateson/stream-decorators/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zbateson/stream-decorators/?branch=master)
 [![Total Downloads](https://poser.pugx.org/zbateson/stream-decorators/downloads)](//packagist.org/packages/zbateson/stream-decorators)
@@ -22,7 +22,7 @@ composer require zbateson/stream-decorators
 
 ## Requirements
 
-StreamDecorators requires PHP 5.4 or newer.  Tested on PHP 5.4, 5.5, 5.6, 7, 7.1, 7.2, 7.3, 7.4 and 8.0.
+StreamDecorators requires PHP 7.2 or newer.  Tested on PHP 7.2, 7.3, 7.4, 8.0, 8.1 and 8.2.
 
 ## Usage
 

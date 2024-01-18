@@ -2,6 +2,7 @@
 
 namespace Illuminate\Support;
 
+use ArgumentCountError;
 use ArrayAccess;
 use Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
@@ -194,6 +195,8 @@ class Arr
             foreach ($array as $item) {
                 return $item;
             }
+
+            return value($default);
         }
 
         foreach ($array as $key => $value) {
@@ -285,7 +288,7 @@ class Arr
             while (count($parts) > 1) {
                 $part = array_shift($parts);
 
-                if (isset($array[$part]) && is_array($array[$part])) {
+                if (isset($array[$part]) && static::accessible($array[$part])) {
                     $array = &$array[$part];
                 } else {
                     continue 2;
@@ -409,9 +412,7 @@ class Arr
      */
     public static function isAssoc(array $array)
     {
-        $keys = array_keys($array);
-
-        return array_keys($keys) !== $keys;
+        return ! array_is_list($array);
     }
 
     /**
@@ -424,19 +425,58 @@ class Arr
      */
     public static function isList($array)
     {
-        return ! self::isAssoc($array);
+        return array_is_list($array);
+    }
+
+    /**
+     * Join all items using a string. The final items can use a separate glue string.
+     *
+     * @param  array  $array
+     * @param  string  $glue
+     * @param  string  $finalGlue
+     * @return string
+     */
+    public static function join($array, $glue, $finalGlue = '')
+    {
+        if ($finalGlue === '') {
+            return implode($glue, $array);
+        }
+
+        if (count($array) === 0) {
+            return '';
+        }
+
+        if (count($array) === 1) {
+            return end($array);
+        }
+
+        $finalItem = array_pop($array);
+
+        return implode($glue, $array).$finalGlue.$finalItem;
     }
 
     /**
      * Key an associative array by a field or using a callback.
      *
      * @param  array  $array
-     * @param  callable|array|string
+     * @param  callable|array|string  $keyBy
      * @return array
      */
     public static function keyBy($array, $keyBy)
     {
         return Collection::make($array)->keyBy($keyBy)->all();
+    }
+
+    /**
+     * Prepend the key names of an associative array.
+     *
+     * @param  array  $array
+     * @param  string  $prependWith
+     * @return array
+     */
+    public static function prependKeysWith($array, $prependWith)
+    {
+        return static::mapWithKeys($array, fn ($item, $key) => [$prependWith.$key => $item]);
     }
 
     /**
@@ -504,6 +544,55 @@ class Arr
     }
 
     /**
+     * Run a map over each of the items in the array.
+     *
+     * @param  array  $array
+     * @param  callable  $callback
+     * @return array
+     */
+    public static function map(array $array, callable $callback)
+    {
+        $keys = array_keys($array);
+
+        try {
+            $items = array_map($callback, $array, $keys);
+        } catch (ArgumentCountError) {
+            $items = array_map($callback, $array);
+        }
+
+        return array_combine($keys, $items);
+    }
+
+    /**
+     * Run an associative map over each of the items.
+     *
+     * The callback should return an associative array with a single key/value pair.
+     *
+     * @template TKey
+     * @template TValue
+     * @template TMapWithKeysKey of array-key
+     * @template TMapWithKeysValue
+     *
+     * @param  array<TKey, TValue>  $array
+     * @param  callable(TValue, TKey): array<TMapWithKeysKey, TMapWithKeysValue>  $callback
+     * @return array
+     */
+    public static function mapWithKeys(array $array, callable $callback)
+    {
+        $result = [];
+
+        foreach ($array as $key => $value) {
+            $assoc = $callback($value, $key);
+
+            foreach ($assoc as $mapKey => $mapValue) {
+                $result[$mapKey] = $mapValue;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Push an item onto the beginning of an array.
      *
      * @param  array  $array
@@ -526,7 +615,7 @@ class Arr
      * Get a value from the array, and remove it.
      *
      * @param  array  $array
-     * @param  string  $key
+     * @param  string|int  $key
      * @param  mixed  $default
      * @return mixed
      */
@@ -555,7 +644,7 @@ class Arr
      *
      * @param  array  $array
      * @param  int|null  $number
-     * @param  bool|false  $preserveKeys
+     * @param  bool  $preserveKeys
      * @return mixed
      *
      * @throws \InvalidArgumentException
@@ -670,6 +759,18 @@ class Arr
     }
 
     /**
+     * Sort the array in descending order using the given callback or "dot" notation.
+     *
+     * @param  array  $array
+     * @param  callable|array|string|null  $callback
+     * @return array
+     */
+    public static function sortDesc($array, $callback = null)
+    {
+        return Collection::make($array)->sortByDesc($callback)->all();
+    }
+
+    /**
      * Recursively sort an array by keys and values.
      *
      * @param  array  $array
@@ -685,7 +786,7 @@ class Arr
             }
         }
 
-        if (static::isAssoc($array)) {
+        if (! array_is_list($array)) {
             $descending
                     ? krsort($array, $options)
                     : ksort($array, $options);
@@ -696,6 +797,18 @@ class Arr
         }
 
         return $array;
+    }
+
+    /**
+     * Recursively sort an array by keys and values in descending order.
+     *
+     * @param  array  $array
+     * @param  int  $options
+     * @return array
+     */
+    public static function sortRecursiveDesc($array, $options = SORT_REGULAR)
+    {
+        return static::sortRecursive($array, $options, true);
     }
 
     /**
@@ -722,6 +835,29 @@ class Arr
     }
 
     /**
+     * Conditionally compile styles from an array into a style list.
+     *
+     * @param  array  $array
+     * @return string
+     */
+    public static function toCssStyles($array)
+    {
+        $styleList = static::wrap($array);
+
+        $styles = [];
+
+        foreach ($styleList as $class => $constraint) {
+            if (is_numeric($class)) {
+                $styles[] = Str::finish($constraint, ';');
+            } elseif ($constraint) {
+                $styles[] = Str::finish($class, ';');
+            }
+        }
+
+        return implode(' ', $styles);
+    }
+
+    /**
      * Filter the array using the given callback.
      *
      * @param  array  $array
@@ -741,9 +877,7 @@ class Arr
      */
     public static function whereNotNull($array)
     {
-        return static::where($array, function ($value) {
-            return ! is_null($value);
-        });
+        return static::where($array, fn ($value) => ! is_null($value));
     }
 
     /**

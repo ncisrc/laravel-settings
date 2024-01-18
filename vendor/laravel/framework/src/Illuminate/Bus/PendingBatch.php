@@ -8,11 +8,14 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\Conditionable;
 use Laravel\SerializableClosure\SerializableClosure;
 use Throwable;
 
 class PendingBatch
 {
+    use Conditionable;
+
     /**
      * The IoC container instance.
      *
@@ -57,16 +60,43 @@ class PendingBatch
     /**
      * Add jobs to the batch.
      *
-     * @param  \Illuminate\Support\Enumerable|object|array  $jobs
+     * @param  iterable|object|array  $jobs
      * @return $this
      */
     public function add($jobs)
     {
-        foreach (Arr::wrap($jobs) as $job) {
+        $jobs = is_iterable($jobs) ? $jobs : Arr::wrap($jobs);
+
+        foreach ($jobs as $job) {
             $this->jobs->push($job);
         }
 
         return $this;
+    }
+
+    /**
+     * Add a callback to be executed after a job in the batch have executed successfully.
+     *
+     * @param  callable  $callback
+     * @return $this
+     */
+    public function progress($callback)
+    {
+        $this->options['progress'][] = $callback instanceof Closure
+            ? new SerializableClosure($callback)
+            : $callback;
+
+        return $this;
+    }
+
+    /**
+     * Get the "progress" callbacks that have been registered with the pending batch.
+     *
+     * @return array
+     */
+    public function progressCallbacks()
+    {
+        return $this->options['progress'] ?? [];
     }
 
     /**
@@ -268,5 +298,72 @@ class PendingBatch
         );
 
         return $batch;
+    }
+
+    /**
+     * Dispatch the batch after the response is sent to the browser.
+     *
+     * @return \Illuminate\Bus\Batch
+     */
+    public function dispatchAfterResponse()
+    {
+        $repository = $this->container->make(BatchRepository::class);
+
+        $batch = $repository->store($this);
+
+        if ($batch) {
+            $this->container->terminating(function () use ($batch) {
+                $this->dispatchExistingBatch($batch);
+            });
+        }
+
+        return $batch;
+    }
+
+    /**
+     * Dispatch an existing batch.
+     *
+     * @param  \Illuminate\Bus\Batch  $batch
+     * @return void
+     *
+     * @throws \Throwable
+     */
+    protected function dispatchExistingBatch($batch)
+    {
+        try {
+            $batch = $batch->add($this->jobs);
+        } catch (Throwable $e) {
+            if (isset($batch)) {
+                $batch->delete();
+            }
+
+            throw $e;
+        }
+
+        $this->container->make(EventDispatcher::class)->dispatch(
+            new BatchDispatched($batch)
+        );
+    }
+
+    /**
+     * Dispatch the batch if the given truth test passes.
+     *
+     * @param  bool|\Closure  $boolean
+     * @return \Illuminate\Bus\Batch|null
+     */
+    public function dispatchIf($boolean)
+    {
+        return value($boolean) ? $this->dispatch() : null;
+    }
+
+    /**
+     * Dispatch the batch unless the given truth test passes.
+     *
+     * @param  bool|\Closure  $boolean
+     * @return \Illuminate\Bus\Batch|null
+     */
+    public function dispatchUnless($boolean)
+    {
+        return ! value($boolean) ? $this->dispatch() : null;
     }
 }

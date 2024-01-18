@@ -35,12 +35,6 @@ return [
 
     'connections' => [
 
-        'testing' => [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', false),
-        ],
-
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
@@ -96,7 +90,7 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
-            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'true'),
+            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
     ],

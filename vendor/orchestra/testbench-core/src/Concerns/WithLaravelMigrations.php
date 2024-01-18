@@ -2,47 +2,40 @@
 
 namespace Orchestra\Testbench\Concerns;
 
-use Orchestra\Testbench\Database\MigrateProcessor;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use function Orchestra\Testbench\after_resolving;
+use function Orchestra\Testbench\laravel_migration_path;
+
+/**
+ * @api
+ */
 trait WithLaravelMigrations
 {
+    use InteractsWithWorkbench;
+
     /**
-     * Migrate Laravel's default migrations.
-     *
-     * @param  string|array<string, mixed>  $database
+     * Bootstrap with laravel migrations.
      *
      * @return void
      */
-    protected function loadLaravelMigrations($database = []): void
+    protected function setUpWithLaravelMigrations(): void
     {
-        $options = \is_array($database) ? $database : ['--database' => $database];
+        /** @var bool $loadLaravelMigrations */
+        $loadLaravelMigrations = static::cachedConfigurationForWorkbench()->getWorkbenchAttributes()['install'] ?? false;
 
-        $options['--path'] = 'migrations';
+        if (! ($loadLaravelMigrations && is_dir(laravel_migration_path()))) {
+            return;
+        }
 
-        $migrator = new MigrateProcessor($this, $options);
-        $migrator->up();
-
-        $this->resetApplicationArtisanCommands($this->app);
-
-        $this->beforeApplicationDestroyed(fn () => $migrator->rollback());
-    }
-
-    /**
-     * Migrate all Laravel's migrations.
-     *
-     * @param  string|array<string, mixed>  $database
-     *
-     * @return void
-     */
-    protected function runLaravelMigrations($database = []): void
-    {
-        $options = \is_array($database) ? $database : ['--database' => $database];
-
-        $migrator = new MigrateProcessor($this, $options);
-        $migrator->up();
-
-        $this->resetApplicationArtisanCommands($this->app);
-
-        $this->beforeApplicationDestroyed(fn () => $migrator->rollback());
+        if (! static::usesTestingConcern(LazilyRefreshDatabase::class) && ! static::usesTestingConcern(RefreshDatabase::class)) {
+            $this->loadLaravelMigrations();
+        } else {
+            after_resolving($this->app, 'migrator', static function ($migrator, $app) {
+                /** @var \Illuminate\Database\Migrations\Migrator $migrator */
+                $migrator->path(laravel_migration_path());
+            });
+        }
     }
 }

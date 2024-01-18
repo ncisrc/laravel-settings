@@ -25,7 +25,7 @@ class ApplicationLogWatcher extends Watcher
                 return;
             }
 
-            $payload = new ApplicationLogPayload($message->message);
+            $payload = new ApplicationLogPayload($message->message, $message->context);
 
             /** @var Ray $ray */
             $ray = app(Ray::class);
@@ -48,7 +48,7 @@ class ApplicationLogWatcher extends Watcher
         });
     }
 
-    protected function shouldLogMessage(MessageLogged  $message): bool
+    protected function shouldLogMessage(MessageLogged $message): bool
     {
         if (! $this->enabled()) {
             return false;
