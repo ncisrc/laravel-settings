@@ -2,7 +2,7 @@
 
 ## Installation :
 
-> Note : Il est recommandé de séparer, par soucis de clarté, de séparer les sources des projets et sources des packages (exemple : souces/packages/mon-package).
+> Note : Il est recommandé de séparer, par soucis de clarté, de séparer les sources des projets et sources des packages (exemple : sources/packages/mon-package).
 
 ```bash
 # Au préalable
