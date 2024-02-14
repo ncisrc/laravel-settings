@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\Console\Kernel as ConsoleKernel;
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Foundation\Application;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ProcessUtils;
 use Illuminate\Support\Str;
@@ -78,9 +79,7 @@ function remote(string $command, array $env = []): Process
 {
     $phpBinary = transform(
         \defined('PHP_BINARY') ? PHP_BINARY : (new PhpExecutableFinder())->find(),
-        static function ($phpBinary) {
-            return ProcessUtils::escapeArgument((string) $phpBinary);
-        }
+        static fn ($phpBinary) => ProcessUtils::escapeArgument((string) $phpBinary)
     );
 
     $binary = \defined('TESTBENCH_DUSK') ? 'testbench-dusk' : 'testbench';
@@ -140,9 +139,8 @@ function defined_environment_variables(): array
 {
     return Collection::make(array_merge($_SERVER, $_ENV))
         ->keys()
-        ->mapWithKeys(static function (string $key) {
-            return [$key => Env::forward($key)];
-        })->put('TESTBENCH_WORKING_PATH', package_path())
+        ->mapWithKeys(static fn (string $key) => [$key => Env::forward($key)])
+        ->put('TESTBENCH_WORKING_PATH', package_path())
         ->all();
 }
 
@@ -171,6 +169,19 @@ function parse_environment_variables($variables): array
 }
 
 /**
+ * Refresh router lookups.
+ *
+ * @api
+ *
+ * @param  \Illuminate\Routing\Router  $router
+ * @return void
+ */
+function refresh_router_lookups(Router $router): void
+{
+    $router->getRoutes()->refreshNameLookups();
+}
+
+/**
  * Transform relative path.
  *
  * @api
@@ -184,6 +195,17 @@ function transform_relative_path(string $path, string $workingPath): string
     return str_starts_with($path, './')
         ? str_replace('./', rtrim($workingPath, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR, $path)
         : $path;
+}
+
+/**
+ * Get the default skeleton path.
+ *
+ * @param  string  $path
+ * @return string
+ */
+function default_skeleton_path(string $path = ''): string
+{
+    return (string) realpath(join_paths(__DIR__, '..', 'laravel', $path));
 }
 
 /**

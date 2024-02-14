@@ -5,6 +5,11 @@
 > Note : Il est recommandé de séparer, par soucis de clarté, de séparer les sources des projets et sources des packages (exemple : souces/packages/mon-package).
 
 ```bash
+# Au préalable
+sudo apt-get install php8.2-mbstring
+sudo apt-get install php8.2-xml
+sudo apt-get install php8.2-sqlite3
+
 # Clonez le projet
 git clone git@git-cloud.nci.fr:laravel-package/settings.git
 

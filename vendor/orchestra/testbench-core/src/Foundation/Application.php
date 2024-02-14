@@ -33,7 +33,7 @@ use function Illuminate\Filesystem\join_paths;
 class Application
 {
     use CreatesApplication {
-        resolveApplication as protected resolveApplicationFromTrait;
+        resolveApplicationResolvingCallback as protected resolveApplicationResolvingCallbackFromTrait;
         resolveApplicationConfiguration as protected resolveApplicationConfigurationFromTrait;
     }
 
@@ -249,17 +249,18 @@ class Application
     }
 
     /**
-     * Resolve application implementation.
+     * Resolve application resolving callback.
      *
-     * @return \Illuminate\Foundation\Application
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
      */
-    protected function resolveApplication()
+    private function resolveApplicationResolvingCallback($app): void
     {
-        return tap($this->resolveApplicationFromTrait(), function ($app) {
-            if (\is_callable($this->resolvingCallback)) {
-                \call_user_func($this->resolvingCallback, $app);
-            }
-        });
+        $this->resolveApplicationResolvingCallbackFromTrait($app);
+
+        if (\is_callable($this->resolvingCallback)) {
+            \call_user_func($this->resolvingCallback, $app);
+        }
     }
 
     /**
