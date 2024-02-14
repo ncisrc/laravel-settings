@@ -39,6 +39,14 @@ composer test-f ma_fonction_test
     ],
     "require": {
         "nci/settings": "master"
+    },
+    "script": {
+        "post-install-cmd": [
+           "rm -rf vendor/nci/settings/.git"
+        ],
+        "post-update-cmd": [
+            "rm -rf vendor/nci/settings/.git"
+        ]
     }
 }
 
