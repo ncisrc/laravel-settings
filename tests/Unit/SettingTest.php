@@ -96,11 +96,10 @@ class SettingTest extends TestCase
             $this->assertEquals(ErrorText::API_E_SETTING05, $e->getMessage());
         }
 
+        $this->assertNotEquals($trueClass, $settingExpected->options_class);
         SettingBusiness::update($settingExpected, ['options_class' => $trueClass]);
-        $setting = SettingBusiness::find($settingExpected->id);
-
-        $this->assertEquals($trueClass, $setting->options_class);
-        $this->assertNotEquals($setting->options_class, $settingExpected->options_class);
+        $settingExpected->refresh();
+        $this->assertEquals($trueClass, $settingExpected->options_class);
     }
 
     /** @test */
@@ -109,11 +108,10 @@ class SettingTest extends TestCase
         $settingExpected = Setting::factory()->create();
         $value           = 'test';
 
+        $this->assertNotEquals($settingExpected->default_value, $value);
         SettingBusiness::update($settingExpected, ['default_value' => $value]);
-        $setting = SettingBusiness::find($settingExpected->id);
-
-        $this->assertEquals($value, $setting->default_value);
-        $this->assertNotEquals($setting->default_value, $settingExpected->default_value);
+        $settingExpected->refresh();
+        $this->assertEquals($value, $settingExpected->default_value);
     }
 
     /** @test */

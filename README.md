@@ -2,9 +2,14 @@
 
 ## Installation :
 
-> Note : Il est recommandé de séparer, par soucis de clarté, de séparer les sources des projets et sources des packages (exemple : souces/packages/mon-package).
+> Note : Il est recommandé de séparer, par soucis de clarté, de séparer les sources des projets et sources des packages (exemple : sources/packages/mon-package).
 
 ```bash
+# Au préalable
+sudo apt-get install php8.2-mbstring
+sudo apt-get install php8.2-xml
+sudo apt-get install php8.2-sqlite3
+
 # Clonez le projet
 git clone git@git-cloud.nci.fr:laravel-package/settings.git
 
@@ -34,6 +39,14 @@ composer test-f ma_fonction_test
     ],
     "require": {
         "nci/settings": "master"
+    },
+    "script": {
+        "post-install-cmd": [
+           "rm -rf vendor/nci/settings/.git"
+        ],
+        "post-update-cmd": [
+            "rm -rf vendor/nci/settings/.git"
+        ]
     }
 }
 
