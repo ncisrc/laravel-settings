@@ -44,10 +44,6 @@ class UserSettingBusiness
             throw new Exception(ErrorText::API_E_SETTING04, 404);
         }
 
-        if ($setting->default_value === $value) {
-            throw new Exception(ErrorText::API_E_SETTING03, 404);
-        }
-
         $userSetting = static::findOrCreate($userId, $settingId);
 
         try {
