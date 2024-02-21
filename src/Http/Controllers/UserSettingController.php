@@ -36,7 +36,7 @@ class UserSettingController extends Controller
         try {
             $setting = SettingBusiness::find($settingId);
 
-            return UserSettingBusiness::setValue($data['user_id'], $setting->id, $data['value']);
+            return UserSettingBusiness::setValue($userId, $setting->id, $data['value']);
         } catch (Exception $e) {
             throw new Exception($e);
         }
