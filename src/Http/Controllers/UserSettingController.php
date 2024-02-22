@@ -23,7 +23,7 @@ class UserSettingController extends Controller
         }
     }
 
-    public function store(Request $request, int $userId, int $settingId)
+    public function store(Request $request, int $settingId, int $userId)
     {
         $data = $request->validate([
             'value'      => 'required|string',
