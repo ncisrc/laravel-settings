@@ -12,7 +12,7 @@ trait UserHasSettings
 
     public function settings()
     {
-        return $this->belongsToMany(Setting::class, 'user_settings', 'user_id', 'setting_id')
+        return $this->belongsToMany(Setting::class, 'user_setting', 'user_id', 'setting_id')
             ->withPivot('value')
             ->withTimestamps();
     }
