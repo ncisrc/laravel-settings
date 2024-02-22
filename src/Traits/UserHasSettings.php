@@ -9,6 +9,14 @@ use Nci\Settings\Models\Setting;
 
 trait UserHasSettings
 {
+
+    public function settings()
+    {
+        return $this->belongsToMany(Setting::class, 'user_settings', 'user_id', 'setting_id')
+            ->withPivot('value')
+            ->withTimestamps();
+    }
+
     public function getSettings(): Collection
     {
         return UserSettingBusiness::get($this->id);
