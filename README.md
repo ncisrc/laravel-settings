@@ -11,7 +11,7 @@ sudo apt-get install php8.2-xml
 sudo apt-get install php8.2-sqlite3
 
 # Clonez le projet
-git clone git@git-cloud.nci.fr:laravel-package/settings.git
+git clone git@github.com:ncisrc/laravel-settings.git
 
 # Initialisez git flow
 git flow init # validez les valeurs par défaut
@@ -34,7 +34,7 @@ composer test-f ma_fonction_test
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://www.github.com/ncisrc/laravel-settings.git"
+            "url": "https://github.com/ncisrc/laravel-settings.git"
         }
     ],
     "require": {
