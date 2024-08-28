@@ -28,8 +28,8 @@ composer test-f ma_fonction_test
 
 ## Installation du package dans un projet :
 
-```bash
-# Ajoutez le repository au composer.json du projet
+Ajoutez le repository au fichier `composer.json` du projet
+```json
 {
     "repositories": [
         {
@@ -49,44 +49,48 @@ composer test-f ma_fonction_test
         ]
     }
 }
+```
+Installez les vendors
+`composer install` ou `composer update`
 
-# Installez les vendors
-composer install ou composer update
+OPTIONNEL - Ajouter le provider dans `config/app.php`
 
-# Ajouter le provider dans "config/app.php" - OPTIONNEL
+```php
 /*
-* Package Service Providers...
-*/
+ * Package Service Providers...
+ */
 Nci\Settings\SettingsPackageServiceProvider::class,
+```
 
-# Publish le fichier de configuration
-sail artisan vendor:publish --provider="Nci\Settings\SettingsPackageServiceProvider"
-# Champs disponibles dans le fichier de configuration :
-# prefix => définit la chaîne de caractère se trouvant avant les routes disponnibles, par défaut "ncisettings" (exemple: ncisettings/settings/user/1).
-# middleware => array des middleware à appliquer avant toutes requête, par défaut contient le middleware "web".
+Publiez le fichier de configuration
+`sail artisan vendor:publish --provider="Nci\Settings\SettingsPackageServiceProvider"`
 
-# Lancez les migrations
-sail artisan migrate
+Champs disponibles dans le fichier de configuration :
+- prefix => définit la chaîne de caractère se trouvant avant les routes disponibles, par défaut "ncisettings" (exemple: ncisettings/settings/user/1).
+- middleware => tableau des middleware à appliquer avant toute requête, par défaut contient le middleware "web".
 
-# Ajoutez le trait au model User
+Lancez les migrations
+`sail artisan migrate`
+
+`Ajoutez le trait au model associé au settings`
+```php
 use Nci\Settings\Traits\HasSettings;
 use HasSettings;
-
-# Routes disponibles
-
-// Setting
-Get /settings
-Get /setting/{id}
-Put /setting/{id}
-
-// SettingOptions
-Get /setting/options
-
-// SettingTypes
-Get /setting/types
-
-// UserSetting
-Get /settings/user/{userId}
-Get /setting/{settingId}/user/{userId}
-
 ```
+
+Routes disponibles
+
+**Setting
+- Get /settings
+- Get /setting/{id}
+- Put /setting/{id}
+
+**SettingOptions**
+- Get /setting/options
+
+**SettingTypes**
+- Get /setting/types
+
+**UserSetting**
+- Get /settings/user/{userId}
+- Get /setting/{settingId}/user/{userId}
